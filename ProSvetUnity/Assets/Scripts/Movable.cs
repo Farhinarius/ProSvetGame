@@ -1,54 +1,42 @@
-﻿using System.Collections;
+﻿using System.Reflection;
+using System.Collections;
 using UnityEngine;
 
 public class Movable : MonoBehaviour,  IClickable
 {
-    [SerializeField] string Name;
+    private string _name;
 
-    private Transform rightPlace;
-    private Vector2 initialPosition;
+    private Vector2 _initialPosition;
 
-    private Vector2 mousePosition;
-
-    private float deltaX, deltaY;
-    private static bool locked;
-    private Camera sceneCamera;
+    private static bool _locked = false;
 
 
     void Start ()
     {
-        initialPosition = transform.position;
-        sceneCamera = Camera.main;
+        _name = this.gameObject.name;
+        _initialPosition = transform.position;
     } 
 
     public void OnPointerClick()
     {
-        Debug.Log("Pointer is ok" + Name);
+        Debug.Log("Pointer Click: " + _name);
     }
 
     public void OnPointerEnter()
     {
-        Debug.Log("OnPointerEnter" + Name);
-
-        if (!locked)
-        {
-            deltaX = sceneCamera.ScreenToWorldPoint(Input.mousePosition).x - transform.position.x;
-            deltaY = sceneCamera.ScreenToWorldPoint(Input.mousePosition).y - transform.position.y;
-        }
+        Debug.Log("Poitner Enter: " + _name);
     }
 
     void OnMouseDrag()
     {
-        if (!locked)
-        {
-            mousePosition = sceneCamera.ScreenToWorldPoint(Input.mousePosition);
-            transform.position = new Vector2(mousePosition.x - deltaX, mousePosition.y - deltaY);
-        }
+        // watch on this
+        if (!_locked)
+            transform.position = PointerHandler.MouseTarget;
     }
 
     public void OnPointerExit()
     {
-        Debug.Log("OnPointerExit" + Name);
+        Debug.Log("Pointer Exit: " + _name);
     }
 
 }
