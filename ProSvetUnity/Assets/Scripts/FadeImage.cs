@@ -4,20 +4,25 @@ using UnityEngine;
 
 public class FadeImage : MonoBehaviour, IClickable
 {
-    public void OnPointerClick()
+    public void OnPointerButtonClick()
     {
         Destroy(GetComponent<SpriteRenderer>());
         Destroy(GetComponent<BoxCollider2D>());
     }
 
+    public void OnPointerButtonHold()
+    {
+        Debug.Log("Pointer button hold Click: " + this.gameObject.name);
+    }
+
     public void OnPointerEnter()
     {
-
+        Debug.Log("Poitner Enter: " + this.gameObject.name);
     }
 
     public void OnPointerExit()
     {
-
+        Debug.Log("Pointer Exit: " + this.gameObject.name);
     }
 
 }

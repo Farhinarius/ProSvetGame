@@ -12,9 +12,14 @@ public class Choicable : MonoBehaviour, IClickable
         _name = this.gameObject.name;
     }
 
-    public void OnPointerClick()
+    public void OnPointerButtonClick()
     {
         Debug.Log("Pointer Click: " + _name);
+    }
+    
+    public void OnPointerButtonHold()
+    {
+        Debug.Log("Pointer Button Hold: " + _name);
     }
 
     public void OnPointerEnter()

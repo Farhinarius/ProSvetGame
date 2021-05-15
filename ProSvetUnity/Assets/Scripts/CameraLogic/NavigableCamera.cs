@@ -18,6 +18,7 @@ public class NavigableCamera : MonoBehaviour
     [SerializeField] private float _lerpSpeed;
     [SerializeField] private float _zoomSpeed;
     [SerializeField] private float _zoomInSpeed;
+    [SerializeField] private float _movingSpeed;
     private Camera _innerCam;
     private bool roomChanged = false;
 
@@ -32,9 +33,8 @@ public class NavigableCamera : MonoBehaviour
     void Init_Enter()
     {
         Debug.Log("Camera Init");
-        _innerCam = GetComponent<Camera>();
-
         Application.targetFrameRate = 60;
+        _innerCam = GetComponent<Camera>();
 
         Navigable.onRoomTargetChanged += SetUpViewRoom;
         StartCoroutine(SetInitialTransform());
@@ -50,6 +50,7 @@ public class NavigableCamera : MonoBehaviour
     void CameraFixed_Update()
     {
         ListenZoom();
+        MoveCameraWithMouse();
 
         if (roomChanged)
         {
@@ -103,12 +104,12 @@ public class NavigableCamera : MonoBehaviour
 
     private void MoveCameraWithMouse()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(2))
         {
             if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
             {
-                transform.position -= new Vector3(Input.GetAxisRaw("Mouse X") * Time.fixedDeltaTime * _lerpSpeed,
-                                                  Input.GetAxisRaw("Mouse Y") * Time.fixedDeltaTime * _lerpSpeed);
+                transform.position -= new Vector3(Input.GetAxisRaw("Mouse X") * Time.fixedDeltaTime * _movingSpeed,
+                                                  Input.GetAxisRaw("Mouse Y") * Time.fixedDeltaTime * _movingSpeed);
             }
         }
     }

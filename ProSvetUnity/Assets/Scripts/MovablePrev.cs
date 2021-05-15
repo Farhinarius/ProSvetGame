@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class MovablePrev : MonoBehaviour, IClickable
 {
-    [SerializeField] string Name;
+    [SerializeField] string _name;
 
     private Transform rightPlace;
     private Vector2 initialPosition;
@@ -14,21 +14,25 @@ public class MovablePrev : MonoBehaviour, IClickable
     private static bool locked;
     private Camera sceneCamera;
 
-
     void Start()
     {
         initialPosition = transform.position;
         sceneCamera = Camera.main;
     }
 
-    public void OnPointerClick()
+    public void OnPointerButtonClick()
     {
-        Debug.Log("Pointer is ok" + Name);
+        Debug.Log("Pointer is ok" + _name);
+    }
+
+    public void OnPointerButtonHold()
+    {
+        Debug.Log("Pointer Button Hold: " + _name);
     }
 
     public void OnPointerEnter()
     {
-        Debug.Log("OnPointerEnter" + Name);
+        Debug.Log("OnPointerEnter" + _name);
 
         if (!locked)
         {
@@ -48,7 +52,7 @@ public class MovablePrev : MonoBehaviour, IClickable
 
     public void OnPointerExit()
     {
-        Debug.Log("OnPointerExit" + Name);
+        Debug.Log("OnPointerExit" + _name);
     }
 
 }
