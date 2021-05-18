@@ -67,7 +67,8 @@ public class NavigableCamera : MonoBehaviour
     void CameraTargetMovement_FixedUpdate()
     {
         if (Mathf.Abs(transform.position.x - _target.position.x) <= 0.2f
-        && Mathf.Abs(transform.position.y - _target.position.y) <= 0.2f)
+        && Mathf.Abs(transform.position.y - _target.position.y) <= 0.2f
+        && _innerCam.orthographicSize == 7)
             fsm.ChangeState(States.CameraFixed);
 
         MoveToTarget();
@@ -96,7 +97,7 @@ public class NavigableCamera : MonoBehaviour
         float size = _innerCam.orthographicSize;
         while (size > 8 && transform.position != _target.position)
         {
-            yield return new WaitForSeconds(Time.deltaTime);
+            yield return new WaitForSeconds(0.016f);
             size -= _zoomInSpeed * 0.1f;
             _innerCam.orthographicSize = size;
         }

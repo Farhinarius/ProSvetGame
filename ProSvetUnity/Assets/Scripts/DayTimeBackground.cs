@@ -9,11 +9,15 @@ public class DayTimeBackground : MonoBehaviour
 
     [SerializeField] public int dayTimeNum;
 
-    public void Update()
+    private void Awake()
     {
-
-        gameObject.GetComponent<SpriteRenderer>().sprite = timesOfDay[dayTimeNum];
-
+        DayTimeChangingStateMachine.onBackgroundChange += ChangeBackground;
+    }
+    
+    public void ChangeBackground(int value, DayTimeChangingStateMachine dayTimeChangeSM)
+    {
+        gameObject.GetComponent<SpriteRenderer>().sprite = timesOfDay[value];
+        Debug.Log("BG has changed");
     }
 
 }
