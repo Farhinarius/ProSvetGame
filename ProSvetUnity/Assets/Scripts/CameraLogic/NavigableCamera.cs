@@ -66,13 +66,13 @@ public class NavigableCamera : MonoBehaviour
 
     void CameraTargetMovement_FixedUpdate()
     {
-        if (Mathf.Abs(transform.position.x - _target.position.x) <= 0.2f
-        && Mathf.Abs(transform.position.y - _target.position.y) <= 0.2f
+        if (Vector2.Distance(_target.position, transform.position) < 0.1f
         && _innerCam.orthographicSize == 7)
             fsm.ChangeState(States.CameraFixed);
 
         MoveToTarget();
     }
+
 
 
     // ---------- Class methods ----------

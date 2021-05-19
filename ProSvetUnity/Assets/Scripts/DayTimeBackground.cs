@@ -1,5 +1,4 @@
-﻿
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,12 +10,12 @@ public class DayTimeBackground : MonoBehaviour
 
     private void Awake()
     {
-        DayTimeChangingStateMachine.onBackgroundChange += ChangeBackground;
+        TimeOfDay.onTimeOfDayChange += ChangeBackground;
     }
     
-    public void ChangeBackground(int value, DayTimeChangingStateMachine dayTimeChangeSM)
+    public void ChangeBackground(TimeOfDay.States state, TimeOfDay timeOfDay)
     {
-        gameObject.GetComponent<SpriteRenderer>().sprite = timesOfDay[value];
+        gameObject.GetComponent<SpriteRenderer>().sprite = timesOfDay[ (int) state ];
         Debug.Log("BG has changed");
     }
 
