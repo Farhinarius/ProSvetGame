@@ -22,6 +22,7 @@ public class ClockMove : MonoBehaviour
 
     private void Start()
     {
+        // TimeOfDay.onTimeOfDayChange += SetUpNextAngle;
         _transform = this.transform;
         _targetRotation = _transform.rotation;          // important to save rotations
     }

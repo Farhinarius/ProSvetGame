@@ -18,11 +18,6 @@ public class Movable : MonoBehaviour,  IClickable
     public void OnPointerEnter()
     {
         Debug.Log("Poitner Enter: " + _name);
-        if (!_locked)
-        {
-            _deltaX = PointerHandler.MouseTarget.x - transform.position.x;
-            _deltaY = PointerHandler.MouseTarget.y - transform.position.y;
-        }
     }
 
     public void OnPointerButtonClick()
@@ -32,11 +27,8 @@ public class Movable : MonoBehaviour,  IClickable
 
     public void OnPointerButtonHold()
     {
-/*         Debug.Log("Pointer Button Hold: " + _name);
-        if (!_locked)
-        {
-            transform.position = new Vector2(PointerHandler.MouseTarget.x - _deltaX, PointerHandler.MouseTarget.y - _deltaY);
-        } */
+/*         Debug.Log("OnPointerButtonHold");
+        transform.position = PointerHandler.MouseTarget; */
     }
 
     public void OnPointerExit()
@@ -44,9 +36,9 @@ public class Movable : MonoBehaviour,  IClickable
         Debug.Log("Pointer Exit: " + _name);
     }
 
-    void OnMouseDrag()
-    {
-        if (!_locked)
-            transform.position = PointerHandler.MouseTarget;
-    }
+    // void OnMouseDrag()
+    // {
+    //     Debug.Log("OnMouseDrag");
+    //     transform.position = PointerHandler.MouseTarget;
+    // }
 }

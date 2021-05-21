@@ -52,10 +52,11 @@ public class PointerHandler : MonoBehaviour
                 item.OnPointerButtonClick();
             }
 
-            if (Input.GetMouseButton(0))
+/*             if (Input.GetMouseButton(0))
             {
+                // fix item 
                 item.OnPointerButtonHold();
-            } 
+            }  */
         }
         else if (_currentClickable != null)                                             // if stop hover any IClickable
         {

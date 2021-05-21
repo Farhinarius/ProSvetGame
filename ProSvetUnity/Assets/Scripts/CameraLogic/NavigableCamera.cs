@@ -19,6 +19,9 @@ public class NavigableCamera : MonoBehaviour
     [SerializeField] private float _zoomSpeed;
     [SerializeField] private float _zoomInSpeed;
     [SerializeField] private float _movingSpeed;
+    [SerializeField] private float _minimumCameraSize = 4;
+    [SerializeField] private float _maximumCameraSize = 11;
+
     private Camera _innerCam;
     private bool roomChanged = false;
 
@@ -33,10 +36,13 @@ public class NavigableCamera : MonoBehaviour
     void Init_Enter()
     {
         Debug.Log("Camera Init");
-        Application.targetFrameRate = 60;
+        // Application.targetFrameRate = 60;
         _innerCam = GetComponent<Camera>();
 
         Navigable.onRoomTargetChanged += SetUpViewRoom;
+
+        var cameraInitialPosition = new Vector3(_target.position.x, _target.position.y, transform.position.z);
+        transform.position = cameraInitialPosition;
         StartCoroutine(SetInitialTransform());
 
         fsm.ChangeState(States.CameraFixed);
@@ -67,7 +73,7 @@ public class NavigableCamera : MonoBehaviour
     void CameraTargetMovement_FixedUpdate()
     {
         if (Vector2.Distance(_target.position, transform.position) < 0.1f
-        && _innerCam.orthographicSize == 7)
+        && _innerCam.orthographicSize == _minimumCameraSize)
             fsm.ChangeState(States.CameraFixed);
 
         MoveToTarget();
@@ -88,17 +94,20 @@ public class NavigableCamera : MonoBehaviour
 
     public void SetUpViewRoom(Transform target, Navigable nav)
     {
-        roomChanged = true;
-        _target = target;
+        if (_target != target)          // if we do not pick current view room
+        {
+            roomChanged = true;
+            _target = target;
+        }
     }
 
     IEnumerator SetInitialTransform()
     {
         float size = _innerCam.orthographicSize;
-        while (size > 8 && transform.position != _target.position)
+        while (size > _minimumCameraSize)
         {
-            yield return new WaitForSeconds(0.016f);
-            size -= _zoomInSpeed * 0.1f;
+            yield return new WaitForSeconds(Time.fixedDeltaTime);
+            size -= 17 * Time.fixedDeltaTime;
             _innerCam.orthographicSize = size;
         }
     }
@@ -122,7 +131,7 @@ public class NavigableCamera : MonoBehaviour
         if (Input.GetAxis("Mouse ScrollWheel") != 0)
         {
             size -= Input.GetAxis("Mouse ScrollWheel") * _zoomSpeed;
-            size = Mathf.Clamp(size, 1, 15);
+            size = Mathf.Clamp(size, _minimumCameraSize, _maximumCameraSize);
         }
 
         _innerCam.orthographicSize = size;
@@ -137,7 +146,7 @@ public class NavigableCamera : MonoBehaviour
         // zoom logic
         float size = _innerCam.orthographicSize;
         size -=  _zoomInSpeed * Time.deltaTime;
-        size = Mathf.Clamp(size, 7, 15);
+        size = Mathf.Clamp(size, _minimumCameraSize, _maximumCameraSize);
         _innerCam.orthographicSize = size;
     }
 

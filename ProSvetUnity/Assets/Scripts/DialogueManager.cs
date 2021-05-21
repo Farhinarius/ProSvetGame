@@ -1,56 +1,93 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+
 public class DialogueManager : MonoBehaviour
 {
-    public Text dialogueText;
-
-    private Queue<string> sentences;
+    private int dialogueID = 0;
+    public static int numberOfObjects;
     
+    [SerializeField] private Dialogue dialogue;
+    private Queue<string> dialogueQueue;
+    public Text dialogueDisplay;
+
+    private static bool[] dialogueChecks;
+
+    public static bool[] DialogueChecks
+    {
+        get => dialogueChecks;
+    }
+
+    public static bool allChecked = false;
+
+    private void Awake()
+    {
+        this.dialogueID = numberOfObjects;
+        numberOfObjects++;
+    }
 
     void Start()
     {
-        sentences = new Queue<string>();
+        if (gameObject.CompareTag("First"))
+        {
+            dialogueChecks = new bool[numberOfObjects];
+            Debug.Log(dialogueChecks.Length);
+        }
+
+        dialogueQueue = new Queue<string>();
     }
 
-    public void StartDialogue (Dialogue dialogue)
+    public void CallDialogue()
+    {
+        if (dialogueQueue.Count == 0)       // if dialogue queue is empty restart this queue
+            StartDialogue(dialogue);        // fill dialogue queue with dialogue strings
+
+        DisplayNextSentence();
+    }
+
+    public void StartDialogue(Dialogue dialogue)
     {
         Debug.Log("Start conversation");
 
-        sentences.Clear();
-
         foreach (string sentence in dialogue.sentences)
         {
-            sentences.Enqueue(sentence);
+            dialogueQueue.Enqueue(sentence);
         }
-        DisplayNextSentence();
     }
 
 
     public void DisplayNextSentence()
     {
+        string sentence = dialogueQueue.Dequeue();
 
-        if (sentences.Count == 0)
-        {
-            EndDialogue();
-            return;
-        }
-
-        string sentence = sentences.Dequeue();
         StopAllCoroutines();
         StartCoroutine(TypeSentence(sentence));
+
         //dialogueText.text = sentence;
+
+        if (dialogueQueue.Count == 0)      // if queue is empty than reset dialog and end dialogue
+        {
+            EndDialogue();
+            dialogueChecks[dialogueID] = true;
+            Debug.Log("d checked");
+            if (dialogueChecks.All(dc => dc))
+            {
+                allChecked = true;
+            }
+        }
     }
 
 
     IEnumerator TypeSentence (string sentence)
     {
-        dialogueText.text = " ";
+        dialogueDisplay.text = " ";
         foreach (char letter in sentence.ToCharArray())
         {
-            dialogueText.text += letter;
+            dialogueDisplay.text += letter;
             yield return null;
         }
     }
@@ -58,6 +95,6 @@ public class DialogueManager : MonoBehaviour
 
     void EndDialogue()
     {
-        Debug.Log("end conversation");
+        Debug.Log("end conversation with interactable human");
     }
 }

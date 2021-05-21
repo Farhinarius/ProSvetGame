@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using MonsterLove.StateMachine;
+using System.Linq;
 
 public class TimeOfDay : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class TimeOfDay : MonoBehaviour
 
     public static event System.Action<States, TimeOfDay> onTimeOfDayChange;
 
+    List<GameObject> dialogueHandlers;
+
 
     private void Awake()
     {
@@ -26,20 +29,35 @@ public class TimeOfDay : MonoBehaviour
 
     private void Start()
     {
+        dialogueHandlers = new List<GameObject>();
+
+        foreach (var diComponent in Resources.FindObjectsOfTypeAll<DialogueInteraction>())
+        {
+            Debug.Log(diComponent.transform.parent.name);
+            dialogueHandlers.Add(diComponent.gameObject);
+        }
+        
+        // fill collection of interactable on scene
+
         fsm.ChangeState(States.Evening);
     }
 
     void Evening_Enter()
     {
-        onTimeOfDayChange?.Invoke(States.Evening, this);
-        
-        // enable behaviours for dialog with characters
+        ToogleAllInteractableOfType(dialogueHandlers, true);
 
+        onTimeOfDayChange?.Invoke(States.Evening, this);
     }
 
     void Evening_Update()
     {
         // if all dialogs have been read, then go to another state (later)
+        if ( DialogueManager.allChecked == true )
+        {
+            fsm.ChangeState(States.Night);
+            Debug.Log("ChangeStateToNight");
+        }
+        
         if (Input.GetKeyDown(KeyCode.X))        // mock while
         {
             fsm.ChangeState(States.Night);
@@ -49,6 +67,7 @@ public class TimeOfDay : MonoBehaviour
 
     void Night_Enter()
     {
+        ToogleAllInteractableOfType(dialogueHandlers, false);
         onTimeOfDayChange?.Invoke(States.Night, this);
     }
 
@@ -77,9 +96,15 @@ public class TimeOfDay : MonoBehaviour
 
 
     // ---------- Class methods ----------
-    public void Update()
+    private void Update()
     {
         fsm.Driver.Update.Invoke();
+    }
+
+    public void ToogleAllInteractableOfType(List<GameObject> interactablesObj, bool state)
+    {
+        foreach (var interactable in interactablesObj)
+            interactable.SetActive(state);                // not necessary code
     }
 
 /*     private void FixedUpdate()

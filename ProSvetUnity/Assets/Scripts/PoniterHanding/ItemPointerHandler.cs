@@ -4,12 +4,7 @@ using UnityEngine;
 
 public class ItemPointerHandler : PointerHandler
 {
-    RaycastHit2D interactHit;
-    
-    private void Start()
-    {
-        Debug.Log(LayerMask.GetMask("Interactable"));
-    }
+    public RaycastHit2D interactHit;
 
     void Update()
     {
