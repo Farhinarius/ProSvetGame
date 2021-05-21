@@ -15,14 +15,14 @@ public class ClockMove : MonoBehaviour
 
     private bool rotating = true;
 
-    private void Awake()
-    {
-        TimeOfDay.onTimeOfDayChange += SetUpNextAngle;
-    }
+    // private void Awake()
+    // {
+    //     TimeOfDay.onTimeOfDayChange += SetUpNextAngle;
+    // }
 
     private void Start()
     {
-        // TimeOfDay.onTimeOfDayChange += SetUpNextAngle;
+        TimeOfDay.onTimeOfDayChange += SetUpNextAngle;
         _transform = this.transform;
         _targetRotation = _transform.rotation;          // important to save rotations
     }

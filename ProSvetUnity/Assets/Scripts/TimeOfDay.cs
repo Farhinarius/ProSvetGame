@@ -21,6 +21,10 @@ public class TimeOfDay : MonoBehaviour
 
     List<GameObject> dialogueHandlers;
 
+    float stateChangeTimer = 0;
+
+    const float timeToChangeState = 3f;
+
 
     private void Awake()
     {
@@ -44,18 +48,27 @@ public class TimeOfDay : MonoBehaviour
 
     void Evening_Enter()
     {
+        onTimeOfDayChange?.Invoke(States.Evening, this);
         ToogleAllInteractableOfType(dialogueHandlers, true);
 
-        onTimeOfDayChange?.Invoke(States.Evening, this);
     }
 
     void Evening_Update()
     {
         // if all dialogs have been read, then go to another state (later)
-        if ( DialogueManager.allChecked == true )
+        if ( DialogueManager.allChecked)
+        {
+            stateChangeTimer = timeToChangeState;
+            DialogueManager.allChecked = false;
+        }
+
+        if (stateChangeTimer > 0) stateChangeTimer -= Time.deltaTime;
+
+        if (stateChangeTimer < 0)
         {
             fsm.ChangeState(States.Night);
             Debug.Log("ChangeStateToNight");
+            stateChangeTimer = 0;       // reset fuild
         }
         
         if (Input.GetKeyDown(KeyCode.X))        // mock while
@@ -67,13 +80,13 @@ public class TimeOfDay : MonoBehaviour
 
     void Night_Enter()
     {
-        ToogleAllInteractableOfType(dialogueHandlers, false);
         onTimeOfDayChange?.Invoke(States.Night, this);
+        ToogleAllInteractableOfType(dialogueHandlers, false);
     }
 
     void Night_Update()
     {
-        // if all interacables has been used then change state
+        // if all scriptable events has been passed then go to next phase
         if (Input.GetKeyDown(KeyCode.C))
         {
             fsm.ChangeState(States.Morning);

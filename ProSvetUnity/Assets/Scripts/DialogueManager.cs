@@ -17,11 +17,6 @@ public class DialogueManager : MonoBehaviour
 
     private static bool[] dialogueChecks;
 
-    public static bool[] DialogueChecks
-    {
-        get => dialogueChecks;
-    }
-
     public static bool allChecked = false;
 
     private void Awake()
@@ -43,7 +38,7 @@ public class DialogueManager : MonoBehaviour
 
     public void CallDialogue()
     {
-        if (dialogueQueue.Count == 0)       // if dialogue queue is empty restart this queue
+        if (dialogueQueue.Count == 0)       // if dialogue queue is empty restart this dialogue
             StartDialogue(dialogue);        // fill dialogue queue with dialogue strings
 
         DisplayNextSentence();
@@ -71,13 +66,10 @@ public class DialogueManager : MonoBehaviour
 
         if (dialogueQueue.Count == 0)      // if queue is empty than reset dialog and end dialogue
         {
+            CheckDialogueCompletion();
+
+            CheckCompletenessOfAllDialogues();
             EndDialogue();
-            dialogueChecks[dialogueID] = true;
-            Debug.Log("d checked");
-            if (dialogueChecks.All(dc => dc))
-            {
-                allChecked = true;
-            }
         }
     }
 
@@ -92,6 +84,20 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
+    private void CheckDialogueCompletion() => dialogueChecks[dialogueID] = true;
+
+    private void CheckCompletenessOfAllDialogues()
+    {
+        if (dialogueChecks.All(dc => dc))
+        {
+            allChecked = true;
+            Debug.Log("All checked");
+
+            for (int i = 0; i < dialogueChecks.Length; i++)     // reset in some case
+                dialogueChecks[i] = false;
+            Debug.Log("Reseted Boolean Array (then changeState)");
+        }
+    }
 
     void EndDialogue()
     {
