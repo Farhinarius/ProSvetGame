@@ -5,11 +5,18 @@ using MonsterLove.StateMachine;
 
 public class NightEventSystem : ScriptableEventSystem
 {
+    [SerializeField] private GameObject girlActions;
+    
+    [SerializeField] private GameObject workmanActions;
+
+    public InteractiveItems interactiveItems;
+
     enum States
     {
         Init,
         AllTiredAndSleepy,
-        gRestingwWorking
+        gDoNothingwWorking,
+        gRestwCannotWork
     }
 
     StateMachine<States, Driver> fsm;
@@ -27,8 +34,11 @@ public class NightEventSystem : ScriptableEventSystem
     // state machine logic
     void Init_Enter()
     {
+        girlActions.SetActive(true);
+        workmanActions.SetActive(true);
+        
         Debug.Log("Enter in night state machine event system (Init state)");
-        fsm.ChangeState(States.AllTiredAndSleepy);
+        // fsm.ChangeState(States.AllTiredAndSleepy);
     }
 
     void AllTiredAndSleepy_Enter()
@@ -50,16 +60,6 @@ public class NightEventSystem : ScriptableEventSystem
     {
 
     }
-
-
-
-
-
-
-
-
-
-
 
     // other methods
 

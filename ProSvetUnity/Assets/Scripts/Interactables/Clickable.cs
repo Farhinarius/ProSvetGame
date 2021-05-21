@@ -2,14 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CurtainScript : Interactable
+public class Clickable : Interactable
 {
     public SpriteRenderer spriteRenderer;
+    [SerializeField] public Sprite originalSprite;
     [SerializeField] public Sprite newSprite;
+
+    public bool toogler;
 
     public override void OnPointerButtonClick()
     {
-        ChangeSprite(newSprite);
+        ChangeSprite(toogler ? originalSprite : newSprite);
+        toogler = !toogler;
     }
 
     public override void OnPointerButtonHold()
@@ -27,24 +31,9 @@ public class CurtainScript : Interactable
         Debug.Log("Pointer Exit: " + _name);
     }
 
-
-
-    //void Update()
-    //{
-    //    if (Input.GetMouseButtonDown(0))
-    //    {
-    //        ChangeSprite(newSprite);
-    //    }
-    //}
-
-    //void Start()
-    //{
-    //    spriteRenderer = GetComponent<SpriteRenderer>();
-    //}
-
-    private void ChangeSprite(Sprite newSprite)
+    private void ChangeSprite(Sprite spriteToChange)
     {
-        spriteRenderer.sprite = newSprite;
+        spriteRenderer.sprite = spriteToChange;
     }
 
 }

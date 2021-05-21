@@ -4,24 +4,48 @@ using UnityEngine;
 
 public class Lamp : Interactable
 {
+    public bool turnedOn;
+    public Lamp otherLamp;
+
+    public SpriteRenderer spriteRendererOrigin;
+    public SpriteRenderer spriteRendererOther;
+    
+
+    protected override void Start()
+    {
+        base.Start();
+    }
+
+    
     public override void OnPointerEnter()
     {
-        Debug.Log("Poitner Enter: " + _name);
+        // base.OnPointerEnter();
     }
 
     public override void OnPointerButtonClick()
     {
-        Debug.Log("Pointer Click: " + _name);
+        // base.OnPointerButtonClick();
+        ChangeSprites();
     }
 
     public override void OnPointerButtonHold()
     {
-        Debug.Log("Pointer Button Hold: " + _name);
+        base.OnPointerButtonHold();
     }
 
     public override void OnPointerExit()
     {
-        Debug.Log("Pointer Exit: " + _name);
+        // base.OnPointerExit();
+    }
+
+    private void ChangeSprites()
+    {
+        var temp = spriteRendererOrigin.sprite;
+        spriteRendererOrigin.sprite = spriteRendererOther.sprite;
+        spriteRendererOther.sprite = temp;
+
+        turnedOn = !turnedOn;
+        otherLamp.turnedOn = !otherLamp.turnedOn;
     }
 
 }

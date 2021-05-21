@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System.Transactions;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MonsterLove.StateMachine;
@@ -25,6 +26,8 @@ public class TimeOfDay : MonoBehaviour
 
     const float timeToChangeState = 3f;
 
+    GameObject nightEventSystem;
+
 
     private void Awake()
     {
@@ -34,6 +37,8 @@ public class TimeOfDay : MonoBehaviour
     private void Start()
     {
         dialogueHandlers = new List<GameObject>();
+        nightEventSystem = transform.Find("NightEventSystem").gameObject;
+        nightEventSystem.SetActive(false);
 
         foreach (var diComponent in Resources.FindObjectsOfTypeAll<DialogueInteraction>())
         {
@@ -81,6 +86,7 @@ public class TimeOfDay : MonoBehaviour
     {
         onTimeOfDayChange?.Invoke(States.Night, this);
         ToogleAllInteractableOfType(dialogueHandlers, false);
+        nightEventSystem.SetActive(true);
     }
 
     void Night_Update()
