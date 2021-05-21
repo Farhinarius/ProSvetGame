@@ -119,7 +119,7 @@ MonoBehaviour:
   _zoomSpeed: 3
   _zoomInSpeed: 11
   _movingSpeed: 7
-  _minimumCameraSize: 3
+  _minimumCameraSize: 4
   _maximumCameraSize: 11
 --- !u!114 &5455867929415929618
 MonoBehaviour:

@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class MovablePrev : MonoBehaviour, IClickable
+public class MovablePrev : MonoBehaviour, IPointer
 {
     [SerializeField] string _name;
 

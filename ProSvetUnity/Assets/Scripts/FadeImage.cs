@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FadeImage : MonoBehaviour, IClickable
+public class FadeImage : MonoBehaviour, IPointer
 {
     public void OnPointerButtonClick()
     {

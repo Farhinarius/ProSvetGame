@@ -50,7 +50,6 @@ public class TimeOfDay : MonoBehaviour
     {
         onTimeOfDayChange?.Invoke(States.Evening, this);
         ToogleAllInteractableOfType(dialogueHandlers, true);
-
     }
 
     void Evening_Update()

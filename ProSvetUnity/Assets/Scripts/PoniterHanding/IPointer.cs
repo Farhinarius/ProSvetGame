@@ -1,5 +1,5 @@
 ﻿
-public interface IClickable
+public interface IPointer
 {
     void OnPointerEnter();
     void OnPointerExit();

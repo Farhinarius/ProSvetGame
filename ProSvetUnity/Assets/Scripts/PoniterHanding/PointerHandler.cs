@@ -5,14 +5,7 @@ using UnityEngine;
 
 public class PointerHandler : MonoBehaviour
 {
-    public enum States
-    {
-        CoversZero,
-        CovesrOne,
-        CoversMupltiple,
-    }
-    
-    private IClickable _currentClickable, _previousClickable;
+    private IPointer _currentClickable, _previousClickable;
     private SpriteRenderer _concuredTerritory;
 
     public static Vector2 MouseTarget
@@ -22,23 +15,11 @@ public class PointerHandler : MonoBehaviour
             return Camera.main.ScreenToWorldPoint(Input.mousePosition);
         }
     }
-
-
-
-/*     void Update()
-    {
-        // case of two targets ()
-        
-        // if we find interactable object upper navigable object, work with them (ignore navigable)
-        RaycastHit2D[] mouseRayHits = Physics2D.RaycastAll(MouseTarget, Vector2.zero);                   // can be empty
-
-
-    } */
     
     protected void HandleSinglePointer(RaycastHit2D rayHitObj)
     {
         // at one time we can handle only one rayhit
-        if (rayHitObj && rayHitObj.collider.TryGetComponent(out IClickable item))       // if hover any IClickable
+        if (rayHitObj && rayHitObj.collider.TryGetComponent(out IPointer item))       // if hover any IClickable
         {
             _previousClickable = _currentClickable;                                     // keep previous item
             _currentClickable = item;                                                   // set new current item
@@ -72,3 +53,15 @@ public class PointerHandler : MonoBehaviour
         }
     }
 }
+
+
+
+/*     void Update()
+    {
+        // case of two targets ()
+        
+        // if we find interactable object upper navigable object, work with them (ignore navigable)
+        RaycastHit2D[] mouseRayHits = Physics2D.RaycastAll(MouseTarget, Vector2.zero);                   // can be empty
+
+
+    } */

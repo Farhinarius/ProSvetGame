@@ -2,34 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Choicable : MonoBehaviour, IClickable
+public class Choicable : Interactable
 {
-    [SerializeField] private AudioSource _audioSource;
-    private string _name;
-
-    void Start()
+    public override void OnPointerEnter()
     {
-        _name = this.gameObject.name;
+        base.OnPointerEnter();
     }
 
-    public void OnPointerButtonClick()
+    public override void OnPointerButtonClick()
     {
-        Debug.Log("Pointer Click: " + _name);
+        base.OnPointerButtonClick();
     }
     
-    public void OnPointerButtonHold()
+    public override void OnPointerButtonHold()
     {
-        Debug.Log("Pointer Button Hold: " + _name);
+        base.OnPointerButtonHold();
     }
 
-    public void OnPointerEnter()
+    public override void OnPointerExit()
     {
-        Debug.Log("Poitner Enter: " + _name);
-    }
-
-    public void OnPointerExit()
-    {
-        Debug.Log("Pointer Exit: " + _name);
+        base.OnPointerExit();
     }
 
 }

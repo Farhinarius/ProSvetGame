@@ -1,13 +1,9 @@
-﻿using System.Reflection;
-using System.Collections;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class Movable : Interactable
+public class Lamp : Interactable
 {
-    private Vector2 _initialPosition;
-    private static bool _locked;
-    private float _deltaX, _deltaY;
-
     public override void OnPointerEnter()
     {
         Debug.Log("Poitner Enter: " + _name);
@@ -20,7 +16,7 @@ public class Movable : Interactable
 
     public override void OnPointerButtonHold()
     {
-        
+        Debug.Log("Pointer Button Hold: " + _name);
     }
 
     public override void OnPointerExit()
@@ -28,9 +24,4 @@ public class Movable : Interactable
         Debug.Log("Pointer Exit: " + _name);
     }
 
-    // void OnMouseDrag()
-    // {
-    //     Debug.Log("OnMouseDrag");
-    //     transform.position = PointerHandler.MouseTarget;
-    // }
 }

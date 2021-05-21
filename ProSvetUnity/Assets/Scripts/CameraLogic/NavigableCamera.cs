@@ -15,10 +15,10 @@ public class NavigableCamera : MonoBehaviour
     StateMachine<States, Driver> fsm;
 
     [SerializeField] private Transform _target;
-    [SerializeField] private float _lerpSpeed;
-    [SerializeField] private float _zoomSpeed;
-    [SerializeField] private float _zoomInSpeed;
-    [SerializeField] private float _movingSpeed;
+    [SerializeField] private float _lerpSpeed = 4;
+    [SerializeField] private float _zoomSpeed = 3;
+    [SerializeField] private float _zoomInSpeed = 11;
+    [SerializeField] private float _movingSpeed = 7;
     [SerializeField] private float _minimumCameraSize = 4;
     [SerializeField] private float _maximumCameraSize = 11;
 
@@ -36,7 +36,7 @@ public class NavigableCamera : MonoBehaviour
     void Init_Enter()
     {
         Debug.Log("Camera Init");
-        // Application.targetFrameRate = 60;
+        Application.targetFrameRate = 60;
         _innerCam = GetComponent<Camera>();
 
         Navigable.onRoomTargetChanged += SetUpViewRoom;
