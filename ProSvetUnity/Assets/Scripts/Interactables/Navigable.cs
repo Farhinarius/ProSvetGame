@@ -9,24 +9,24 @@ public class Navigable : Interactable
 
     public override void OnPointerButtonClick()
     {
-        Debug.Log("Clicked on room: " + _name);
+        base.OnPointerButtonClick();
         onRoomTargetChanged?.Invoke(this.transform, this);         // change current target to this (camera movement logic)
     }
 
     public override void OnPointerButtonHold()
     {
-        Debug.Log("Pointer Button Hold: " + _name);
+        base.OnPointerButtonHold();
     }
 
     public override void OnPointerEnter()
     {
-        Debug.Log("Entered in room: " + _name);
+        base.OnPointerEnter();
         GetComponent<SpriteRenderer>().color = Color.yellow;       // stay mock implementation, later change sprite to highlighted
     }
 
     public override void OnPointerExit()
     {
-        Debug.Log("Exit from room: " + _name);
+        base.OnPointerExit();
         GetComponent<SpriteRenderer>().color = Color.white;        // stay mock implementation, later change sprite to default
     }
 }

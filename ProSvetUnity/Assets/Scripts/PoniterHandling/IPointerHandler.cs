@@ -1,5 +1,5 @@
 ﻿
-public interface IPointer
+public interface IPointerHandler
 {
     void OnPointerEnter();
     void OnPointerExit();

@@ -374,11 +374,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: curtains
       objectReference: {fileID: 0}
-    - target: {fileID: 5591989995718330135, guid: 007e2a31e727ba04ca37e027eaa44715,
-        type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5634550704486705788, guid: 007e2a31e727ba04ca37e027eaa44715,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -956,7 +951,8 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1421007305852374129, guid: 6b097b2f65f17394786d6d69108608ca, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6b097b2f65f17394786d6d69108608ca, type: 3}
 --- !u!1001 &1325148206
 PrefabInstance:
@@ -1024,11 +1020,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: TimeOfDayBackground
-      objectReference: {fileID: 0}
-    - target: {fileID: 3526591524380147551, guid: 168fad692ab68a24b94e325fb8d61c5c,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 168fad692ab68a24b94e325fb8d61c5c, type: 3}
@@ -1120,6 +1111,26 @@ PrefabInstance:
       propertyPath: spriteRendererOther
       value: 
       objectReference: {fileID: 830682175}
+    - target: {fileID: 5520451511195791300, guid: 97e13211d6c3d0849ae6a06a3fa25356,
+        type: 3}
+      propertyPath: _otherLamp
+      value: 
+      objectReference: {fileID: 830682178}
+    - target: {fileID: 5520451511195791300, guid: 97e13211d6c3d0849ae6a06a3fa25356,
+        type: 3}
+      propertyPath: _spriteRendererOrigin
+      value: 
+      objectReference: {fileID: 1474673037}
+    - target: {fileID: 5520451511195791300, guid: 97e13211d6c3d0849ae6a06a3fa25356,
+        type: 3}
+      propertyPath: _spriteRendererOther
+      value: 
+      objectReference: {fileID: 830682175}
+    - target: {fileID: 5520451511195791300, guid: 97e13211d6c3d0849ae6a06a3fa25356,
+        type: 3}
+      propertyPath: turnedOn
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 97e13211d6c3d0849ae6a06a3fa25356, type: 3}
 --- !u!212 &1474673037 stripped
@@ -1293,8 +1304,7 @@ PrefabInstance:
       propertyPath: _target
       value: 
       objectReference: {fileID: 1195517860}
-    m_RemovedComponents:
-    - {fileID: 5455867929415929837, guid: b51c1b171e979984f9b5cd25c095a802, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b51c1b171e979984f9b5cd25c095a802, type: 3}
 --- !u!1001 &2132639158
 PrefabInstance:
@@ -1363,8 +1373,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 5484282598566599865, guid: d82ce65543b10b54ea4e3d4883437e98, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d82ce65543b10b54ea4e3d4883437e98, type: 3}
 --- !u!1001 &3059542593569177943
 PrefabInstance:
@@ -1435,24 +1444,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5520451511195791300, guid: 97e13211d6c3d0849ae6a06a3fa25356,
         type: 3}
-      propertyPath: otherLamp
+      propertyPath: _spriteRendererOrigin
+      value: 
+      objectReference: {fileID: 830682175}
+    - target: {fileID: 5520451511195791300, guid: 97e13211d6c3d0849ae6a06a3fa25356,
+        type: 3}
+      propertyPath: _spriteRendererOther
+      value: 
+      objectReference: {fileID: 1474673037}
+    - target: {fileID: 5520451511195791300, guid: 97e13211d6c3d0849ae6a06a3fa25356,
+        type: 3}
+      propertyPath: _otherLamp
       value: 
       objectReference: {fileID: 1677839366}
-    - target: {fileID: 5520451511195791300, guid: 97e13211d6c3d0849ae6a06a3fa25356,
-        type: 3}
-      propertyPath: spriteRendererDest
-      value: 
-      objectReference: {fileID: 1474673037}
-    - target: {fileID: 5520451511195791300, guid: 97e13211d6c3d0849ae6a06a3fa25356,
-        type: 3}
-      propertyPath: turnedOn
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5520451511195791300, guid: 97e13211d6c3d0849ae6a06a3fa25356,
-        type: 3}
-      propertyPath: spriteRendererOther
-      value: 
-      objectReference: {fileID: 1474673037}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 97e13211d6c3d0849ae6a06a3fa25356, type: 3}
 --- !u!1001 &4851863898152829780

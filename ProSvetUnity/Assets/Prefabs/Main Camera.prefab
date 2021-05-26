@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5455867929415929836}
   - component: {fileID: 5455867929415929619}
   - component: {fileID: 5455867929415929617}
-  - component: {fileID: 5455867929415929837}
   - component: {fileID: 5455867929415929838}
   - component: {fileID: 5455867929415929618}
   - component: {fileID: 5455867929415929839}
@@ -87,21 +86,6 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5455867929415929616}
   m_Enabled: 1
---- !u!114 &5455867929415929837
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5455867929415929616}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 253e0a97f8cdab143a8fc59662ce3671, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _target: {fileID: 0}
-  _lerpSpeed: 3
-  _zoomSpeed: 2
 --- !u!114 &5455867929415929838
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117,9 +101,9 @@ MonoBehaviour:
   _target: {fileID: 0}
   _lerpSpeed: 4
   _zoomSpeed: 3
-  _zoomInSpeed: 11
+  _zoomInSpeed: 9
   _movingSpeed: 7
-  _minimumCameraSize: 4
+  _minimumCameraSize: 3
   _maximumCameraSize: 11
 --- !u!114 &5455867929415929618
 MonoBehaviour:

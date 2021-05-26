@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5203414655078918243
 Transform:
   m_ObjectHideFlags: 0
@@ -60,13 +60,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a53a5dad497b8ea42afb43a5aced6ce6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue:
-    heroName: Girl
-    sentences:
-    - asdasd
-    - Bsdfsdfsd
-    - GHSGsdsfdsf
-  dialogueDisplay: {fileID: 8740284179906389142}
+  _dialogue:
+    heroName: 
+    sentences: []
+  _dialogueDisplay: {fileID: 0}
 --- !u!61 &6945719520199716751
 BoxCollider2D:
   m_ObjectHideFlags: 0

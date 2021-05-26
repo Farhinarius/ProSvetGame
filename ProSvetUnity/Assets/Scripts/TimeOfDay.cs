@@ -14,47 +14,45 @@ public class TimeOfDay : MonoBehaviour
         Morning
     }
 
-    StateMachine<States, Driver> fsm;
-
-    private bool[] dialogeChecks;
+    StateMachine<States, Driver> _fsm;
 
     public static event System.Action<States, TimeOfDay> onTimeOfDayChange;
 
-    List<GameObject> dialogueHandlers;
+    List<GameObject> _dialogueHandlers;
 
     float stateChangeTimer = 0;
 
     const float timeToChangeState = 3f;
 
-    GameObject nightEventSystem;
+    GameObject _nightEventSystem;
 
 
     private void Awake()
     {
-        fsm = new StateMachine<States, Driver>(this);
+        _fsm = new StateMachine<States, Driver>(this);
     }
 
     private void Start()
     {
-        dialogueHandlers = new List<GameObject>();
-        nightEventSystem = transform.Find("NightEventSystem").gameObject;
-        nightEventSystem.SetActive(false);
+        _dialogueHandlers = new List<GameObject>();
+        _nightEventSystem = transform.Find("NightEventSystem").gameObject;
+        _nightEventSystem.SetActive(false);
 
-        foreach (var diComponent in Resources.FindObjectsOfTypeAll<DialogueInteraction>())
+        // fill collection of interactable on scene
+        var dialogueInteractions = Resources.FindObjectsOfTypeAll<DialogueInteraction>();
+        foreach (var diComponent in dialogueInteractions)
         {
             Debug.Log(diComponent.transform.parent.name);
-            dialogueHandlers.Add(diComponent.gameObject);
+            _dialogueHandlers.Add(diComponent.gameObject);
         }
-        
-        // fill collection of interactable on scene
 
-        fsm.ChangeState(States.Evening);
+        _fsm.ChangeState(States.Evening);
     }
 
     void Evening_Enter()
     {
         onTimeOfDayChange?.Invoke(States.Evening, this);
-        ToogleAllInteractableOfType(dialogueHandlers, true);
+        Helpers.ToogleAllInteractableOfType(_dialogueHandlers, true);
     }
 
     void Evening_Update()
@@ -70,14 +68,14 @@ public class TimeOfDay : MonoBehaviour
 
         if (stateChangeTimer < 0)
         {
-            fsm.ChangeState(States.Night);
+            _fsm.ChangeState(States.Night);
             Debug.Log("ChangeStateToNight");
             stateChangeTimer = 0;       // reset fuild
         }
         
         if (Input.GetKeyDown(KeyCode.X))        // mock while
         {
-            fsm.ChangeState(States.Night);
+            _fsm.ChangeState(States.Night);
         }
         
     }
@@ -85,8 +83,8 @@ public class TimeOfDay : MonoBehaviour
     void Night_Enter()
     {
         onTimeOfDayChange?.Invoke(States.Night, this);
-        ToogleAllInteractableOfType(dialogueHandlers, false);
-        nightEventSystem.SetActive(true);
+        Helpers.ToogleAllInteractableOfType(_dialogueHandlers, false);
+        _nightEventSystem.SetActive(true);
     }
 
     void Night_Update()
@@ -94,20 +92,21 @@ public class TimeOfDay : MonoBehaviour
         // if all scriptable events has been passed then go to next phase
         if (Input.GetKeyDown(KeyCode.C))
         {
-            fsm.ChangeState(States.Morning);
+            _fsm.ChangeState(States.Morning);
         }
     }
 
     void Morning_Enter()
     {
         onTimeOfDayChange?.Invoke(States.Morning, this);
+        _nightEventSystem.SetActive(false);
     }
 
     void Morning_Update()
     {
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            fsm.ChangeState(States.Evening);
+            _fsm.ChangeState(States.Evening);
         }
     }
 
@@ -116,18 +115,12 @@ public class TimeOfDay : MonoBehaviour
     // ---------- Class methods ----------
     private void Update()
     {
-        fsm.Driver.Update.Invoke();
+        _fsm.Driver.Update.Invoke();
     }
 
-    public void ToogleAllInteractableOfType(List<GameObject> interactablesObj, bool state)
-    {
-        foreach (var interactable in interactablesObj)
-            interactable.SetActive(state);                // not necessary code
-    }
-
-/*     private void FixedUpdate()
-    {
-        fsm.Driver.FixedUpdate.Invoke();
-    } */
+    // private void FixedUpdate()
+    // {
+    //     _fsm.Driver.FixedUpdate.Invoke();
+    // }
 
 }

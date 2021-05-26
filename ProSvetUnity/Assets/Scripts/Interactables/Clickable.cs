@@ -4,36 +4,41 @@ using UnityEngine;
 
 public class Clickable : Interactable
 {
-    public SpriteRenderer spriteRenderer;
+    private SpriteRenderer _spriteRenderer;
     [SerializeField] public Sprite originalSprite;
     [SerializeField] public Sprite newSprite;
 
     public bool toogler;
 
+    protected override void Start()
+    {
+        base.Start();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
     public override void OnPointerButtonClick()
     {
+        base.OnPointerButtonClick();
         ChangeSprite(toogler ? originalSprite : newSprite);
         toogler = !toogler;
     }
 
     public override void OnPointerButtonHold()
     {
-        Debug.Log("Pointer Button Hold: " + _name);
+        base.OnPointerButtonHold();
     }
 
     public override void OnPointerEnter()
     {
-        Debug.Log("Poitner Enter: " + _name);
+        base.OnPointerEnter();
     }
 
     public override void OnPointerExit()
     {
-        Debug.Log("Pointer Exit: " + _name);
+        base.OnPointerExit();
     }
 
-    private void ChangeSprite(Sprite spriteToChange)
-    {
-        spriteRenderer.sprite = spriteToChange;
-    }
+    private void ChangeSprite(Sprite spriteToChange) => 
+        _spriteRenderer.sprite = spriteToChange;
 
 }

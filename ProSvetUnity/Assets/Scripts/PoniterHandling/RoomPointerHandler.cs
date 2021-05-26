@@ -6,23 +6,22 @@ using UnityEngine;
 
 public class RoomPointerHandler : PointerHandler
 {
-    // fix
+    // ? fix
     // ! errors to fix
-    // -todo- if mouse cover interactable object, we not detect navigable object, cast ray only in interactable obj 
+    // * done if mouse cover interactable object, we not detect navigable object, cast ray only in interactable obj 
     // -> collect array of raycast point and handle we 
     // -> layer selection priority (filter hit by layer in one script ???) if one hit in this layer than do this stuff, else do this stuff
 
     RaycastHit2D roomHit;
 
-    ItemPointerHandler itemPointerHandler;
+    ItemPointerHandler _itemPointerHandler;
 
     private void Start() =>
-    itemPointerHandler = GetComponent<ItemPointerHandler>();
+        _itemPointerHandler = GetComponent<ItemPointerHandler>();
 
-    
     void Update()
     {
-        if (!itemPointerHandler.interactHit)
+        if (!_itemPointerHandler.interactableHit)
         {
             roomHit = Physics2D.Raycast(MouseTarget, Vector2.zero, 0f, LayerMask.GetMask("Navigable"));
             HandleSinglePointer(roomHit);

@@ -12,6 +12,8 @@ public class NavigableCamera : MonoBehaviour
         CameraTargetMovement,
     }
 
+    # region Fields
+    
     StateMachine<States, Driver> fsm;
 
     [SerializeField] private Transform _target;
@@ -19,12 +21,15 @@ public class NavigableCamera : MonoBehaviour
     [SerializeField] private float _zoomSpeed = 3;
     [SerializeField] private float _zoomInSpeed = 11;
     [SerializeField] private float _movingSpeed = 7;
-    [SerializeField] private float _minimumCameraSize = 4;
+    [SerializeField] private float _minimumCameraSize = 3;
     [SerializeField] private float _maximumCameraSize = 11;
 
     private Camera _innerCam;
     private bool roomChanged = false;
 
+    # endregion
+
+    # region StateMachineLogic 
 
     private void Awake()
     {
@@ -32,7 +37,6 @@ public class NavigableCamera : MonoBehaviour
         fsm.ChangeState(States.Init);
     }
 
-    // ---------- State Machine Behaviour ----------
     void Init_Enter()
     {
         Debug.Log("Camera Init");
@@ -79,9 +83,10 @@ public class NavigableCamera : MonoBehaviour
         MoveToTarget();
     }
 
+    # endregion
 
+    # region DefaultUpdates
 
-    // ---------- Class methods ----------
     public void Update()
     {
         fsm.Driver.Update.Invoke();
@@ -91,6 +96,10 @@ public class NavigableCamera : MonoBehaviour
     {
         fsm.Driver.FixedUpdate.Invoke();
     }
+
+    # endregion
+
+    # region CameraMethods
 
     public void SetUpViewRoom(Transform target, Navigable nav)
     {
@@ -150,5 +159,5 @@ public class NavigableCamera : MonoBehaviour
         _innerCam.orthographicSize = size;
     }
 
-
+    # endregion
 }

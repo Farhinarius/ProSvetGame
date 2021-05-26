@@ -10,22 +10,22 @@ public class Movable : Interactable
 
     public override void OnPointerEnter()
     {
-        Debug.Log("Poitner Enter: " + _name);
+        base.OnPointerEnter();
     }
 
     public override void OnPointerButtonClick()
     {
-        Debug.Log("Pointer Click: " + _name);
+        base.OnPointerButtonClick();
     }
 
     public override void OnPointerButtonHold()
     {
-        
+        base.OnPointerButtonHold();
     }
 
     public override void OnPointerExit()
     {
-        Debug.Log("Pointer Exit: " + _name);
+        base.OnPointerExit();
     }
 
     // void OnMouseDrag()

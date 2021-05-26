@@ -8,38 +8,37 @@ using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
 {
-    private int dialogueID = 0;
-    public static int numberOfObjects;
+    private int _dialogueID = 0;
+    public static int s_numberOfObjects;
     
-    [SerializeField] private Dialogue dialogue;
-    private Queue<string> dialogueQueue;
-    public Text dialogueDisplay;
+    [SerializeField] private Dialogue _dialogue;
+    private Queue<string> _dialogueQueue;
+    public Text _dialogueDisplay;
 
-    private static bool[] dialogueChecks;
-
+    private static bool[] _dialogueChecks;
     public static bool allChecked = false;
 
     private void Awake()
     {
-        this.dialogueID = numberOfObjects;
-        numberOfObjects++;
+        this._dialogueID = s_numberOfObjects;
+        s_numberOfObjects++;
     }
 
     void Start()
     {
         if (gameObject.CompareTag("First"))
         {
-            dialogueChecks = new bool[numberOfObjects];
-            Debug.Log(dialogueChecks.Length);
+            _dialogueChecks = new bool[s_numberOfObjects];
+            Debug.Log(_dialogueChecks.Length);
         }
 
-        dialogueQueue = new Queue<string>();
+        _dialogueQueue = new Queue<string>();
     }
 
     public void CallDialogue()
     {
-        if (dialogueQueue.Count == 0)       // if dialogue queue is empty restart this dialogue
-            StartDialogue(dialogue);        // fill dialogue queue with dialogue strings
+        if (_dialogueQueue.Count == 0)       // if dialogue queue is empty restart this dialogue
+            StartDialogue(_dialogue);        // fill dialogue queue with dialogue strings
 
         DisplayNextSentence();
     }
@@ -50,23 +49,23 @@ public class DialogueManager : MonoBehaviour
 
         foreach (string sentence in dialogue.sentences)
         {
-            dialogueQueue.Enqueue(sentence);
+            _dialogueQueue.Enqueue(sentence);
         }
     }
 
 
     public void DisplayNextSentence()
     {
-        string sentence = dialogueQueue.Dequeue();
+        string sentence = _dialogueQueue.Dequeue();
 
         StopAllCoroutines();
         StartCoroutine(TypeSentence(sentence));
 
         //dialogueText.text = sentence;
 
-        if (dialogueQueue.Count == 0)      // if queue is empty than reset dialog and end dialogue
+        if (_dialogueQueue.Count == 0)      // if queue is empty than reset dialog and end dialogue
         {
-            CheckDialogueCompletion();
+            SetDialogueCompletion();
 
             CheckCompletenessOfAllDialogues();
             EndDialogue();
@@ -76,27 +75,33 @@ public class DialogueManager : MonoBehaviour
 
     IEnumerator TypeSentence (string sentence)
     {
-        dialogueDisplay.text = " ";
+        _dialogueDisplay.text = " ";
         foreach (char letter in sentence.ToCharArray())
         {
-            dialogueDisplay.text += letter;
+            _dialogueDisplay.text += letter;
             yield return new WaitForSeconds(Time.fixedDeltaTime);
         }
     }
 
-    private void CheckDialogueCompletion() => dialogueChecks[dialogueID] = true;
+    private void SetDialogueCompletion() => _dialogueChecks[_dialogueID] = true;
 
     private void CheckCompletenessOfAllDialogues()
     {
-        if (dialogueChecks.All(dc => dc))
+        if (_dialogueChecks.All(dc => dc))
         {
             allChecked = true;
-            Debug.Log("All checked");
 
-            for (int i = 0; i < dialogueChecks.Length; i++)     // reset in some case
-                dialogueChecks[i] = false;
-            Debug.Log("Reseted Boolean Array (then changeState)");
+            ResetDialogueChecks();
+            Debug.Log("All checked");
         }
+    }
+
+    private void ResetDialogueChecks()
+    {
+        for (int i = 0; i < _dialogueChecks.Length; i++)     // reset in some case
+            _dialogueChecks[i] = false;
+
+        Debug.Log("Reseted Boolean Array of dialogueChecks (then changeState)");
     }
 
     void EndDialogue()

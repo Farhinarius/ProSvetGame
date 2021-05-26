@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Interactable : MonoBehaviour, IPointer
+public class Interactable : MonoBehaviour, IPointerHandler
 {
     [SerializeField] protected AudioSource _audioSource;
     protected string _name;

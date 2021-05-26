@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DayTimeBackground : MonoBehaviour
 {
-    [SerializeField] public Sprite[] timesOfDay = new Sprite[3];
+    [SerializeField] public Sprite[] _timesOfDay = new Sprite[3];
 
     [SerializeField] public int dayTimeNum;
 
@@ -14,6 +14,6 @@ public class DayTimeBackground : MonoBehaviour
     }
     
     public void ChangeBackground(TimeOfDay.States state, TimeOfDay timeOfDay) =>
-        gameObject.GetComponent<SpriteRenderer>().sprite = timesOfDay[ (int) state ];
+        gameObject.GetComponent<SpriteRenderer>().sprite = _timesOfDay[ (int) state ];
 
 }

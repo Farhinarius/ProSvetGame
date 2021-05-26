@@ -5,32 +5,21 @@ using UnityEngine.UI;
 
 public class ClockMove : MonoBehaviour
 {
-    [SerializeField] private float _rotationSpeed;
-
     private Transform _transform;
-
     private Quaternion _targetRotation;
 
-    private float _direction = 1; 
-
+    [SerializeField] private float _rotationSpeed;
     private bool rotating = true;
-
-    // private void Awake()
-    // {
-    //     TimeOfDay.onTimeOfDayChange += SetUpNextAngle;
-    // }
 
     private void Start()
     {
-        TimeOfDay.onTimeOfDayChange += SetUpNextAngle;
+        TimeOfDay.onTimeOfDayChange += SetUpNextClockAngle;     // transfet to awake method it didn't work
         _transform = this.transform;
         _targetRotation = _transform.rotation;          // important to save rotations
     }
 
-    private void Update()
-    {
-        RotateArrow();
-    }
+    private void Update() => RotateArrow();
+
 
     private void RotateArrow()
     {
@@ -46,10 +35,8 @@ public class ClockMove : MonoBehaviour
 
     }
 
-    public void SetUpNextAngle(TimeOfDay.States timeOfDayState, TimeOfDay timeOfDay)
+    public void SetUpNextClockAngle(TimeOfDay.States timeOfDayState, TimeOfDay timeOfDay)
     {
-        rotating = true;
-
         switch (timeOfDayState)
         {
             case TimeOfDay.States.Evening:
@@ -69,8 +56,7 @@ public class ClockMove : MonoBehaviour
             }
         }
 
-        Debug.Log("transform z: " + _transform.rotation);
-        Debug.Log("target z: " + _targetRotation);
+        rotating = true;
     }
 
 }
