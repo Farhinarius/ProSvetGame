@@ -51,6 +51,7 @@ public class TimeOfDay : MonoBehaviour
 
     void Evening_Enter()
     {
+        Debug.Log("Enter Evening");
         onTimeOfDayChange?.Invoke(States.Evening, this);
         Helpers.ToogleAllInteractableOfType(_dialogueHandlers, true);
     }

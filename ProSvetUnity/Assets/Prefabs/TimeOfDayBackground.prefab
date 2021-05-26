@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 3526591524380147551}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.0749349, y: 0.099384785, z: 0}
-  m_LocalScale: {x: 4.094908, y: 4.1691465, z: 1}
+  m_LocalScale: {x: 2.3606782, y: 2.974191, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -95,7 +95,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _timesOfDay:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 21300000, guid: 725fbba77e2f38d48aa3b54697c7a84a, type: 3}
+  - {fileID: 21300000, guid: 088aaabb3721a8c47be5440f69d2b224, type: 3}
+  - {fileID: 21300000, guid: 07b7a485b5e48f3479048e1d9945b9e4, type: 3}
   dayTimeNum: 1

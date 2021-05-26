@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5597585149660127997}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.1, y: 12.58, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3766964133312675646}
@@ -61,9 +61,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dialogue:
-    heroName: 
-    sentences: []
-  _dialogueDisplay: {fileID: 0}
+    heroName: Workman
+    sentences:
+    - ALALALAAL
+    - Tralalala
+    - Nandere na yeooo
+  _dialogueDisplay: {fileID: 8740284179906389142}
 --- !u!61 &6945719520199716751
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -77,7 +80,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.02471757, y: -12.640412}
+  m_Offset: {x: -0.11186743, y: 0.008085251}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -88,7 +91,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 5.5077186, y: 14.67668}
+  m_Size: {x: 5.658784, y: 16.221909}
   m_EdgeRadius: 0
 --- !u!1 &6235982120859088673
 GameObject:
@@ -99,8 +102,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4383133613760492795}
-  - component: {fileID: 4851863898152829782}
-  m_Layer: 0
+  - component: {fileID: 7541864707224433651}
+  m_Layer: 9
   m_Name: Actions
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -121,7 +124,7 @@ Transform:
   m_Father: {fileID: 7137522767552752482}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4851863898152829782
+--- !u!114 &7541864707224433651
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -130,13 +133,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 6235982120859088673}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 014de55f4b81fc64e86defa71e2491af, type: 3}
+  m_Script: {fileID: 11500000, guid: 938cda3ac6ff6a1459680b7f6c8412eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   actionTimer: 0
   nightEventSystem: {fileID: 0}
-  restTarget: {fileID: 0}
-  speed: 2
+  workplaceTransform: {fileID: 0}
+  speed: 4
 --- !u!1 &6324490622667316926
 GameObject:
   m_ObjectHideFlags: 0
@@ -148,7 +151,7 @@ GameObject:
   - component: {fileID: 303184959708944827}
   - component: {fileID: 6171480315607917088}
   - component: {fileID: 8740284179906389142}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -214,7 +217,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: ASDASDDASD
+  m_Text: .......
 --- !u!1 &6426744833806760716
 GameObject:
   m_ObjectHideFlags: 0
@@ -227,7 +230,7 @@ GameObject:
   - component: {fileID: 7439682550515452942}
   - component: {fileID: 2888038264258362670}
   - component: {fileID: 1440910888413782846}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -251,7 +254,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -0.139, y: 2.97}
+  m_AnchoredPosition: {x: -0.139, y: 19.5}
   m_SizeDelta: {x: 2765.0547, y: 1737.5393}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &7439682550515452942
@@ -325,7 +328,7 @@ GameObject:
   - component: {fileID: 2992014891095593871}
   - component: {fileID: 2473366806381395660}
   - component: {fileID: 8668983557802573906}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -528,7 +531,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.075402796, y: -0.03428507}
+  m_Offset: {x: -0.08768654, y: -0.03428507}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -539,5 +542,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.6492019, y: 14.304156}
+  m_Size: {x: 3.9753804, y: 14.304156}
   m_EdgeRadius: 0
