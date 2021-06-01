@@ -35,7 +35,6 @@ public class GirlActions : HumanActions
 
     void Start()
     {
-        interactiveItems = nightEventSystem.interactiveItems;
         rb2d = GetComponentInParent<Rigidbody2D>();
         fsm.ChangeState(States.DoNothing);
     }
@@ -55,8 +54,8 @@ public class GirlActions : HumanActions
             timer = changeTime;
         }
 
-        if ( interactiveItems.cat.toogler && interactiveItems.lamp0.turnedOn)
-            fsm.ChangeState(States.Rest);
+        // if ( interactiveItems.cat.toogler && interactiveItems.lamp0.turnedOn)
+        //     fsm.ChangeState(States.Rest);
     }
 
     void DoNothing_FixedUpdate()

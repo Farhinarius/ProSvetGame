@@ -20,11 +20,11 @@ public class TimeOfDay : MonoBehaviour
 
     List<GameObject> _dialogueHandlers;
 
-    float stateChangeTimer = 0;
+    [SerializeField] private float stateChangeTimer = 0;
 
     const float timeToChangeState = 3f;
 
-    GameObject _nightEventSystem;
+    private GameObject _nightEventSystem;
 
 
     private void Awake()
@@ -35,25 +35,24 @@ public class TimeOfDay : MonoBehaviour
     private void Start()
     {
         _dialogueHandlers = new List<GameObject>();
-        _nightEventSystem = transform.Find("NightEventSystem").gameObject;
-        _nightEventSystem.SetActive(false);
 
-        // fill collection of interactable on scene
+        _nightEventSystem = transform.Find("NightEventSystem").gameObject;
+        // _nightEventSystem.SetActive(false);
+
+        // fill collection of dialogue components in scene
         var dialogueInteractions = Resources.FindObjectsOfTypeAll<DialogueInteraction>();
         foreach (var diComponent in dialogueInteractions)
-        {
-            Debug.Log(diComponent.transform.parent.name);
             _dialogueHandlers.Add(diComponent.gameObject);
-        }
 
         _fsm.ChangeState(States.Evening);
     }
 
     void Evening_Enter()
     {
-        Debug.Log("Enter Evening");
+        Debug.Log("Evening Enter");
         onTimeOfDayChange?.Invoke(States.Evening, this);
-        Helpers.ToogleAllInteractableOfType(_dialogueHandlers, true);
+        Helpers.ToggleGameObjectsCollection(_dialogueHandlers, true);
+        // restrict access to interactable
     }
 
     void Evening_Update()
@@ -65,13 +64,15 @@ public class TimeOfDay : MonoBehaviour
             DialogueManager.allChecked = false;
         }
 
-        if (stateChangeTimer > 0) stateChangeTimer -= Time.deltaTime;
-
-        if (stateChangeTimer < 0)
+        if (stateChangeTimer > 0)  stateChangeTimer -= Time.fixedDeltaTime;
+        else if (stateChangeTimer < 0)
         {
-            _fsm.ChangeState(States.Night);
             Debug.Log("ChangeStateToNight");
+            
             stateChangeTimer = 0;       // reset fuild
+            DialogueManager.allChecked = false;
+            
+            _fsm.ChangeState(States.Night);
         }
         
         if (Input.GetKeyDown(KeyCode.X))        // mock while
@@ -83,8 +84,9 @@ public class TimeOfDay : MonoBehaviour
 
     void Night_Enter()
     {
+        Debug.Log("Enter Night");
         onTimeOfDayChange?.Invoke(States.Night, this);
-        Helpers.ToogleAllInteractableOfType(_dialogueHandlers, false);
+        Helpers.ToggleGameObjectsCollection(_dialogueHandlers, false);
         _nightEventSystem.SetActive(true);
     }
 

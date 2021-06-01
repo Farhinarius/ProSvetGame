@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using MonsterLove.StateMachine;
 
@@ -8,8 +9,6 @@ public class NightEventSystem : ScriptableEventSystem
     [SerializeField] private GameObject girlActions;
     
     [SerializeField] private GameObject workmanActions;
-
-    public InteractiveItems interactiveItems;
 
     enum States
     {
@@ -21,11 +20,17 @@ public class NightEventSystem : ScriptableEventSystem
 
     StateMachine<States, Driver> fsm;
 
+    [SerializeField] List<Interactable> items;
+
     private void Awake()
     {
+        items = new List<Interactable>();
         fsm = new StateMachine<States, Driver>(this);
     }
 
+    private void OnEnable() => Helpers.ToggleComponentsCollection(items, true);
+
+    
     private void Start()
     {
         fsm.ChangeState(States.Init);
@@ -34,10 +39,16 @@ public class NightEventSystem : ScriptableEventSystem
     // state machine logic
     void Init_Enter()
     {
-        girlActions.SetActive(true);
-        workmanActions.SetActive(true);
+        // or in this place
+        // girlActions.SetActive(true);
+        // workmanActions.SetActive(true);
+        // later replace in iterator activation
         
         Debug.Log("Enter in night state machine event system (Init state)");
+
+        FindAllInteractableComponents();
+
+        Helpers.ToggleComponentsCollection(items, true);
         // fsm.ChangeState(States.AllTiredAndSleepy);
     }
 
@@ -63,10 +74,16 @@ public class NightEventSystem : ScriptableEventSystem
 
     // other methods
 
-    private void Update()
+    private void OnDisable() => Helpers.ToggleComponentsCollection(items, false);
+
+    // separate methods
+    private void FindAllInteractableComponents()
     {
-        fsm.Driver.Update.Invoke();
+        items.Clear();
+        var interactables = Resources.FindObjectsOfTypeAll<Interactable>();
+        
+        if (interactables != null)
+            foreach (var item in interactables) 
+                    items.Add(item);
     }
-
-
 }

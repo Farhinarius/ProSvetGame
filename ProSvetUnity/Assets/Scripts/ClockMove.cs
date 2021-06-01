@@ -30,7 +30,7 @@ public class ClockMove : MonoBehaviour
             if ( Mathf.Abs(_targetRotation.z - _transform.rotation.z) < 0.01f )
                  rotating = false;
                 
-            Debug.Log(_transform.rotation.z);
+            // Debug.Log(_transform.rotation.z);
         }
 
     }

@@ -35,7 +35,6 @@ public class WorkmanActions : HumanActions
 
     void Start()
     {
-        interactiveItems = nightEventSystem.interactiveItems;
         rb2d = GetComponentInParent<Rigidbody2D>();
         fsm.ChangeState(States.CannotWork);
     }
@@ -55,8 +54,8 @@ public class WorkmanActions : HumanActions
             timer = changeTime;
         }
 
-        if (interactiveItems.lamp1.turnedOn)
-            fsm.ChangeState(States.Work);
+        // if (interactiveItems.lamp1.turnedOn)
+        //     fsm.ChangeState(States.Work);
     }
 
     void CannotWork_FixedUpdate()
@@ -75,8 +74,8 @@ public class WorkmanActions : HumanActions
     {
         transform.position = Vector2.MoveTowards(transform.position, workplaceTransform.position, speed * Time.fixedDeltaTime);
         
-        if (interactiveItems.lamp0.turnedOn)
-            fsm.ChangeState(States.CannotWork);
+        // if (interactiveItems.lamp0.turnedOn)
+        //     fsm.ChangeState(States.CannotWork);
     }
 
     // Update is called once per frame

@@ -4,8 +4,6 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-
-
 public class DialogueManager : MonoBehaviour
 {
     private int _dialogueID = 0;
@@ -16,7 +14,9 @@ public class DialogueManager : MonoBehaviour
     public Text _dialogueDisplay;
 
     private static bool[] _dialogueChecks;
-    public static bool allChecked = false;
+    public static bool allChecked;
+
+    private void OnEnable() => allChecked = false;
 
     private void Awake()
     {
@@ -29,7 +29,7 @@ public class DialogueManager : MonoBehaviour
         if (gameObject.CompareTag("First"))
         {
             _dialogueChecks = new bool[s_numberOfObjects];
-            Debug.Log(_dialogueChecks.Length);
+            Debug.Log("Dialogue checks array length: " + _dialogueChecks.Length);
         }
 
         _dialogueQueue = new Queue<string>();

@@ -8,8 +8,6 @@ public class HumanActions : MonoBehaviour
 
     public const float timeToAction = 30;
 
-    protected InteractiveItems interactiveItems;
-
     public NightEventSystem nightEventSystem;
     
 }

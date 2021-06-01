@@ -5,6 +5,8 @@ using MonsterLove.StateMachine;
 
 public class NavigableCamera : MonoBehaviour
 {
+    #region Fields
+
     public enum States
     {
         Init,
@@ -12,8 +14,6 @@ public class NavigableCamera : MonoBehaviour
         CameraTargetMovement,
     }
 
-    # region Fields
-    
     StateMachine<States, Driver> fsm;
 
     [SerializeField] private Transform _target;
@@ -27,9 +27,9 @@ public class NavigableCamera : MonoBehaviour
     private Camera _innerCam;
     private bool roomChanged = false;
 
-    # endregion
+    #endregion
 
-    # region StateMachineLogic 
+    #region StateMachineMethods
 
     private void Awake()
     {
