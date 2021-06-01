@@ -20,17 +20,12 @@ public class NightEventSystem : ScriptableEventSystem
 
     StateMachine<States, Driver> fsm;
 
-    [SerializeField] List<Interactable> items;
-
     private void Awake()
     {
-        items = new List<Interactable>();
         fsm = new StateMachine<States, Driver>(this);
     }
 
-    private void OnEnable() => Helpers.ToggleComponentsCollection(items, true);
 
-    
     private void Start()
     {
         fsm.ChangeState(States.Init);
@@ -39,16 +34,10 @@ public class NightEventSystem : ScriptableEventSystem
     // state machine logic
     void Init_Enter()
     {
-        // or in this place
-        // girlActions.SetActive(true);
-        // workmanActions.SetActive(true);
-        // later replace in iterator activation
+        // activate all human scenario in interator
         
         Debug.Log("Enter in night state machine event system (Init state)");
 
-        FindAllInteractableComponents();
-
-        Helpers.ToggleComponentsCollection(items, true);
         // fsm.ChangeState(States.AllTiredAndSleepy);
     }
 
@@ -70,20 +59,5 @@ public class NightEventSystem : ScriptableEventSystem
     void gRestingwWorking_Update()
     {
 
-    }
-
-    // other methods
-
-    private void OnDisable() => Helpers.ToggleComponentsCollection(items, false);
-
-    // separate methods
-    private void FindAllInteractableComponents()
-    {
-        items.Clear();
-        var interactables = Resources.FindObjectsOfTypeAll<Interactable>();
-        
-        if (interactables != null)
-            foreach (var item in interactables) 
-                    items.Add(item);
     }
 }

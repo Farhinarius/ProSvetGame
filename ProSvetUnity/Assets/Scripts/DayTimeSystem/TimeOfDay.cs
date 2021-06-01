@@ -18,13 +18,17 @@ public class TimeOfDay : MonoBehaviour
 
     public static event System.Action<States, TimeOfDay> onTimeOfDayChange;
 
-    List<GameObject> _dialogueHandlers;
+ 
 
     [SerializeField] private float stateChangeTimer = 0;
 
     const float timeToChangeState = 3f;
 
     private GameObject _nightEventSystem;
+
+    private DialoguePointerHandler _dialoguePointerHandler;
+
+    private ItemPointerHandler _itemPointerHandler;
 
 
     private void Awake()
@@ -34,15 +38,12 @@ public class TimeOfDay : MonoBehaviour
 
     private void Start()
     {
-        _dialogueHandlers = new List<GameObject>();
+        _dialoguePointerHandler = Camera.main.GetComponent<DialoguePointerHandler>();
+        _itemPointerHandler = Camera.main.GetComponent<ItemPointerHandler>();
 
         _nightEventSystem = transform.Find("NightEventSystem").gameObject;
         // _nightEventSystem.SetActive(false);
 
-        // fill collection of dialogue components in scene
-        var dialogueInteractions = Resources.FindObjectsOfTypeAll<DialogueInteraction>();
-        foreach (var diComponent in dialogueInteractions)
-            _dialogueHandlers.Add(diComponent.gameObject);
 
         _fsm.ChangeState(States.Evening);
     }
@@ -51,7 +52,9 @@ public class TimeOfDay : MonoBehaviour
     {
         Debug.Log("Evening Enter");
         onTimeOfDayChange?.Invoke(States.Evening, this);
-        Helpers.ToggleGameObjectsCollection(_dialogueHandlers, true);
+
+        Helpers.TogglePointerHandler(_dialoguePointerHandler, true);
+        Helpers.TogglePointerHandler(_itemPointerHandler, false);
         // restrict access to interactable
     }
 
@@ -86,7 +89,9 @@ public class TimeOfDay : MonoBehaviour
     {
         Debug.Log("Enter Night");
         onTimeOfDayChange?.Invoke(States.Night, this);
-        Helpers.ToggleGameObjectsCollection(_dialogueHandlers, false);
+
+        Helpers.TogglePointerHandler(_dialoguePointerHandler, false);
+        Helpers.TogglePointerHandler(_itemPointerHandler, true);
         _nightEventSystem.SetActive(true);
     }
 
@@ -101,7 +106,11 @@ public class TimeOfDay : MonoBehaviour
 
     void Morning_Enter()
     {
+        Debug.Log("Enter Morning");
         onTimeOfDayChange?.Invoke(States.Morning, this);
+
+        Helpers.TogglePointerHandler(_dialoguePointerHandler, false);
+        Helpers.TogglePointerHandler(_itemPointerHandler, false);
         _nightEventSystem.SetActive(false);
     }
 
@@ -112,8 +121,6 @@ public class TimeOfDay : MonoBehaviour
             _fsm.ChangeState(States.Evening);
         }
     }
-
-
 
     // ---------- Class methods ----------
     private void Update()

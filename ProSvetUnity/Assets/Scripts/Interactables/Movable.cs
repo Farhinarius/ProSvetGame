@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Movable : Interactable
+public class Movable : InteractableItem
 {
     private Vector2 _initialPosition;
     private static bool _locked;
@@ -20,7 +20,7 @@ public class Movable : Interactable
 
     public override void OnPointerButtonHold()
     {
-        base.OnPointerButtonHold();
+        // base.OnPointerButtonHold();
     }
 
     public override void OnPointerExit()

@@ -16,12 +16,18 @@ public class RoomPointerHandler : PointerHandler
 
     ItemPointerHandler _itemPointerHandler;
 
-    private void Start() =>
+    DialoguePointerHandler _dialoguePointerHandler;
+
+    private void Start()
+    {
         _itemPointerHandler = GetComponent<ItemPointerHandler>();
+        _dialoguePointerHandler = GetComponent<DialoguePointerHandler>();
+    }
+        
 
     void Update()
     {
-        if (!_itemPointerHandler.interactableHit)
+        if (!_itemPointerHandler.interactableHit && !_dialoguePointerHandler.dialogueHit)
         {
             roomHit = Physics2D.Raycast(MouseTarget, Vector2.zero, 0f, LayerMask.GetMask("Navigable"));
             HandleSinglePointer(roomHit);

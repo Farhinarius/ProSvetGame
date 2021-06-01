@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Choicable : Interactable
+public class Choicable : InteractableItem
 {
     public override void OnPointerEnter()
     {

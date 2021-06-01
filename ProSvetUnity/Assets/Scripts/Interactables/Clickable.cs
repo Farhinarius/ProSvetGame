@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Clickable : Interactable
+public class Clickable : InteractableItem
 {
     private SpriteRenderer _spriteRenderer;
     [SerializeField] public Sprite originalSprite;

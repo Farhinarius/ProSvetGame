@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Lamp : Interactable
+public class Lamp : InteractableItem
 {
     public bool turnedOn;
     public Lamp _otherLamp;

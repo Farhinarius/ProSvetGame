@@ -10,8 +10,16 @@ public static class Helpers
             interactable.SetActive(state);
     }
 
-    public static void ToggleComponentsCollection(List<Interactable> items, bool state)
-        => items.ForEach(ic => ic.enabled = state);
+    public static void ToggleInteractableItemComponents(List<InteractableItem> items, bool state)
+    {
+        for (int i = 0; i < items.Count; i++)
+        {
+            items[i].enabled = state;
+        }
+    }
+
+    public static void TogglePointerHandler(PointerHandler pointerHandler, bool state) =>
+        pointerHandler.enabled = state;
 
     
 }
