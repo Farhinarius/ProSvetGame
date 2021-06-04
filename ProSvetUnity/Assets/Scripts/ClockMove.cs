@@ -20,7 +20,6 @@ public class ClockMove : MonoBehaviour
 
     private void Update() => RotateArrow();
 
-
     private void RotateArrow()
     {
         if (rotating)

@@ -53,7 +53,6 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-
     public void DisplayNextSentence()
     {
         string sentence = _dialogueQueue.Dequeue();
@@ -72,8 +71,7 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-
-    IEnumerator TypeSentence (string sentence)
+    IEnumerator TypeSentence(string sentence)
     {
         _dialogueDisplay.text = " ";
         foreach (char letter in sentence.ToCharArray())

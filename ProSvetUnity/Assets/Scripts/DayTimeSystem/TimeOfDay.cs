@@ -16,9 +16,7 @@ public class TimeOfDay : MonoBehaviour
 
     StateMachine<States, Driver> _fsm;
 
-    public static event System.Action<States, TimeOfDay> onTimeOfDayChange;
-
- 
+    public static event System.Action<States, TimeOfDay> onTimeOfDayChange; 
 
     [SerializeField] private float stateChangeTimer = 0;
 
@@ -53,9 +51,8 @@ public class TimeOfDay : MonoBehaviour
         Debug.Log("Evening Enter");
         onTimeOfDayChange?.Invoke(States.Evening, this);
 
-        Helpers.TogglePointerHandler(_dialoguePointerHandler, true);
-        Helpers.TogglePointerHandler(_itemPointerHandler, false);
-        // restrict access to interactable
+        Helpers.TogglePointerHandler(_dialoguePointerHandler, true); // give access to dialogue interaction
+        Helpers.TogglePointerHandler(_itemPointerHandler, false);    // restrict access to interactable item
     }
 
     void Evening_Update()
