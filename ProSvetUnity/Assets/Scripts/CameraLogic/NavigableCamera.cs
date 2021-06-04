@@ -25,7 +25,7 @@ public class NavigableCamera : MonoBehaviour
     [SerializeField] private float _maximumCameraSize = 11;
 
     private Camera _innerCam;
-    private bool roomChanged = false;
+    private bool _roomChanged = false;
 
     #endregion
 
@@ -62,10 +62,10 @@ public class NavigableCamera : MonoBehaviour
         ListenZoom();
         MoveCameraWithMouse();
 
-        if (roomChanged)
+        if (_roomChanged)
         {
             fsm.ChangeState(States.CameraTargetMovement);
-            roomChanged = false;
+            _roomChanged = false;
         }
     }
 
@@ -105,7 +105,7 @@ public class NavigableCamera : MonoBehaviour
     {
         if (_target != target)          // if we do not pick current view room
         {
-            roomChanged = true;
+            _roomChanged = true;
             _target = target;
         }
     }
