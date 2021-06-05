@@ -6,10 +6,17 @@ using MonsterLove.StateMachine;
 
 public class NightEventSystem : ScriptableEventSystem
 {
-    [SerializeField] private GameObject girlActions;
-    
-    [SerializeField] private GameObject workmanActions;
+    [System.Serializable]
+    public struct InteractableItems
+    {
+        public Clickable cat;
 
+        public Lamp lamp;
+
+        public Lamp lamp1;
+    }
+
+    [System.Serializable]
     enum States
     {
         Init,
@@ -20,25 +27,26 @@ public class NightEventSystem : ScriptableEventSystem
 
     StateMachine<States, Driver> fsm;
 
+    [SerializeField] private InteractableItems items;
+
+    [SerializeField] private GameObject girlActions, workmanActions;
+
     private void Awake()
     {
         fsm = new StateMachine<States, Driver>(this);
     }
-
 
     private void Start()
     {
         fsm.ChangeState(States.Init);
     }
 
-    // state machine logic
     void Init_Enter()
     {
-        // activate all human scenario in interator
-        
         Debug.Log("Enter in night state machine event system (Init state)");
-
-        // fsm.ChangeState(States.AllTiredAndSleepy);
+        
+        girlActions.SetActive(true);
+        workmanActions.SetActive(true);
     }
 
     void AllTiredAndSleepy_Enter()
@@ -60,4 +68,5 @@ public class NightEventSystem : ScriptableEventSystem
     {
 
     }
+
 }

@@ -40,7 +40,7 @@ public class TimeOfDay : MonoBehaviour
         _itemPointerHandler = Camera.main.GetComponent<ItemPointerHandler>();
 
         _nightEventSystem = transform.Find("NightEventSystem").gameObject;
-        // _nightEventSystem.SetActive(false);
+        _nightEventSystem.SetActive(false);
 
 
         _fsm.ChangeState(States.Evening);

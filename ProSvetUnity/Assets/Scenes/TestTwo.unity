@@ -768,6 +768,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 673906936, guid: 1b7edbaeeec935f4990450994cff38da, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 673906938, guid: 1b7edbaeeec935f4990450994cff38da, type: 3}
       propertyPath: girlActions
       value: 
@@ -1439,7 +1443,7 @@ PrefabInstance:
     - target: {fileID: 1421007306237116365, guid: 6b097b2f65f17394786d6d69108608ca,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b097b2f65f17394786d6d69108608ca, type: 3}

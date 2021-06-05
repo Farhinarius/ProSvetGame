@@ -20,7 +20,7 @@ public class HumanActions : MonoBehaviour
 
     protected Transform _target;
 
-    [SerializeField] protected float speed;
+    protected float speed;
 
     public Dictionary<string, Transform> _associatedTargets;
 

@@ -22,6 +22,7 @@ public class GirlActions : HumanActions
     protected override void Start()
     {
         base.Start();
+        
         rb2d = GetComponentInParent<Rigidbody2D>();
         _fsm.ChangeState(States.DoNothing);
     }
@@ -31,7 +32,7 @@ public class GirlActions : HumanActions
         Debug.Log("Do Nothing" + transform.parent.name);
     }
 
-
+    
 
     private void Update()
     {
