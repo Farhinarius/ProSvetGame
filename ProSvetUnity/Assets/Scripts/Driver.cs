@@ -7,4 +7,5 @@ public class Driver
 {
     public StateEvent Update;
     public StateEvent FixedUpdate;
+    public StateEvent OnViewRoomChanged;
 }

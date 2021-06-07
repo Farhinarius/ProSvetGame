@@ -44,12 +44,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eventTimer: 45
+  items:
+    cat: {fileID: 0}
+    lamp: {fileID: 0}
+    lamp1: {fileID: 0}
   girlActions: {fileID: 0}
   workmanActions: {fileID: 0}
-  interactiveItems:
-    lamp0: {fileID: 0}
-    lamp1: {fileID: 0}
-    cat: {fileID: 0}
 --- !u!1 &6640939445318180821
 GameObject:
   m_ObjectHideFlags: 0
@@ -94,3 +94,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 095bb4ab26c0fdf43ba25b380e587237, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stateChangeTimer: 0

@@ -14,21 +14,21 @@ public class Interactable : MonoBehaviour, IPointerHandler
 
     public virtual void OnPointerEnter()
     {
-        Debug.Log("Poitner Enter: " + _name);
+        // Debug.Log("Poitner Enter: " + _name);
     }
 
     public virtual void OnPointerButtonClick()
     {
-        Debug.Log("Pointer Click: " + _name);
+        // Debug.Log("Pointer Click: " + _name);
     }
 
     public virtual void OnPointerButtonHold()
     {
-        Debug.Log("Pointer Button Hold: " + _name);
+        // Debug.Log("Pointer Button Hold: " + _name);
     }
 
     public virtual void OnPointerExit()
     {
-        Debug.Log("Pointer Exit: " + _name);
+        // Debug.Log("Pointer Exit: " + _name);
     }
 }

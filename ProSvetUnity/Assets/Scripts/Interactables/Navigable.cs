@@ -1,16 +1,14 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Navigable : Interactable
 {
-    public static event Action<Transform, Navigable> onRoomTargetChanged;
+    public static event Action<Transform> onViewRoomChanged;
 
     public override void OnPointerButtonClick()
     {
         base.OnPointerButtonClick();
-        onRoomTargetChanged?.Invoke(this.transform, this);         // change current target to this (camera movement logic)
+        onViewRoomChanged?.Invoke(this.transform);         // change current target to this (camera movement logic)
     }
 
     public override void OnPointerButtonHold()

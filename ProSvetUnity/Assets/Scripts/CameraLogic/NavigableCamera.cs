@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using MonsterLove.StateMachine;
 
@@ -24,8 +23,9 @@ public class NavigableCamera : MonoBehaviour
     [SerializeField] private float _minimumCameraSize = 3;
     [SerializeField] private float _maximumCameraSize = 11;
 
-    private Camera _innerCam;
-    private bool _roomChanged = false;
+    private Camera _mainCam;
+
+    public static event System.Action HandleInput;
 
     #endregion
 
@@ -40,11 +40,20 @@ public class NavigableCamera : MonoBehaviour
     void Init_Enter()
     {
         Debug.Log("Camera Init");
+        
+        // temp set up target framerate
         Application.targetFrameRate = 60;
-        _innerCam = GetComponent<Camera>();
+        
+        // get main camera
+        _mainCam = GetComponent<Camera>();
 
-        Navigable.onRoomTargetChanged += SetUpViewRoom;
+        // event subscription
+        Navigable.onViewRoomChanged += OnViewRoomChanged;
 
+        HandleInput += ListenZoom;
+        HandleInput += MoveCameraWithMouse;
+
+        // camera setup
         var cameraInitialPosition = new Vector3(_target.position.x, _target.position.y, transform.position.z);
         transform.position = cameraInitialPosition;
         StartCoroutine(SetInitialTransform());
@@ -52,21 +61,13 @@ public class NavigableCamera : MonoBehaviour
         fsm.ChangeState(States.CameraFixed);
     }
 
-    void CameraFixed_Enter()
-    {
-        Debug.Log("Camera Fixed Enter");
-    }
+    void CameraFixed_Enter() => Debug.Log("Camera Fixed Enter");
 
-    void CameraFixed_Update()
-    {
-        ListenZoom();
-        MoveCameraWithMouse();
+    void CameraFixed_Update() => HandleInput?.Invoke();
 
-        if (_roomChanged)
-        {
-            fsm.ChangeState(States.CameraTargetMovement);
-            _roomChanged = false;
-        }
+    void CameraFixed_OnViewRoomChanged()        // _target field is already changed
+    {
+        fsm.ChangeState(States.CameraTargetMovement);
     }
 
     void CameraTargetMovement_Enter()
@@ -77,7 +78,7 @@ public class NavigableCamera : MonoBehaviour
     void CameraTargetMovement_FixedUpdate()
     {
         if (Vector2.Distance(_target.position, transform.position) < 0.1f
-        && _innerCam.orthographicSize == _minimumCameraSize)
+        && _mainCam.orthographicSize == _minimumCameraSize)
             fsm.ChangeState(States.CameraFixed);
 
         MoveToTarget();
@@ -85,7 +86,7 @@ public class NavigableCamera : MonoBehaviour
 
     # endregion
 
-    # region DefaultUpdates
+    # region StateMachineEvents
 
     public void Update()
     {
@@ -97,27 +98,24 @@ public class NavigableCamera : MonoBehaviour
         fsm.Driver.FixedUpdate.Invoke();
     }
 
+    public void OnViewRoomChanged(Transform target)
+    {
+        if (_target != target) _target = target;
+        fsm.Driver.OnViewRoomChanged.Invoke();
+    }
+
     # endregion
 
     # region CameraMethods
 
-    public void SetUpViewRoom(Transform target, Navigable nav)
-    {
-        if (_target != target)          // if we do not pick current view room
-        {
-            _roomChanged = true;
-            _target = target;
-        }
-    }
-
     IEnumerator SetInitialTransform()
     {
-        float size = _innerCam.orthographicSize;
+        float size = _mainCam.orthographicSize;
         while (size > _minimumCameraSize)
         {
             yield return new WaitForSeconds(Time.fixedDeltaTime);
             size -= 17 * Time.fixedDeltaTime;
-            _innerCam.orthographicSize = size;
+            _mainCam.orthographicSize = size;
         }
     }
 
@@ -135,7 +133,7 @@ public class NavigableCamera : MonoBehaviour
 
     private void ListenZoom()
     {
-        float size = _innerCam.orthographicSize;
+        float size = _mainCam.orthographicSize;
 
         if (Input.GetAxis("Mouse ScrollWheel") != 0)
         {
@@ -143,7 +141,7 @@ public class NavigableCamera : MonoBehaviour
             size = Mathf.Clamp(size, _minimumCameraSize, _maximumCameraSize);
         }
 
-        _innerCam.orthographicSize = size;
+        _mainCam.orthographicSize = size;
     }
 
     private void MoveToTarget()
@@ -153,10 +151,10 @@ public class NavigableCamera : MonoBehaviour
         transform.position = new Vector3(positionToMove.x, positionToMove.y, transform.position.z);
 
         // zoom logic
-        float size = _innerCam.orthographicSize;
+        float size = _mainCam.orthographicSize;
         size -=  _zoomInSpeed * Time.deltaTime;
         size = Mathf.Clamp(size, _minimumCameraSize, _maximumCameraSize);
-        _innerCam.orthographicSize = size;
+        _mainCam.orthographicSize = size;
     }
 
     # endregion
