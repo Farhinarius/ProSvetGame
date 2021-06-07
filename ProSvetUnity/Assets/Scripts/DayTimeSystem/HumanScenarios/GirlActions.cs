@@ -4,43 +4,32 @@ using System;
 
 public class GirlActions : HumanActions
 {
-    public enum States
+    public enum State
     {
-        DoNothing,
-        Rest
+        Null,
+        Rest,
+        WalkAround,
+        MovingToDestination,
+        Sleep
     }
 
-    StateMachine<States, Driver> _fsm;
-    
-    public States CurrentState { get => _fsm.State; }
+    StateMachine<State, Driver> _fsm;
+
+    public State CurrentState { get; private set; }
 
     private void Awake()
     {
-        _fsm = new StateMachine<States, Driver>(this);
+        _fsm = new StateMachine<State, Driver>(this);
     }
 
     protected override void Start()
     {
+        _fsm.Changed += OnChangeState;
         base.Start();
-        
-        rb2d = GetComponentInParent<Rigidbody2D>();
-        _fsm.ChangeState(States.DoNothing);
     }
 
-    void DoNothing_Enter()
-    {
-        Debug.Log("Do Nothing" + transform.parent.name);
-    }
+    private void OnChangeState(State state) => 
+        CurrentState = _fsm.State;
 
-    
 
-    private void Update()
-    {
-        _fsm.Driver.Update.Invoke();
-    }
-
-    private void FixedUpdate()
-    {
-        _fsm.Driver.FixedUpdate.Invoke();
-    }
 }

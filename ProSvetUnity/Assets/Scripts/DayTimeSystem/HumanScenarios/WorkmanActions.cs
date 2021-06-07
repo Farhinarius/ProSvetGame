@@ -27,7 +27,7 @@ public class WorkmanActions : HumanActions
     protected override void Start()
     {
         base.Start();
-        rb2d = GetComponentInParent<Rigidbody2D>();
+        _rb2d = GetComponentInParent<Rigidbody2D>();
         fsm.ChangeState(States.CannotWork);
     }
 

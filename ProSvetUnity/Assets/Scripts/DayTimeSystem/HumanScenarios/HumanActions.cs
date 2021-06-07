@@ -20,45 +20,24 @@ public class HumanActions : MonoBehaviour
 
     protected Transform _target;
 
-    protected float speed;
+    protected float _speed;
 
-    public Dictionary<string, Transform> _associatedTargets;
+    protected Rigidbody2D _rb2d;
 
-    protected Rigidbody2D rb2d;
-
-    #region MonoBehaviour Methods
+    # region MonoBehaviour Methods
 
     protected virtual void Start()
     {
         _nightEventSystem = GameObject.Find("TimeOfDay/NightEventSystem").GetComponent<NightEventSystem>() ?? throw new NullReferenceException("Not initialized night event system");
         _transform = transform;
-        _associatedTargets = new Dictionary<string, Transform>();
     }
 
     # endregion
 
     # region Methods
 
-    protected void SetTarget(string targetName) =>
-        _target = _associatedTargets[targetName];
-
     protected void UpdateMove() =>
-        _transform.position = Vector2.MoveTowards(_transform.position, _target.position, speed * Time.fixedDeltaTime);
-
-    protected IEnumerator CoroutineMoveTo()
-    {
-        while (_transform.position != _target.position)
-        {
-            yield return new WaitForFixedUpdate();
-            Vector2.MoveTowards(_transform.position, _target.position, Time.fixedDeltaTime);
-        }
-    }
-    
-    protected async void MoveToAsync()
-    {
-        await Task.Delay( (int) (Time.fixedDeltaTime  * 1000) );
-        _transform.position =  Vector2.MoveTowards(_transform.position, _target.position, Time.fixedDeltaTime);
-    }
+        _transform.position = Vector2.MoveTowards(_transform.position, _target.position, _speed * Time.fixedDeltaTime);
 
     protected void WalkAround()
     {
@@ -70,9 +49,9 @@ public class HumanActions : MonoBehaviour
             timer = changeTime;
         }
 
-        Vector2 objPos = rb2d.position;
-        objPos.x += speed * Time.fixedDeltaTime * direction;
-        rb2d.MovePosition(objPos);
+        Vector2 objPos = _rb2d.position;
+        objPos.x += _speed * Time.fixedDeltaTime * direction;
+        _rb2d.MovePosition(objPos);
     }
 
 

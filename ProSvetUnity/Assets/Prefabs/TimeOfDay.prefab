@@ -44,12 +44,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eventTimer: 45
-  items:
+  _items:
     cat: {fileID: 0}
     lamp: {fileID: 0}
     lamp1: {fileID: 0}
-  girlActions: {fileID: 0}
-  workmanActions: {fileID: 0}
+  _destinations:
+    bed: {fileID: 0}
+    workPlace: {fileID: 0}
+  _girlActionObject: {fileID: 0}
+  _workmanActionObject: {fileID: 0}
 --- !u!1 &6640939445318180821
 GameObject:
   m_ObjectHideFlags: 0
