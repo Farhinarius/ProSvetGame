@@ -4,7 +4,7 @@ using System;
 
 public class GirlActions : HumanActions
 {
-    public enum State
+    public enum States
     {
         Null,
         Rest,
@@ -13,23 +13,19 @@ public class GirlActions : HumanActions
         Sleep
     }
 
-    StateMachine<State, Driver> _fsm;
+    StateMachine<States, Driver> _fsm;
 
-    public State CurrentState { get; private set; }
+    public States CurrentState { get => _fsm.State; }
 
     private void Awake()
     {
-        _fsm = new StateMachine<State, Driver>(this);
+        _fsm = new StateMachine<States, Driver>(this);
     }
 
     protected override void Start()
     {
-        _fsm.Changed += OnChangeState;
         base.Start();
     }
-
-    private void OnChangeState(State state) => 
-        CurrentState = _fsm.State;
 
 
 }
