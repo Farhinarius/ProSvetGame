@@ -14,7 +14,7 @@ public class TimeOfDay : MonoBehaviour
         Morning
     }
 
-    StateMachine<States, Driver> _fsm;
+    StateMachine<States, GeneralDriver> _fsm;
 
     public static event System.Action<States, TimeOfDay> onTimeOfDayChange; 
 
@@ -31,7 +31,7 @@ public class TimeOfDay : MonoBehaviour
 
     private void Awake()
     {
-        _fsm = new StateMachine<States, Driver>(this);
+        _fsm = new StateMachine<States, GeneralDriver>(this);
     }
 
     private void Start()

@@ -13,13 +13,13 @@ public class GirlActions : HumanActions
         Sleep
     }
 
-    StateMachine<States, Driver> _fsm;
+    StateMachine<States, GeneralDriver> _fsm;
 
     public States CurrentState { get => _fsm.State; }
 
     private void Awake()
     {
-        _fsm = new StateMachine<States, Driver>(this);
+        _fsm = new StateMachine<States, GeneralDriver>(this);
     }
 
     protected override void Start()

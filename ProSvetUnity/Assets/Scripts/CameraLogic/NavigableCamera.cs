@@ -13,7 +13,7 @@ public class NavigableCamera : MonoBehaviour
         CameraTargetMovement,
     }
 
-    StateMachine<States, Driver> fsm;
+    StateMachine<States, CameraDriver> fsm;
 
     [SerializeField] private Transform _target;
     [SerializeField] private float _lerpSpeed = 4;
@@ -25,7 +25,7 @@ public class NavigableCamera : MonoBehaviour
 
     private Camera _mainCam;
 
-    public static event System.Action HandleInput;
+    public event System.Action handleInput;
 
     #endregion
 
@@ -33,7 +33,7 @@ public class NavigableCamera : MonoBehaviour
 
     private void Awake()
     {
-        fsm = new StateMachine<States, Driver>(this);
+        fsm = new StateMachine<States, CameraDriver>(this);
         fsm.ChangeState(States.Init);
     }
 
@@ -50,8 +50,8 @@ public class NavigableCamera : MonoBehaviour
         // event subscription
         Navigable.onViewRoomChanged += OnViewRoomChanged;
 
-        HandleInput += ListenZoom;
-        HandleInput += MoveCameraWithMouse;
+        handleInput += ListenZoom;
+        handleInput += MoveCameraWithMouse;
 
         // camera setup
         var cameraInitialPosition = new Vector3(_target.position.x, _target.position.y, transform.position.z);
@@ -63,12 +63,9 @@ public class NavigableCamera : MonoBehaviour
 
     void CameraFixed_Enter() => Debug.Log("Camera Fixed Enter");
 
-    void CameraFixed_Update() => HandleInput?.Invoke();
+    void CameraFixed_Update() => handleInput?.Invoke();
 
-    void CameraFixed_OnViewRoomChanged()        // _target field is already changed
-    {
-        fsm.ChangeState(States.CameraTargetMovement);
-    }
+    void CameraFixed_OnViewRoomChanged() => fsm.ChangeState(States.CameraTargetMovement);
 
     void CameraTargetMovement_Enter()
     {

@@ -22,7 +22,7 @@ public class NightEventSystem : ScriptableEventSystem
 
     # region Fields 
 
-    StateMachine<States, Driver> _fsm;
+    StateMachine<States, GeneralDriver> _fsm;
 
     [SerializeField] private InteractableItems _items;
 
@@ -37,7 +37,7 @@ public class NightEventSystem : ScriptableEventSystem
 
     private void Awake()
     {
-        _fsm = new StateMachine<States, Driver>(this);
+        _fsm = new StateMachine<States, GeneralDriver>(this);
     }
 
     private void Start()

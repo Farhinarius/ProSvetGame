@@ -14,14 +14,14 @@ public class WorkmanActions : HumanActions
         Work
     }
 
-    StateMachine<States, Driver> fsm;
+    StateMachine<States, GeneralDriver> fsm;
 
     public States CurrentState { get => fsm.State; }
 
 
     private void Awake()
     {
-        fsm = new StateMachine<States, Driver>(this);
+        fsm = new StateMachine<States, GeneralDriver>(this);
     }
 
     protected override void Start()
