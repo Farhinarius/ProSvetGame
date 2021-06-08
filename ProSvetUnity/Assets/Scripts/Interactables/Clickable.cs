@@ -8,7 +8,7 @@ public class Clickable : InteractableItem
     [SerializeField] public Sprite originalSprite;
     [SerializeField] public Sprite newSprite;
 
-    public bool toogler;
+    public bool isSleep;
 
     protected override void Start()
     {
@@ -19,8 +19,8 @@ public class Clickable : InteractableItem
     public override void OnPointerButtonClick()
     {
         base.OnPointerButtonClick();
-        ChangeSprite(toogler ? originalSprite : newSprite);
-        toogler = !toogler;
+        isSleep = !isSleep;
+        ChangeSprite(isSleep ? newSprite : originalSprite);
     }
 
     public override void OnPointerButtonHold()

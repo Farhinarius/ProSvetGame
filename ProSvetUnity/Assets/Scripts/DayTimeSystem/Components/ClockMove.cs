@@ -34,7 +34,7 @@ public class ClockMove : MonoBehaviour
 
     }
 
-    public void SetUpNextClockAngle(TimeOfDay.States timeOfDayState, TimeOfDay timeOfDay)
+    public void SetUpNextClockAngle(TimeOfDay.States timeOfDayState)
     {
         switch (timeOfDayState)
         {

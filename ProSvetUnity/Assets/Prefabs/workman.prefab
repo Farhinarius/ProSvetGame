@@ -93,53 +93,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5.658784, y: 16.221909}
   m_EdgeRadius: 0
---- !u!1 &6235982120859088673
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4383133613760492795}
-  - component: {fileID: 7541864707224433651}
-  m_Layer: 9
-  m_Name: Actions
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &4383133613760492795
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6235982120859088673}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 7137522767552752482}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7541864707224433651
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6235982120859088673}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 938cda3ac6ff6a1459680b7f6c8412eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  actionTimer: 0
-  nightEventSystem: {fileID: 0}
-  workplaceTransform: {fileID: 0}
-  speed: 4
 --- !u!1 &6324490622667316926
 GameObject:
   m_ObjectHideFlags: 0
@@ -405,6 +358,7 @@ GameObject:
   - component: {fileID: 2160166615706932691}
   - component: {fileID: 6913374643726231928}
   - component: {fileID: 6913374643726231931}
+  - component: {fileID: 7884104601346547803}
   m_Layer: 0
   m_Name: workman
   m_TagString: Untagged
@@ -424,7 +378,6 @@ Transform:
   m_LocalScale: {x: 0.1, y: 0.1, z: 1}
   m_Children:
   - {fileID: 5203414655078918243}
-  - {fileID: 4383133613760492795}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -544,3 +497,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3.9753804, y: 14.304156}
   m_EdgeRadius: 0
+--- !u!114 &7884104601346547803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9137076107515504575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4b160f2fe7b34748a0c3eb4d61dc285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _target: {fileID: 0}
+  _speed: 4

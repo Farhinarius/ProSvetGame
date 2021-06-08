@@ -36,16 +36,6 @@ public class WorkmanActions : HumanActions
         Debug.Log("Cannot Work");
     }
 
-    void CannotWork_FixedUpdate()
-    {
-
-
-            // if (interactiveItems.lamp1.turnedOn)
-            //     fsm.ChangeState(States.Work);
-
-    }
-
-
     // Update is called once per frame
     private void Update()
     {

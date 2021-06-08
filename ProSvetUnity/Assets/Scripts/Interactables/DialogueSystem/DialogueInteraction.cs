@@ -20,6 +20,9 @@ public class DialogueInteraction : Interactable
 
         _dialogueCanvas = this.transform.GetChild(0).gameObject;
         _dialogueCanvas.SetActive(false);
+
+        onPointerButtonClick += ShowDialogue;
+        onPointerExit += ResetDialogue;
     }
     
     public override void OnPointerEnter()
@@ -31,8 +34,6 @@ public class DialogueInteraction : Interactable
     public override void OnPointerButtonClick()
     {
         base.OnPointerButtonClick();
-        _dialogueCanvas.SetActive(true);     // if canvas is not active after 4 seconds delay
-        _dialogueManager.CallDialogue();
     }
 
     public override void OnPointerButtonHold()
@@ -43,8 +44,6 @@ public class DialogueInteraction : Interactable
     public override void OnPointerExit()
     {
         base.OnPointerExit();
-        if (_dialogueManager != null)
-            timerDisplay = displayTime;         // run close dialog event
     }
 
     private void Update()
@@ -57,6 +56,19 @@ public class DialogueInteraction : Interactable
                 _dialogueCanvas.SetActive(false);
             }
         }
+    }
+
+    private void ShowDialogue()
+    {
+        if (!_dialogueCanvas.activeSelf)
+            _dialogueCanvas.SetActive(true);
+        _dialogueManager.CallDialogue();
+    }
+
+    private void ResetDialogue()
+    {
+        if (_dialogueManager != null)
+            timerDisplay = displayTime;         // run close dialog event
     }
 
 }

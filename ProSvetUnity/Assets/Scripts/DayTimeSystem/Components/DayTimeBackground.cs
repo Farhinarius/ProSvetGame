@@ -13,7 +13,7 @@ public class DayTimeBackground : MonoBehaviour
         TimeOfDay.onTimeOfDayChange += ChangeBackground;
     }
     
-    public void ChangeBackground(TimeOfDay.States state, TimeOfDay timeOfDay) =>
+    public void ChangeBackground(TimeOfDay.States state) =>
         gameObject.GetComponent<SpriteRenderer>().sprite = _timesOfDay[ (int) state ];
 
 }

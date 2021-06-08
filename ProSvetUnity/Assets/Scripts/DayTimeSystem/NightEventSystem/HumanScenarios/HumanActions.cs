@@ -9,18 +9,18 @@ public class HumanActions : MonoBehaviour
     // timer zone
     public const float changeTime = 2.5f;
 
-    int direction = 1;
+    protected int direction = 1;
 
-    float timer;
+    protected float timer;
 
     // night event system
-    private NightEventSystem _nightEventSystem;
+    protected NightEventSystem _nightEventSystem;
 
     protected Transform _transform;
 
     protected Transform _target;
 
-    protected float _speed;
+    public float _speed;
 
     protected Rigidbody2D _rb2d;
 
@@ -37,7 +37,7 @@ public class HumanActions : MonoBehaviour
     # region Methods
 
     protected void UpdateMove() =>
-        _transform.position = Vector2.MoveTowards(_transform.position, _target.position, _speed * Time.fixedDeltaTime);
+        _transform.position = Vector2.MoveTowards(_transform.position, _target.position, _speed * Time.deltaTime);
 
     protected void WalkAround()
     {
@@ -54,6 +54,11 @@ public class HumanActions : MonoBehaviour
         _rb2d.MovePosition(objPos);
     }
 
+    protected void ChangeDestination(Transform target) =>
+        _target = target;
+
+    protected bool ReachedOf(Transform target) =>
+        _transform.position == _target.position;
 
     #endregion
 }

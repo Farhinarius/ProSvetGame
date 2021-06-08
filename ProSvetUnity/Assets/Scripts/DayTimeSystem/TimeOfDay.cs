@@ -16,7 +16,7 @@ public class TimeOfDay : MonoBehaviour
 
     StateMachine<States, GeneralDriver> _fsm;
 
-    public static event System.Action<States, TimeOfDay> onTimeOfDayChange; 
+    public static event System.Action<States> onTimeOfDayChange; 
 
     [SerializeField] private float stateChangeTimer = 0;
 
@@ -24,9 +24,9 @@ public class TimeOfDay : MonoBehaviour
 
     private GameObject _nightEventSystem;
 
-    private DialoguePointerHandler _dialoguePointerHandler;
+    private PointerHandler _dialoguePointerHandler;
 
-    private ItemPointerHandler _itemPointerHandler;
+    private PointerHandler _itemPointerHandler;
 
 
     private void Awake()
@@ -39,7 +39,7 @@ public class TimeOfDay : MonoBehaviour
         _dialoguePointerHandler = Camera.main.GetComponent<DialoguePointerHandler>();
         _itemPointerHandler = Camera.main.GetComponent<ItemPointerHandler>();
 
-        _nightEventSystem = transform.Find("NightEventSystem").gameObject;
+        _nightEventSystem = GameObject.Find("TimeOfDay/NightEventSystem");
         _nightEventSystem.SetActive(false);
 
 
@@ -49,7 +49,7 @@ public class TimeOfDay : MonoBehaviour
     void Evening_Enter()
     {
         Debug.Log("Evening Enter");
-        onTimeOfDayChange?.Invoke(States.Evening, this);
+        onTimeOfDayChange?.Invoke(States.Evening);
 
         Helpers.TogglePointerHandler(_dialoguePointerHandler, true); // give access to dialogue interaction
         Helpers.TogglePointerHandler(_itemPointerHandler, false);    // restrict access to interactable item
@@ -85,7 +85,7 @@ public class TimeOfDay : MonoBehaviour
     void Night_Enter()
     {
         Debug.Log("Enter Night");
-        onTimeOfDayChange?.Invoke(States.Night, this);
+        onTimeOfDayChange?.Invoke(States.Night);
 
         Helpers.TogglePointerHandler(_dialoguePointerHandler, false);
         Helpers.TogglePointerHandler(_itemPointerHandler, true);
@@ -104,7 +104,7 @@ public class TimeOfDay : MonoBehaviour
     void Morning_Enter()
     {
         Debug.Log("Enter Morning");
-        onTimeOfDayChange?.Invoke(States.Morning, this);
+        onTimeOfDayChange?.Invoke(States.Morning);
 
         Helpers.TogglePointerHandler(_dialoguePointerHandler, false);
         Helpers.TogglePointerHandler(_itemPointerHandler, false);

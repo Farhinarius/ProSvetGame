@@ -26,17 +26,22 @@ public class NightEventSystem : ScriptableEventSystem
 
     [SerializeField] private InteractableItems _items;
 
-    [SerializeField] private Destinations _destinations = new Destinations();
-    
-    [SerializeField] private GameObject _girlActionObject, _workmanActionObject;
+    [SerializeField] private Destinations _destinations;
 
-    HumanActions _girlActions, _workmanActions;
+    [SerializeField] private HumanActions _girlActions, _workmanActions;
+
+    public InteractableItems InteractableItems { get => _items; }
+
+    public Destinations Destinations { get => _destinations; }
+
+    List<Transform> list;
 
 
     # endregion
 
     private void Awake()
     {
+        list = new List<Transform>();
         _fsm = new StateMachine<States, GeneralDriver>(this);
     }
 
@@ -49,23 +54,15 @@ public class NightEventSystem : ScriptableEventSystem
     {
         Debug.Log("Enter in night state machine event system (Init state)");
 
-        _girlActionObject.SetActive(true);
-        _workmanActionObject.SetActive(true);
-
-        _girlActions = gameObject.GetComponent<HumanActions>();
-        _workmanActions = gameObject.GetComponent<HumanActions>();
-
+        _girlActions.enabled = true;
+        _workmanActions.enabled = true;
+        
         _fsm.ChangeState(States.AllTiredAndSleepy);
     }
 
     void AllTiredAndSleepy_Enter()
     {
         Debug.Log("Enter All Tired and Sleepy");
-    }
-
-    void AllTiredAndSleepy_Update()
-    {
-
     }
 
     void gRestingwWorking_Enter()
@@ -80,8 +77,8 @@ public class NightEventSystem : ScriptableEventSystem
 
     private void OnDisable()
     {
-        _girlActionObject.SetActive(false);
-        _workmanActionObject.SetActive(false);
+        _girlActions.enabled = false;
+        _workmanActions.enabled = false;
     }
 
 }
