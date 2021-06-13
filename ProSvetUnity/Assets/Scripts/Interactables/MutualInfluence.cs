@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Lamp : InteractableItem
+public class MutualInfluence : InteractableItem
 {
     public bool turnedOn;
-    public Lamp _otherLamp;
+    public MutualInfluence _mutualItem;
 
     public SpriteRenderer _spriteRendererOrigin;
     public SpriteRenderer _spriteRendererOther;
@@ -44,7 +44,7 @@ public class Lamp : InteractableItem
         _spriteRendererOther.sprite = temp;
 
         turnedOn = !turnedOn;
-        _otherLamp.turnedOn = !_otherLamp.turnedOn;
+        _mutualItem.turnedOn = !_mutualItem.turnedOn;
     }
 
 }

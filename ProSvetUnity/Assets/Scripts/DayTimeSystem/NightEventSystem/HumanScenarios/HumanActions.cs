@@ -6,29 +6,30 @@ using System.Threading.Tasks;
 
 public class HumanActions : MonoBehaviour
 {
-    // timer zone
-    public const float changeTime = 2.5f;
+    #region Data
 
+    public const float changeTime = 10f;
+    public const float debugTime = 5f;
+    [SerializeField] protected float timer;
     protected int direction = 1;
 
-    protected float timer;
-
-    // night event system
-    protected NightEventSystem _nightEventSystem;
-
     protected Transform _transform;
-
     protected Transform _target;
 
     public float _speed;
 
     protected Rigidbody2D _rb2d;
 
+    protected LevelData LevelInfo { get; private set; }
+
+    # endregion
+
     # region MonoBehaviour Methods
 
     protected virtual void Start()
     {
-        _nightEventSystem = GameObject.Find("TimeOfDay/NightEventSystem").GetComponent<NightEventSystem>() ?? throw new NullReferenceException("Not initialized night event system");
+        LevelInfo = GameObject.Find("TimeOfDay/NightEventSystem").GetComponent<NightEventSystem>().LevelInfo
+                                                ?? throw new NullReferenceException("Level data not found");
         _transform = transform;
     }
 
@@ -54,11 +55,8 @@ public class HumanActions : MonoBehaviour
         _rb2d.MovePosition(objPos);
     }
 
-    protected void ChangeDestination(Transform target) =>
+    protected void SetDestination(Transform target) =>
         _target = target;
-
-    protected bool ReachedOf(Transform target) =>
-        _transform.position == _target.position;
 
     #endregion
 }

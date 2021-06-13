@@ -89,6 +89,7 @@ public class TimeOfDay : MonoBehaviour
 
         Helpers.TogglePointerHandler(_dialoguePointerHandler, false);
         Helpers.TogglePointerHandler(_itemPointerHandler, true);
+
         _nightEventSystem.SetActive(true);
     }
 
@@ -119,15 +120,13 @@ public class TimeOfDay : MonoBehaviour
         }
     }
 
-    // ---------- Class methods ----------
+    # region State Machine Driver Methods
+
     private void Update()
     {
         _fsm.Driver.Update.Invoke();
     }
 
-    // private void FixedUpdate()
-    // {
-    //     _fsm.Driver.FixedUpdate.Invoke();
-    // }
+    # endregion
 
 }

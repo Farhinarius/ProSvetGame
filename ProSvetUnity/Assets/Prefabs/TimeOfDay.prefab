@@ -44,15 +44,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eventTimer: 45
-  _items:
-    cat: {fileID: 0}
-    lamp: {fileID: 0}
-    lamp1: {fileID: 0}
-  _destinations:
-    bed: {fileID: 0}
-    workPlace: {fileID: 0}
-  _girlActionObject: {fileID: 0}
-  _workmanActionObject: {fileID: 0}
+  _levelData:
+    _items:
+      cat: {fileID: 0}
+      lamp: {fileID: 0}
+      lamp1: {fileID: 0}
+    _destinations:
+      sofa: {fileID: 0}
+      bed: {fileID: 0}
+      sink: {fileID: 0}
+      workmanInitialPosition: {fileID: 0}
+      workPlace: {fileID: 0}
+      shower: {fileID: 0}
+  _girlActions: {fileID: 0}
+  _workmanActions: {fileID: 0}
 --- !u!1 &6640939445318180821
 GameObject:
   m_ObjectHideFlags: 0

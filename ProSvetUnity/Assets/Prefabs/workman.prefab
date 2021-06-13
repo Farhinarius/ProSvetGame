@@ -358,7 +358,7 @@ GameObject:
   - component: {fileID: 2160166615706932691}
   - component: {fileID: 6913374643726231928}
   - component: {fileID: 6913374643726231931}
-  - component: {fileID: 7884104601346547803}
+  - component: {fileID: 6288210662188024600}
   m_Layer: 0
   m_Name: workman
   m_TagString: Untagged
@@ -497,7 +497,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3.9753804, y: 14.304156}
   m_EdgeRadius: 0
---- !u!114 &7884104601346547803
+--- !u!114 &6288210662188024600
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -506,8 +506,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 9137076107515504575}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4b160f2fe7b34748a0c3eb4d61dc285, type: 3}
+  m_Script: {fileID: 11500000, guid: 938cda3ac6ff6a1459680b7f6c8412eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _target: {fileID: 0}
   _speed: 4

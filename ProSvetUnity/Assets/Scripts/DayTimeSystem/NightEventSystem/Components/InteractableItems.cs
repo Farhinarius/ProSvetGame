@@ -4,7 +4,7 @@ using UnityEngine;
 public struct InteractableItems
 {
     public Clickable cat;
-    public Lamp lamp;
-    public Lamp lamp1;
+    public MutualInfluence lamp;
+    public MutualInfluence lamp1;
 }
 

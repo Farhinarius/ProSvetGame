@@ -53,11 +53,11 @@ TagManager:
   - name: Environment
     uniqueID: 949920717
     locked: 0
-  - name: Person
-    uniqueID: 4124484935
-    locked: 0
   - name: InteractableItem
     uniqueID: 2153281357
+    locked: 0
+  - name: Person
+    uniqueID: 4124484935
     locked: 0
   - name: UI
     uniqueID: 2065131913

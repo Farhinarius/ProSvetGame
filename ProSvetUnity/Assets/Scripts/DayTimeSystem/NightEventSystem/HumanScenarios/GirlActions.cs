@@ -1,13 +1,12 @@
 ﻿using UnityEngine;
 using MonsterLove.StateMachine;
-using System;
+using static Helpers;
 
 public class GirlActions : HumanActions
 {
     public enum States
     {
         Null,
-        Choice,
         StandStill,
         Rest,
         MovingToDestination,
@@ -16,15 +15,15 @@ public class GirlActions : HumanActions
 
     StateMachine<States, HumanDriver> _fsm;
 
-    public States CurrentState { get => _fsm.State; }
+    public States CurrentState => _fsm.State;
 
     private bool ItemsIsActivated =>
-        !_nightEventSystem.InteractableItems.lamp.turnedOn &&
-        _nightEventSystem.InteractableItems.cat.isSleep;
+        !LevelInfo.InteractableItems.lamp.turnedOn &&
+        LevelInfo.InteractableItems.cat.isTurnedOn;
 
     private bool ItemsIsDeactivated =>
-        _nightEventSystem.InteractableItems.lamp.turnedOn ||
-        !_nightEventSystem.InteractableItems.cat.isSleep;
+        LevelInfo.InteractableItems.lamp.turnedOn ||
+        !LevelInfo.InteractableItems.cat.isTurnedOn;
 
     private void Awake()
     {
@@ -50,7 +49,7 @@ public class GirlActions : HumanActions
 
     void StandStill_Exit()
     {
-        ChangeDestination(_nightEventSystem.Destinations.bed);
+        SetDestination(LevelInfo.Destinations.bed);
     }
 
     void MovingToDestination_Enter()
@@ -58,15 +57,15 @@ public class GirlActions : HumanActions
         Debug.Log($"Enter MovingToDestination. Move To {_target}");
     }
 
-    void MovingToDestination_Update()
+    void MovingToDestination_FixedUpdate()
     {
         UpdateMove();
 
-        if (ReachedOf(_target) )
+        if (Reached(_transform, _target))
         {
-            if ( _target == _nightEventSystem.Destinations.bed)
+            if ( _target == LevelInfo.Destinations.bed)
                 _fsm.ChangeState(States.Rest);
-            else if ( _target == _nightEventSystem.Destinations.sofa)
+            else if ( _target == LevelInfo.Destinations.sofa)
                 _fsm.ChangeState(States.StandStill);
         }
     }
@@ -89,7 +88,7 @@ public class GirlActions : HumanActions
 
     void Rest_Exit()
     {
-        ChangeDestination(_nightEventSystem.Destinations.sofa);
+        SetDestination(LevelInfo.Destinations.sofa);
     }
 
     # region StateMachine MonoBehaviour

@@ -12,4 +12,7 @@ public static class Helpers
 
     public static void TogglePointerHandler(PointerHandler pointerHandler, bool state) =>
         pointerHandler.enabled = state;
+
+    public static bool Reached(Transform current, Transform target) =>
+        Vector2.Distance(current.position, target.position) < 0.1;
 }

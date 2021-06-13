@@ -103,7 +103,7 @@ MonoBehaviour:
   _lerpSpeed: 4
   _zoomSpeed: 3
   _zoomInSpeed: 9
-  _movingSpeed: 7
+  _movingSpeed: 3
   _minimumCameraSize: 3
   _maximumCameraSize: 11
 --- !u!114 &5455867929415929618

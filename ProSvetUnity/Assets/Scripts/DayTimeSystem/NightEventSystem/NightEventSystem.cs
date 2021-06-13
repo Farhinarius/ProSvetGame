@@ -1,13 +1,10 @@
-﻿using System.ComponentModel.Design;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using MonsterLove.StateMachine;
 
 public class NightEventSystem : ScriptableEventSystem
 {
-    # region Structs
+    # region States
 
     [System.Serializable]
     enum States
@@ -24,24 +21,20 @@ public class NightEventSystem : ScriptableEventSystem
 
     StateMachine<States, GeneralDriver> _fsm;
 
-    [SerializeField] private InteractableItems _items;
-
-    [SerializeField] private Destinations _destinations;
+    [SerializeField] private LevelData _levelData;
 
     [SerializeField] private HumanActions _girlActions, _workmanActions;
 
-    public InteractableItems InteractableItems { get => _items; }
+    # endregion
 
-    public Destinations Destinations { get => _destinations; }
+    # region Properties
 
-    List<Transform> list;
-
+    public LevelData LevelInfo => _levelData;
 
     # endregion
 
     private void Awake()
     {
-        list = new List<Transform>();
         _fsm = new StateMachine<States, GeneralDriver>(this);
     }
 

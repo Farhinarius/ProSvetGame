@@ -26,7 +26,7 @@ public class ClockMove : MonoBehaviour
         {
             transform.rotation = Quaternion.Lerp(_transform.rotation, _targetRotation, Time.deltaTime);
 
-            if ( Mathf.Abs(_targetRotation.z - _transform.rotation.z) < 0.01f )
+            if ( Mathf.Abs(_targetRotation.z - _transform.rotation.z) < Vector2.kEpsilon )
                  rotating = false;
                 
             // Debug.Log(_transform.rotation.z);

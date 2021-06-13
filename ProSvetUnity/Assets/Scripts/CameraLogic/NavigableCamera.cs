@@ -122,8 +122,8 @@ public class NavigableCamera : MonoBehaviour
         {
             if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
             {
-                transform.position -= new Vector3(Input.GetAxisRaw("Mouse X") * Time.fixedDeltaTime * _movingSpeed,
-                                                  Input.GetAxisRaw("Mouse Y") * Time.fixedDeltaTime * _movingSpeed);
+                transform.position -= new Vector3(Input.GetAxisRaw("Mouse X") * Time.fixedDeltaTime * 6,
+                                                  Input.GetAxisRaw("Mouse Y") * Time.fixedDeltaTime * 6);
             }
         }
     }
