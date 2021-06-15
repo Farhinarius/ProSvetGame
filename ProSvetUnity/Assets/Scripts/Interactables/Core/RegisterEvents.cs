@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class InteractableItem : Interactable
+public static class RegisterEvents
 {
-
 }

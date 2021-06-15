@@ -3,7 +3,7 @@ using UnityEngine;
 [System.Serializable]
 public struct InteractableItems
 {
-    public Clickable cat;
+    public SpriteModifiable cat;
     public MutualInfluence lamp;
     public MutualInfluence lamp1;
 }

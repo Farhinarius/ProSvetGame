@@ -103,3 +103,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stateChangeTimer: 0
+  _mainCamera: {fileID: 0}

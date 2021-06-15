@@ -2,14 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MutualInfluence : InteractableItem
+public class MutualInfluence : Connected
 {
-    public bool turnedOn;
-    public MutualInfluence _mutualItem;
-
     public SpriteRenderer _spriteRendererOrigin;
     public SpriteRenderer _spriteRendererOther;
-
 
     protected override void Start()
     {
@@ -37,14 +33,11 @@ public class MutualInfluence : InteractableItem
         base.OnPointerExit();
     }
 
-    private void SwapSprites()
+    protected void SwapSprites()
     {
         var temp = _spriteRendererOrigin.sprite;
         _spriteRendererOrigin.sprite = _spriteRendererOther.sprite;
         _spriteRendererOther.sprite = temp;
-
-        turnedOn = !turnedOn;
-        _mutualItem.turnedOn = !_mutualItem.turnedOn;
     }
 
 }

@@ -18,12 +18,12 @@ public class GirlActions : HumanActions
     public States CurrentState => _fsm.State;
 
     private bool ItemsIsActivated =>
-        !LevelInfo.InteractableItems.lamp.turnedOn &&
-        LevelInfo.InteractableItems.cat.isTurnedOn;
+        !LevelInfo.InteractableItems.lamp._turnedOn &&
+        LevelInfo.InteractableItems.cat._turnedOn;
 
     private bool ItemsIsDeactivated =>
-        LevelInfo.InteractableItems.lamp.turnedOn ||
-        !LevelInfo.InteractableItems.cat.isTurnedOn;
+        LevelInfo.InteractableItems.lamp._turnedOn ||
+        !LevelInfo.InteractableItems.cat._turnedOn;
 
     private void Awake()
     {

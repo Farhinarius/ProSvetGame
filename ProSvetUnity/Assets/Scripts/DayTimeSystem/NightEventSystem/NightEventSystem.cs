@@ -49,7 +49,7 @@ public class NightEventSystem : ScriptableEventSystem
 
         _girlActions.enabled = true;
         _workmanActions.enabled = true;
-        
+
         _fsm.ChangeState(States.AllTiredAndSleepy);
     }
 

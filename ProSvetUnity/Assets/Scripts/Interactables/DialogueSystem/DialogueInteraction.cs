@@ -20,9 +20,6 @@ public class DialogueInteraction : Interactable
 
         _dialogueCanvas = this.transform.GetChild(0).gameObject;
         _dialogueCanvas.SetActive(false);
-
-        onPointerButtonClick += ShowDialogue;
-        onPointerExit += ResetDialogue;
     }
     
     public override void OnPointerEnter()
@@ -34,6 +31,7 @@ public class DialogueInteraction : Interactable
     public override void OnPointerButtonClick()
     {
         base.OnPointerButtonClick();
+        ShowDialogue();
     }
 
     public override void OnPointerButtonHold()
@@ -44,6 +42,7 @@ public class DialogueInteraction : Interactable
     public override void OnPointerExit()
     {
         base.OnPointerExit();
+        ResetDialogue();
     }
 
     private void Update()

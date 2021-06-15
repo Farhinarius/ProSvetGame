@@ -7,6 +7,8 @@ using System.Linq;
 
 public class TimeOfDay : MonoBehaviour
 {
+    # region States
+
     public enum States
     {
         Evening,
@@ -14,20 +16,28 @@ public class TimeOfDay : MonoBehaviour
         Morning
     }
 
+    #endregion
+
+    # region Fields
+
     StateMachine<States, GeneralDriver> _fsm;
 
-    public static event System.Action<States> onTimeOfDayChange; 
+    // TODO: delete later
+    public static event System.Action<States> onTimeOfDayChange;
 
+    // state change times fields
     [SerializeField] private float stateChangeTimer = 0;
-
     const float timeToChangeState = 3f;
 
+    // night event system
     private GameObject _nightEventSystem;
 
+    // pointer handlers
+    [SerializeField] private Camera _mainCamera;
     private PointerHandler _dialoguePointerHandler;
-
     private PointerHandler _itemPointerHandler;
 
+    #endregion
 
     private void Awake()
     {
@@ -36,12 +46,12 @@ public class TimeOfDay : MonoBehaviour
 
     private void Start()
     {
-        _dialoguePointerHandler = Camera.main.GetComponent<DialoguePointerHandler>();
-        _itemPointerHandler = Camera.main.GetComponent<ItemPointerHandler>();
+        _dialoguePointerHandler = _mainCamera.GetComponent<DialoguePointerHandler>();
+        _itemPointerHandler = _mainCamera.GetComponent<ItemPointerHandler>();
 
         _nightEventSystem = GameObject.Find("TimeOfDay/NightEventSystem");
         _nightEventSystem.SetActive(false);
-
+        
 
         _fsm.ChangeState(States.Evening);
     }

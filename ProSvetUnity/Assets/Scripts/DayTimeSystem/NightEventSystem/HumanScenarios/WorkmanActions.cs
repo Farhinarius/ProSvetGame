@@ -22,10 +22,10 @@ public class WorkmanActions : HumanActions
     public States CurrentState => _fsm.State;
 
     private bool lampIsTurnedOn =>
-        LevelInfo.InteractableItems.lamp1.turnedOn;
+        LevelInfo.InteractableItems.lamp1._turnedOn;
 
     private bool lampIsTurnedOff =>
-        !LevelInfo.InteractableItems.lamp1.turnedOn;
+        !LevelInfo.InteractableItems.lamp1._turnedOn;
 
     private void Awake()
     {
@@ -109,7 +109,7 @@ public class WorkmanActions : HumanActions
     {
         if (timer > 0) timer -= Time.deltaTime;
 
-        else if (timer <= 0) 
+        else
             _fsm.ChangeState(States.MovingToDestination);
     }
 

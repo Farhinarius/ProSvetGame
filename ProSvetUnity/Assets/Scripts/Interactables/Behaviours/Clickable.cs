@@ -1,26 +1,21 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Clickable : InteractableItem
 {
-    private SpriteRenderer _spriteRenderer;
-    [SerializeField] public Sprite originalSprite;
-    [SerializeField] public Sprite newSprite;
-
-    public bool isTurnedOn;
+    public bool _turnedOn;
 
     protected override void Start()
     {
         base.Start();
-        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     public override void OnPointerButtonClick()
     {
         base.OnPointerButtonClick();
-        isTurnedOn = !isTurnedOn;
-        ChangeSprite(isTurnedOn ? newSprite : originalSprite);
+        Switch();
     }
 
     public override void OnPointerButtonHold()
@@ -38,7 +33,9 @@ public class Clickable : InteractableItem
         base.OnPointerExit();
     }
 
-    private void ChangeSprite(Sprite spriteToChange) => 
-        _spriteRenderer.sprite = spriteToChange;
+    public void Switch()
+    {
+        _turnedOn = !_turnedOn;
+    }
 
 }
