@@ -1482,7 +1482,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _mutualItem
       value: 
-      objectReference: {fileID: 1442919732}
+      objectReference: {fileID: 830682178}
     - target: {fileID: 5520451511195791300, guid: 97e13211d6c3d0849ae6a06a3fa25356,
         type: 3}
       propertyPath: _spriteRendererOther

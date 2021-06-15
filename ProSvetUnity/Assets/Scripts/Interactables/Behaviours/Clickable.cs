@@ -33,7 +33,7 @@ public class Clickable : InteractableItem
         base.OnPointerExit();
     }
 
-    public void Switch()
+    protected void Switch()
     {
         _turnedOn = !_turnedOn;
     }
