@@ -8,6 +8,7 @@ public class JointAction : Connected
     private Sprite _origin;
     [SerializeField] private Sprite _spriteUpdate;
     private JointAction _mutualObj;
+    public static event System.Action onPointerButtonClick;
 
     protected override void Start()
     {
@@ -21,8 +22,9 @@ public class JointAction : Connected
         base.OnPointerButtonClick();
         this.UpdateSprite();
         _mutualObj.UpdateSprite();
+        onPointerButtonClick.Invoke();
     }
 
     private void UpdateSprite() =>
-        _spriteRenderer.sprite = _turnedOn ? _spriteUpdate : _origin;
+        _spriteRenderer.sprite = _turnedOn ? _origin : _spriteUpdate;
 }
