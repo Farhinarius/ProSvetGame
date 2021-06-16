@@ -71,9 +71,6 @@ public class GirlActions : HumanActions
             else 
             if ( _target.Equals(LevelInfo.Destinations.sofa))
                 _fsm.ChangeState(States.StandStill);
-            // else 
-            // if (_target.Equals(LevelInfo.Destinations.bed))
-            //     _fsm.ChangeState(States.Sleep);
         }
     }
 

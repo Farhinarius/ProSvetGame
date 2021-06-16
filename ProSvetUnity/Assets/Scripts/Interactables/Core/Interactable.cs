@@ -21,6 +21,7 @@ public class Interactable : MonoBehaviour, IPointerHandler
     public virtual void OnPointerButtonClick()
     {
         // Debug.Log("Pointer Click: " + _name);
+        _audioSource.Play();
     }
 
     public virtual void OnPointerButtonHold()
