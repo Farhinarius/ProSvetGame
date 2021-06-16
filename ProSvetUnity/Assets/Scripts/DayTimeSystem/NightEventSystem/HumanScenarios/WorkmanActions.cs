@@ -9,12 +9,12 @@ public class WorkmanActions : HumanActions
 {
     public enum States
     {
-        Idle,
         CannotWork,
         MovingToDestination,
         Work,
         TakeAShower,
-        Sleep
+        Sleep,
+        SleepDissatisfied
     }
 
     StateMachine<States, GeneralDriver> _fsm;
@@ -89,6 +89,7 @@ public class WorkmanActions : HumanActions
     void Work_Enter()
     {
         Debug.Log("Enter 'Work' state");
+        // change sprite 
         timer = debugTime;
     }
 
@@ -117,11 +118,14 @@ public class WorkmanActions : HumanActions
     void TakeAShower_Enter()
     {
         Debug.Log("Enter 'TakeAShower' state");
+        // change sprite
         timer = debugTime;
     }
 
     void TakeAShower_Update()
     {
+        if (!showerIsWorking) _fsm.ChangeState(States.MovingToDestination); 
+        
         if (timer > 0) timer -= Time.deltaTime;
         else  
             _fsm.ChangeState(States.MovingToDestination);
@@ -129,13 +133,27 @@ public class WorkmanActions : HumanActions
 
     void TakeAShower_Exit()
     {
+        if (!showerIsWorking) 
+            isDissatisfied = true;
+
+        
         SetDestination(LevelInfo.Destinations.workmanSleep);
     }
 
     void Sleep_Enter()
     {
         Debug.Log("Enter 'Sleep' state");
-        // switch sprite
+        
+
+        if (isDissatisfied)
+            _fsm.ChangeState(States.SleepDissatisfied);
+        // change sprite
+    }
+
+    void SleepDissatisfied_Enter()
+    {
+        Debug.Log("Enter 'SleepDissatisfied' state");
+        // change sprite
     }
 
 

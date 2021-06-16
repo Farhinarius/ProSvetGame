@@ -24,6 +24,8 @@ public class HumanActions : MonoBehaviour
     public bool _turnedOn;
     private SpriteRenderer _spriteRenderer;
     private Sprite _originalSprite;
+
+    protected bool isDissatisfied;
     
     [SerializeField] private Sprite[] _states;
 

@@ -6,8 +6,7 @@ public class NightEventSystem : ScriptableEventSystem
 {
     # region States
 
-    [System.Serializable]
-    enum States
+    public enum States
     {
         Init,
         AllTiredAndSleepy,
@@ -20,10 +19,16 @@ public class NightEventSystem : ScriptableEventSystem
     # region Fields 
 
     StateMachine<States, GeneralDriver> _fsm;
+    
+    public States CurrentState => _fsm.State;
 
     [SerializeField] private LevelData _levelData;
 
-    [SerializeField] private HumanActions _girlActions, _workmanActions;
+    [SerializeField] private GirlActions _girlActions;
+    [SerializeField] private WorkmanActions _workmanActions;
+
+    [SerializeField] private float escapeTime;
+    [SerializeField] private float escapeTimer;
 
     # endregion
 
@@ -40,6 +45,8 @@ public class NightEventSystem : ScriptableEventSystem
 
     private void Start()
     {
+        _girlActions.enabled = true;
+        _workmanActions.enabled = true;
         _fsm.ChangeState(States.Init);
     }
 
@@ -47,15 +54,14 @@ public class NightEventSystem : ScriptableEventSystem
     {
         Debug.Log("Enter in night state machine event system (Init state)");
 
-        _girlActions.enabled = true;
-        _workmanActions.enabled = true;
 
-        _fsm.ChangeState(States.AllTiredAndSleepy);
+
     }
 
     void AllTiredAndSleepy_Enter()
     {
-        Debug.Log("Enter All Tired and Sleepy");
+        Debug.Log("Enter 'All Tired and Sleepy' state");
+        
     }
 
     void gRestingwWorking_Enter()
@@ -72,6 +78,25 @@ public class NightEventSystem : ScriptableEventSystem
     {
         _girlActions.enabled = false;
         _workmanActions.enabled = false;
+    }
+
+    private void DefineState()
+    {
+        switch (CurrentState)
+        {
+            case States.Init:
+                if (_girlActions.CurrentState.Equals(GirlActions.States.StandStill)
+                    && _workmanActions.CurrentState.Equals(WorkmanActions.States.CannotWork))
+                {
+                    _fsm.ChangeState(States.AllTiredAndSleepy);
+                }
+                break;
+
+            case States.AllTiredAndSleepy:
+                break;
+
+        }
+
     }
 
 }

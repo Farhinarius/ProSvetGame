@@ -10,7 +10,8 @@ public class GirlActions : HumanActions
         StandStill,
         Rest,
         MovingToDestination,
-        Sleep
+        Sleep,
+        SleepDissatisfied
     }
 
     StateMachine<States, HumanDriver> _fsm;
@@ -101,7 +102,12 @@ public class GirlActions : HumanActions
     void Sleep_Update()
     {
         if (sinkIsOpened)
-            _fsm.ChangeState(States.Rest);
+            _fsm.ChangeState(States.SleepDissatisfied);
+    }
+
+    void SleepDissatisfied_Enter()
+    {
+        Debug.Log("Enter 'SleepDissatisfied' state");
     }
 
     # region StateMachine MonoBehaviour
