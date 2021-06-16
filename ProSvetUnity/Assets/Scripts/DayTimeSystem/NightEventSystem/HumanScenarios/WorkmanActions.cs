@@ -26,6 +26,9 @@ public class WorkmanActions : HumanActions
 
     private bool lampIsTurnedOff =>
         !LevelInfo.InteractableItems.lamp1._turnedOn;
+    
+    private bool showerIsWorking =>
+        LevelInfo.InteractableItems.shower._turnedOn;
 
     private void Awake()
     {
@@ -42,12 +45,15 @@ public class WorkmanActions : HumanActions
     void CannotWork_Enter()
     {
         Debug.Log("Enter 'Cannot Work' state");
+        timer = 2.0f;
     }
 
     void CannotWork_Update()
     {
-        if (lampIsTurnedOn)
-            _fsm.ChangeState(States.MovingToDestination);
+        if (timer > 0) timer -= Time.deltaTime;
+        else
+            if (lampIsTurnedOn)
+                _fsm.ChangeState(States.MovingToDestination);
     }
 
     void CannotWork_Exit()
@@ -66,12 +72,17 @@ public class WorkmanActions : HumanActions
 
         if (Reached(_transform, _target))
         {
-            if (_target == LevelInfo.Destinations.workPlace)
+            if (_target.Equals(LevelInfo.Destinations.workPlace))
                 _fsm.ChangeState(States.Work);
-            else if (_target == LevelInfo.Destinations.workmanInitialPosition)
+            else 
+            if (_target.Equals(LevelInfo.Destinations.cannotWorkPosition))
                 _fsm.ChangeState(States.CannotWork);
-            else if (_target == LevelInfo.Destinations.shower)
+            else
+            if (_target.Equals(LevelInfo.Destinations.shower))
                 _fsm.ChangeState(States.TakeAShower);
+            else 
+            if (_target.Equals(LevelInfo.Destinations.workmanSleep))
+                _fsm.ChangeState(States.Sleep);
         }
     }
 
@@ -84,19 +95,23 @@ public class WorkmanActions : HumanActions
     void Work_Update()
     {
         if (timer > 0) timer -= Time.deltaTime;
-        else if (lampIsTurnedOff || timer <= 0)
-            _fsm.ChangeState(States.MovingToDestination);
+        else 
+            if (lampIsTurnedOff || timer <= 0)
+                _fsm.ChangeState(States.MovingToDestination);
     }
 
     void Work_Exit()
     {
         if (lampIsTurnedOff)
         {
-            SetDestination(LevelInfo.Destinations.workmanInitialPosition);
+            SetDestination(LevelInfo.Destinations.cannotWorkPosition);
             return;
         }
 
-        SetDestination(LevelInfo.Destinations.shower);
+        if (showerIsWorking)
+            SetDestination(LevelInfo.Destinations.shower);
+        else
+            SetDestination(LevelInfo.Destinations.cannotWorkPosition);
     }
 
     void TakeAShower_Enter()
@@ -108,19 +123,19 @@ public class WorkmanActions : HumanActions
     void TakeAShower_Update()
     {
         if (timer > 0) timer -= Time.deltaTime;
-
-        else
+        else  
             _fsm.ChangeState(States.MovingToDestination);
     }
 
     void TakeAShower_Exit()
     {
-        SetDestination(LevelInfo.Destinations.workmanInitialPosition);
+        SetDestination(LevelInfo.Destinations.workmanSleep);
     }
 
-    void Idle_Enter()
+    void Sleep_Enter()
     {
-        
+        Debug.Log("Enter 'Sleep' state");
+        // switch sprite
     }
 
 

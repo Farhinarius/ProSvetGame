@@ -8,13 +8,7 @@ public class PointerHandler : MonoBehaviour
     private IPointerHandler _currentClickable, _previousClickable;
     private SpriteRenderer _concuredTerritory;
 
-    public static Vector2 MouseTarget
-    {
-        get 
-        {
-            return Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        }
-    }
+    public static Vector2 MouseTarget => Camera.main.ScreenToWorldPoint(Input.mousePosition);
     
     protected void HandleSinglePointer(RaycastHit2D rayHitObj)
     {

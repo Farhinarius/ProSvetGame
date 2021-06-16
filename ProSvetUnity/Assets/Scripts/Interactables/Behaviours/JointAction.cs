@@ -18,9 +18,9 @@ public class JointAction : Connected
 
     public override void OnPointerButtonClick()
     {
-        UpdateSprite();
-        _mutualObj.UpdateSprite();
         base.OnPointerButtonClick();
+        this.UpdateSprite();
+        _mutualObj.UpdateSprite();
     }
 
     private void UpdateSprite() =>

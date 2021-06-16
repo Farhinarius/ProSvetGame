@@ -7,7 +7,8 @@ public struct Destinations
     public Transform bed;
     public Transform sink;
     
-    public Transform workmanInitialPosition;
+    public Transform cannotWorkPosition;
     public Transform workPlace;
     public Transform shower;
+    public Transform workmanSleep;
 }

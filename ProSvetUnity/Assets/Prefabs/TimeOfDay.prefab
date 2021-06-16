@@ -49,6 +49,8 @@ MonoBehaviour:
       cat: {fileID: 0}
       lamp: {fileID: 0}
       lamp1: {fileID: 0}
+      sink: {fileID: 0}
+      shower: {fileID: 0}
     _destinations:
       sofa: {fileID: 0}
       bed: {fileID: 0}

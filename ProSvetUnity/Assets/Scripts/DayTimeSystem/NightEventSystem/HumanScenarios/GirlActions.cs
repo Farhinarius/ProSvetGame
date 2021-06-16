@@ -25,6 +25,9 @@ public class GirlActions : HumanActions
         LevelInfo.InteractableItems.lamp._turnedOn ||
         !LevelInfo.InteractableItems.cat._turnedOn;
 
+    private bool sinkIsOpened =>
+        LevelInfo.InteractableItems.sink._turnedOn;
+
     private void Awake()
     {
         _fsm = new StateMachine<States, HumanDriver>(this);
@@ -63,16 +66,15 @@ public class GirlActions : HumanActions
 
         if (Reached(_transform, _target))
         {
-            if ( _target == LevelInfo.Destinations.bed)
+            if ( _target.Equals(LevelInfo.Destinations.bed))
                 _fsm.ChangeState(States.Rest);
-            else if ( _target == LevelInfo.Destinations.sofa)
+            else 
+            if ( _target.Equals(LevelInfo.Destinations.sofa))
                 _fsm.ChangeState(States.StandStill);
+            // else 
+            // if (_target.Equals(LevelInfo.Destinations.bed))
+            //     _fsm.ChangeState(States.Sleep);
         }
-    }
-
-    void MovingToDestination_Exit()
-    {
-
     }
 
     void Rest_Enter()
@@ -84,11 +86,25 @@ public class GirlActions : HumanActions
     {
         if (ItemsIsDeactivated)
             _fsm.ChangeState(States.MovingToDestination);
+
+        if (!sinkIsOpened)
+            _fsm.ChangeState(States.Sleep);
     }
 
     void Rest_Exit()
     {
         SetDestination(LevelInfo.Destinations.sofa);
+    }
+
+    void Sleep_Enter()
+    {
+        Debug.Log("Enter 'Sleep' state");
+    }
+
+    void Sleep_Update()
+    {
+        if (sinkIsOpened)
+            _fsm.ChangeState(States.Rest);
     }
 
     # region StateMachine MonoBehaviour

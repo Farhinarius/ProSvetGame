@@ -17,10 +17,15 @@ public class HumanActions : MonoBehaviour
     protected Transform _target;
 
     public float _speed;
-
     protected Rigidbody2D _rb2d;
 
     protected LevelData LevelInfo { get; private set; }
+
+    public bool _turnedOn;
+    private SpriteRenderer _spriteRenderer;
+    private Sprite _originalSprite;
+    
+    [SerializeField] private Sprite[] _states;
 
     # endregion
 
@@ -31,6 +36,10 @@ public class HumanActions : MonoBehaviour
         LevelInfo = GameObject.Find("TimeOfDay/NightEventSystem").GetComponent<NightEventSystem>().LevelInfo
                                                 ?? throw new NullReferenceException("Level data not found");
         _transform = transform;
+
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _originalSprite = _spriteRenderer.sprite;
+
     }
 
     # endregion
@@ -57,6 +66,9 @@ public class HumanActions : MonoBehaviour
 
     protected void SetDestination(Transform target) =>
         _target = target;
+
+    protected void ChangeSprite(Sprite spriteToChange) =>
+        _spriteRenderer.sprite = _turnedOn ? spriteToChange : _originalSprite; 
 
     #endregion
 }
