@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Runtime.InteropServices.ComTypes;
+using UnityEngine;
 using MonsterLove.StateMachine;
 using static Helpers;
 
@@ -18,9 +19,11 @@ public class GirlActions : HumanActions
 
     public States CurrentState => _fsm.State;
 
+    public StateMachine<States, HumanDriver> FSM => _fsm;
+
     private bool ItemsIsActivated =>
-        !LevelInfo.InteractableItems.lamp._turnedOn &&
-        LevelInfo.InteractableItems.cat._turnedOn;
+        !LevelInfo.InteractableItems.lamp._turnedOn &&  // lamp turned off
+        LevelInfo.InteractableItems.cat._turnedOn;      // is sleeping
 
     private bool ItemsIsDeactivated =>
         LevelInfo.InteractableItems.lamp._turnedOn ||
@@ -78,6 +81,7 @@ public class GirlActions : HumanActions
     void Rest_Enter()
     {
         Debug.Log("Enter Rest");
+        timer = 4.0f;
     }
 
     void Rest_Update()
@@ -85,8 +89,14 @@ public class GirlActions : HumanActions
         if (ItemsIsDeactivated)
             _fsm.ChangeState(States.MovingToDestination);
 
-        if (!sinkIsOpened)
-            _fsm.ChangeState(States.Sleep);
+        if (timer > 0) timer -= Time.deltaTime;
+        else 
+        {
+            if (!sinkIsOpened)
+                _fsm.ChangeState(States.Sleep);
+            else
+                _fsm.ChangeState(States.SleepDissatisfied);
+        }
     }
 
     void Rest_Exit()
@@ -101,8 +111,17 @@ public class GirlActions : HumanActions
 
     void Sleep_Update()
     {
+        if (ItemsIsDeactivated)
+            _fsm.ChangeState(States.MovingToDestination);
+
         if (sinkIsOpened)
             _fsm.ChangeState(States.SleepDissatisfied);
+    }
+
+    void Sleep_Exit()
+    {
+        if (ItemsIsDeactivated)
+            SetDestination(LevelInfo.Destinations.sofa);
     }
 
     void SleepDissatisfied_Enter()

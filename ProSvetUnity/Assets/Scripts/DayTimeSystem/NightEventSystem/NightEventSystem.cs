@@ -6,12 +6,14 @@ public class NightEventSystem : ScriptableEventSystem
 {
     # region States
 
+    [System.Serializable]
     public enum States
     {
         Init,
-        AllTiredAndSleepy,
-        gDoNothingwWorking,
-        gRestwCannotWork
+        DoStuff,     // RestOrTakeAShower 
+        BadDreams,
+        OneGoodDream,
+        BestDream
     }
 
     #endregion
@@ -30,6 +32,8 @@ public class NightEventSystem : ScriptableEventSystem
     [SerializeField] private float escapeTime;
     [SerializeField] private float escapeTimer;
 
+    [SerializeField] private int score;
+
     # endregion
 
     # region Properties
@@ -43,35 +47,13 @@ public class NightEventSystem : ScriptableEventSystem
         _fsm = new StateMachine<States, GeneralDriver>(this);
     }
 
+    # region MonoBehaviour Methods
+
     private void Start()
     {
         _girlActions.enabled = true;
         _workmanActions.enabled = true;
         _fsm.ChangeState(States.Init);
-    }
-
-    void Init_Enter()
-    {
-        Debug.Log("Enter in night state machine event system (Init state)");
-
-
-
-    }
-
-    void AllTiredAndSleepy_Enter()
-    {
-        Debug.Log("Enter 'All Tired and Sleepy' state");
-        
-    }
-
-    void gRestingwWorking_Enter()
-    {
-
-    }
-
-    void gRestingwWorking_Update()
-    {
-
     }
 
     private void OnDisable()
@@ -80,21 +62,106 @@ public class NightEventSystem : ScriptableEventSystem
         _workmanActions.enabled = false;
     }
 
+    public void StateCallback(GirlActions.States girlState)
+    {
+        DefineState();
+    }
+
+    public void StateCallback(WorkmanActions.States workmanState)
+    {
+        DefineState();
+    }
+
+    # endregion
+
+    void Init_Enter()
+    {
+        Debug.Log("Enter in night state machine event system (Init state)");
+
+        // when any item is being clicked, check event system
+        // InteractableItem.onMousePointerClick += DefineState;
+
+
+        // This code RAISES EXCEPTION!!!    // Fix
+        _girlActions.FSM.Changed += StateCallback;
+        _workmanActions.FSM.Changed += StateCallback;
+    }
+
+    void DoStuff_Enter()
+    {
+        Debug.Log("Enter 'DoStuff' state");
+        score = 0;
+    }
+
+    void BadDreams_Enter()
+    {
+        Debug.Log("Enter 'BadDreams' state");
+        score = 1;
+    }
+    
+    void OneGoodDream_Enter()
+    {
+        Debug.Log("Enter 'OneGoodDream' state");
+        score = 2;
+    }
+        
+    void BestDream_Enter()
+    {
+        Debug.Log("Enter 'Best Dream' state");
+        score = 3;
+    }
+
     private void DefineState()
     {
         switch (CurrentState)
         {
             case States.Init:
-                if (_girlActions.CurrentState.Equals(GirlActions.States.StandStill)
-                    && _workmanActions.CurrentState.Equals(WorkmanActions.States.CannotWork))
-                {
-                    _fsm.ChangeState(States.AllTiredAndSleepy);
-                }
+                
+                if (_girlActions.CurrentState != GirlActions.States.Sleep &&
+                    _girlActions.CurrentState != GirlActions.States.SleepDissatisfied &&
+                    _workmanActions.CurrentState != WorkmanActions.States.Sleep &&
+                    _workmanActions.CurrentState != WorkmanActions.States.SleepDissatisfied)
+                    {
+                        _fsm.ChangeState(States.DoStuff);   // 1 star gaiin
+                    }
+                break;
+                
+            case States.DoStuff:
+                
+                if (_girlActions.CurrentState == GirlActions.States.SleepDissatisfied &&
+                    _workmanActions.CurrentState == WorkmanActions.States.SleepDissatisfied)
+                    {
+                        _fsm.ChangeState(States.BadDreams);     // transit to 1 stars   state lock
+                    }
+                
+                if (_girlActions.CurrentState == GirlActions.States.Sleep ||
+                    _workmanActions.CurrentState == WorkmanActions.States.Sleep)
+                    {
+                        _fsm.ChangeState(States.OneGoodDream);  // transit to 2 stars
+                    }
                 break;
 
-            case States.AllTiredAndSleepy:
-                break;
+            case States.OneGoodDream:
+                
+                if (_girlActions.CurrentState == GirlActions.States.Sleep &&
+                    _workmanActions.CurrentState == WorkmanActions.States.Sleep)
+                    {
+                        _fsm.ChangeState(States.BestDream);       // transit to 3 stars state lock
+                    }
+                
+                if (_girlActions.CurrentState != GirlActions.States.Sleep &&
+                    _workmanActions.CurrentState != WorkmanActions.States.Sleep)
+                    {
+                        _fsm.ChangeState(States.DoStuff);
+                    }
+                
+                if (_girlActions.CurrentState == GirlActions.States.SleepDissatisfied &&
+                    _workmanActions.CurrentState == WorkmanActions.States.SleepDissatisfied)
+                    {
+                        _fsm.ChangeState(States.BadDreams);     // transit to 1 stars   state lock
+                    }
 
+                break;
         }
 
     }
