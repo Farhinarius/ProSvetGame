@@ -1,0 +1,15 @@
+// Pointer handler options
+- Cast only one ray on specify layer logic for this ray (layer selection priority)
+
+// Camera logic
+- Activate camera bounds
+- Fixes Navigable camera script
+    - CameraFixed_Update change if block (very bad efficiency)
+    - Think about CameraTargetMovement_FixedUpdate if block
+    - Overall update flow in camera logic (Navigable Camera)
+
+// TimeOfDay State Machine System
+- Specify camera value in TimeOfDay system (replace Camera.Main)
+- Get GameObject Children NightEventSystem straight way
+- Create another timer logic for Evening_update
+
