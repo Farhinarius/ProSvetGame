@@ -34,6 +34,8 @@ public class NightEventSystem : ScriptableEventSystem
 
     [SerializeField] private int score;
 
+    [SerializeField] private ControlProgressBar progressBar;
+
     # endregion
 
     # region Properties
@@ -91,24 +93,22 @@ public class NightEventSystem : ScriptableEventSystem
     {
         Debug.Log("Enter 'DoStuff' state");
         score = 0;
+        // progressBar.DrawValue(score / 3);
     }
 
     void BadDreams_Enter()
     {
         Debug.Log("Enter 'BadDreams' state");
-        score = 1;
     }
     
     void OneGoodDream_Enter()
     {
         Debug.Log("Enter 'OneGoodDream' state");
-        score = 2;
     }
         
     void BestDream_Enter()
     {
         Debug.Log("Enter 'Best Dream' state");
-        score = 3;
     }
 
     private void DefineState()
@@ -121,45 +121,54 @@ public class NightEventSystem : ScriptableEventSystem
                     _girlActions.CurrentState != GirlActions.States.SleepDissatisfied &&
                     _workmanActions.CurrentState != WorkmanActions.States.Sleep &&
                     _workmanActions.CurrentState != WorkmanActions.States.SleepDissatisfied)
-                    {
-                        _fsm.ChangeState(States.DoStuff);   // 1 star gaiin
-                    }
+                {
+                    _fsm.ChangeState(States.DoStuff);       // 1 star gain
+                    // progressBar.DrawValue(aboveZero: true);
+                    progressBar.SetValue(0.186f);
+                }
                 break;
                 
             case States.DoStuff:
-                
+
                 if (_girlActions.CurrentState == GirlActions.States.SleepDissatisfied &&
                     _workmanActions.CurrentState == WorkmanActions.States.SleepDissatisfied)
-                    {
-                        _fsm.ChangeState(States.BadDreams);     // transit to 1 stars   state lock
-                    }
+                {
+                    _fsm.ChangeState(States.BadDreams);     // transit to 1 star   state lock
+                }
                 
                 if (_girlActions.CurrentState == GirlActions.States.Sleep ||
                     _workmanActions.CurrentState == WorkmanActions.States.Sleep)
-                    {
-                        _fsm.ChangeState(States.OneGoodDream);  // transit to 2 stars
-                    }
+                {
+                    _fsm.ChangeState(States.OneGoodDream);  // transit to 2 stars
+                    // progressBar.DrawValue(aboveZero: true);
+                    progressBar.SetValue(0.493f);
+                }
+
                 break;
 
             case States.OneGoodDream:
                 
                 if (_girlActions.CurrentState == GirlActions.States.Sleep &&
                     _workmanActions.CurrentState == WorkmanActions.States.Sleep)
-                    {
-                        _fsm.ChangeState(States.BestDream);       // transit to 3 stars state lock
-                    }
+                {
+                    _fsm.ChangeState(States.BestDream);       // transit to 3 stars state lock
+                    // progressBar.DrawValue(aboveZero: true);
+                    progressBar.SetValue(1);
+                }
                 
                 if (_girlActions.CurrentState != GirlActions.States.Sleep &&
                     _workmanActions.CurrentState != WorkmanActions.States.Sleep)
-                    {
-                        _fsm.ChangeState(States.DoStuff);
-                    }
+                {
+                    _fsm.ChangeState(States.DoStuff);
+                }
                 
                 if (_girlActions.CurrentState == GirlActions.States.SleepDissatisfied &&
                     _workmanActions.CurrentState == WorkmanActions.States.SleepDissatisfied)
-                    {
-                        _fsm.ChangeState(States.BadDreams);     // transit to 1 stars   state lock
-                    }
+                {
+                    _fsm.ChangeState(States.BadDreams);     // transit to 1 stars   state lock
+                    // progressBar.DrawValue(aboveZero: false);
+                    progressBar.SetValue(0.186f);
+                }
 
                 break;
         }

@@ -51,7 +51,6 @@ public class TimeOfDay : MonoBehaviour
 
         _nightEventSystem = GameObject.Find("TimeOfDay/NightEventSystem");
         _nightEventSystem.SetActive(false);
-        
 
         _fsm.ChangeState(States.Evening);
     }
