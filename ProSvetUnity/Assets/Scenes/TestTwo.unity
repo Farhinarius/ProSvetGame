@@ -1402,6 +1402,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI
       objectReference: {fileID: 0}
+    - target: {fileID: 1421007306237116365, guid: 6b097b2f65f17394786d6d69108608ca,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1421007306970349162, guid: 6b097b2f65f17394786d6d69108608ca,
         type: 3}
       propertyPath: m_FillAmount
