@@ -1,4 +1,5 @@
-﻿using System.Timers;
+﻿using System.Globalization;
+using System.Timers;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,17 +10,19 @@ public class WorkmanActions : HumanActions
 {
     public enum States
     {
-        Idle,
         CannotWork,
         MovingToDestination,
         Work,
         TakeAShower,
-        Sleep
+        Sleep,
+        SleepDissatisfied
     }
 
-    StateMachine<States, GeneralDriver> _fsm;
+    StateMachine<States, HumanDriver> _fsm;
 
     public States CurrentState => _fsm.State;
+
+    public StateMachine<States, HumanDriver> FSM => _fsm;
 
     private bool lampIsTurnedOn =>
         LevelInfo.InteractableItems.lamp1._turnedOn;
@@ -32,7 +35,7 @@ public class WorkmanActions : HumanActions
 
     private void Awake()
     {
-        _fsm = new StateMachine<States, GeneralDriver>(this);
+        _fsm = new StateMachine<States, HumanDriver>(this);
     }
 
     protected override void Start()
@@ -45,7 +48,7 @@ public class WorkmanActions : HumanActions
     void CannotWork_Enter()
     {
         Debug.Log("Enter 'Cannot Work' state");
-        timer = 2.0f;
+        timer = 1.0f;
     }
 
     void CannotWork_Update()
@@ -89,14 +92,14 @@ public class WorkmanActions : HumanActions
     void Work_Enter()
     {
         Debug.Log("Enter 'Work' state");
+        // change sprite 
         timer = debugTime;
     }
 
     void Work_Update()
     {
         if (timer > 0) timer -= Time.deltaTime;
-        else 
-            if (lampIsTurnedOff || timer <= 0)
+        if (timer <= 0 || lampIsTurnedOff)
                 _fsm.ChangeState(States.MovingToDestination);
     }
 
@@ -110,18 +113,21 @@ public class WorkmanActions : HumanActions
 
         if (showerIsWorking)
             SetDestination(LevelInfo.Destinations.shower);
-        else
-            SetDestination(LevelInfo.Destinations.cannotWorkPosition);
+        else 
+            _fsm.ChangeState(States.Work);  // return to this state and repeat work time
     }
 
     void TakeAShower_Enter()
     {
         Debug.Log("Enter 'TakeAShower' state");
+        // change sprite
         timer = debugTime;
     }
 
     void TakeAShower_Update()
     {
+        if (!showerIsWorking) _fsm.ChangeState(States.MovingToDestination); 
+        
         if (timer > 0) timer -= Time.deltaTime;
         else  
             _fsm.ChangeState(States.MovingToDestination);
@@ -129,19 +135,31 @@ public class WorkmanActions : HumanActions
 
     void TakeAShower_Exit()
     {
+        if (!showerIsWorking)
+            isDissatisfied = true;
+            // can add agro emotion
+        
         SetDestination(LevelInfo.Destinations.workmanSleep);
     }
 
     void Sleep_Enter()
     {
         Debug.Log("Enter 'Sleep' state");
-        // switch sprite
+
+        if (isDissatisfied)
+            _fsm.ChangeState(States.SleepDissatisfied);
+        // change sprite
+    }
+
+    void SleepDissatisfied_Enter()
+    {
+        Debug.Log("Enter 'SleepDissatisfied' state");
+        // change sprite
     }
 
 
     # region StateMachine Driver Methods
 
-    // Update is called once per frame
     private void Update()
     {
         _fsm.Driver.Update.Invoke();

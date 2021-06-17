@@ -8,24 +8,33 @@ public class HumanActions : MonoBehaviour
 {
     #region Data
 
+    // timers
     public const float changeTime = 10f;
     public const float debugTime = 5f;
     [SerializeField] protected float timer;
     protected int direction = 1;
 
+    // transforms
     protected Transform _transform;
     protected Transform _target;
 
+    // physics
     public float _speed;
     protected Rigidbody2D _rb2d;
-
-    protected LevelData LevelInfo { get; private set; }
-
+    
+    // sprite changing logic
     public bool _turnedOn;
     private SpriteRenderer _spriteRenderer;
     private Sprite _originalSprite;
-    
     [SerializeField] private Sprite[] _states;
+
+    // level data
+    protected LevelData LevelInfo { get; private set; }
+    
+    // personal info
+    protected bool isDissatisfied;
+
+    // emotion in future ???
 
     # endregion
 
@@ -39,7 +48,6 @@ public class HumanActions : MonoBehaviour
 
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _originalSprite = _spriteRenderer.sprite;
-
     }
 
     # endregion
