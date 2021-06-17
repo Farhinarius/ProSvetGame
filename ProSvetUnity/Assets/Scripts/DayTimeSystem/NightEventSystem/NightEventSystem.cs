@@ -123,8 +123,9 @@ public class NightEventSystem : ScriptableEventSystem
                     _workmanActions.CurrentState != WorkmanActions.States.SleepDissatisfied)
                 {
                     _fsm.ChangeState(States.DoStuff);       // 1 star gain
-                    // progressBar.DrawValue(aboveZero: true);
-                    progressBar.SetValue(0.186f);
+
+                    StartCoroutine(progressBar.DrawValue(0.186f));
+                    // progressBar.SetValue(0.186f);
                 }
                 break;
                 
@@ -140,8 +141,9 @@ public class NightEventSystem : ScriptableEventSystem
                     _workmanActions.CurrentState == WorkmanActions.States.Sleep)
                 {
                     _fsm.ChangeState(States.OneGoodDream);  // transit to 2 stars
-                    // progressBar.DrawValue(aboveZero: true);
-                    progressBar.SetValue(0.493f);
+                    
+                    StartCoroutine(progressBar.DrawValue(0.493f));
+                    // progressBar.SetValue(0.493f);
                 }
 
                 break;
@@ -152,8 +154,10 @@ public class NightEventSystem : ScriptableEventSystem
                     _workmanActions.CurrentState == WorkmanActions.States.Sleep)
                 {
                     _fsm.ChangeState(States.BestDream);       // transit to 3 stars state lock
-                    // progressBar.DrawValue(aboveZero: true);
-                    progressBar.SetValue(1);
+
+
+                    StartCoroutine(progressBar.DrawValue(1));
+                    // progressBar.SetValue(1);
                 }
                 
                 if (_girlActions.CurrentState != GirlActions.States.Sleep &&
@@ -166,8 +170,9 @@ public class NightEventSystem : ScriptableEventSystem
                     _workmanActions.CurrentState == WorkmanActions.States.SleepDissatisfied)
                 {
                     _fsm.ChangeState(States.BadDreams);     // transit to 1 stars   state lock
-                    // progressBar.DrawValue(aboveZero: false);
-                    progressBar.SetValue(0.186f);
+
+                    StartCoroutine(progressBar.DrawValue(0.186f));
+                    // progressBar.SetValue(0.186f);
                 }
 
                 break;
