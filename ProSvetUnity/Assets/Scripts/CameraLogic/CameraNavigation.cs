@@ -2,7 +2,7 @@
 using UnityEngine;
 using MonsterLove.StateMachine;
 
-public class NavigableCamera : MonoBehaviour
+public class CameraNavigation : MonoBehaviour
 {
     #region Fields
 
@@ -16,12 +16,12 @@ public class NavigableCamera : MonoBehaviour
     StateMachine<States, CameraDriver> fsm;
 
     [SerializeField] private Transform _target;
-    [SerializeField] private float _lerpSpeed = 4;
-    [SerializeField] private float _zoomSpeed = 3;
-    [SerializeField] private float _zoomInSpeed = 11;
-    [SerializeField] private float _movingSpeed = 7;
-    [SerializeField] private float _minimumCameraSize = 3;
-    [SerializeField] private float _maximumCameraSize = 11;
+    [SerializeField] private float _lerpSpeed; // default 4
+    [SerializeField] private float _zoomSpeed; // default 3
+    [SerializeField] private float _zoomInSpeed; // default 9
+    [SerializeField] private float _movingSpeed; // default 8
+    [SerializeField] private float _minimumCameraSize; // default 3
+    [SerializeField] private float _maximumCameraSize; // default 11
 
     private Camera _mainCam;
 

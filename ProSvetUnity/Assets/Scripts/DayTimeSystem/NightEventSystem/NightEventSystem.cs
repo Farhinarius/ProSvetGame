@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using MonsterLove.StateMachine;
+using static ControlProgressBar.Limits;
 
 public class NightEventSystem : ScriptableEventSystem
 {
@@ -31,8 +32,6 @@ public class NightEventSystem : ScriptableEventSystem
 
     [SerializeField] private float escapeTime;
     [SerializeField] private float escapeTimer;
-
-    [SerializeField] private int score;
 
     [SerializeField] private ControlProgressBar progressBar;
 
@@ -92,8 +91,6 @@ public class NightEventSystem : ScriptableEventSystem
     void DoStuff_Enter()
     {
         Debug.Log("Enter 'DoStuff' state");
-        score = 0;
-        // progressBar.DrawValue(score / 3);
     }
 
     void BadDreams_Enter()
@@ -124,8 +121,7 @@ public class NightEventSystem : ScriptableEventSystem
                 {
                     _fsm.ChangeState(States.DoStuff);       // 1 star gain
 
-                    StartCoroutine(progressBar.DrawValue(0.186f));
-                    // progressBar.SetValue(0.186f);
+                    StartCoroutine(progressBar.DrawValue(OneStar));
                 }
                 break;
                 
@@ -142,8 +138,7 @@ public class NightEventSystem : ScriptableEventSystem
                 {
                     _fsm.ChangeState(States.OneGoodDream);  // transit to 2 stars
                     
-                    StartCoroutine(progressBar.DrawValue(0.493f));
-                    // progressBar.SetValue(0.493f);
+                    StartCoroutine(progressBar.DrawValue(TwoStar));
                 }
 
                 break;
@@ -155,9 +150,7 @@ public class NightEventSystem : ScriptableEventSystem
                 {
                     _fsm.ChangeState(States.BestDream);       // transit to 3 stars state lock
 
-
-                    StartCoroutine(progressBar.DrawValue(1));
-                    // progressBar.SetValue(1);
+                    StartCoroutine(progressBar.DrawValue(ThreeStar));
                 }
                 
                 if (_girlActions.CurrentState != GirlActions.States.Sleep &&
@@ -171,8 +164,7 @@ public class NightEventSystem : ScriptableEventSystem
                 {
                     _fsm.ChangeState(States.BadDreams);     // transit to 1 stars   state lock
 
-                    StartCoroutine(progressBar.DrawValue(0.186f));
-                    // progressBar.SetValue(0.186f);
+                    StartCoroutine(progressBar.DrawValue(OneStar));
                 }
 
                 break;

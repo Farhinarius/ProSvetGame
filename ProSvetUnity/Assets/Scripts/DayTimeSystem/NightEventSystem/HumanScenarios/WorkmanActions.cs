@@ -162,12 +162,18 @@ public class WorkmanActions : HumanActions
 
     private void Update()
     {
+
         _fsm.Driver.Update.Invoke();
     }
 
     private void FixedUpdate()
     {
         _fsm.Driver.FixedUpdate.Invoke();
+    }
+
+    private void OnMouseButtonClick()
+    {
+        _fsm.Driver.OnMouseButtonClick.Invoke();
     }
 
     # endregion

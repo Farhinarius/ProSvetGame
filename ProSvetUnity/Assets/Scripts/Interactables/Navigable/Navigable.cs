@@ -5,6 +5,12 @@ public class Navigable : Interactable
 {
     public static event Action<Transform> onViewRoomChanged;
 
+    public override void OnPointerEnter()
+    {
+        base.OnPointerEnter();
+        GetComponent<SpriteRenderer>().color = Color.yellow;       // stay mock implementation, later change sprite to highlighted
+    }
+
     public override void OnPointerButtonClick()
     {
         base.OnPointerButtonClick();
@@ -14,12 +20,6 @@ public class Navigable : Interactable
     public override void OnPointerButtonHold()
     {
         base.OnPointerButtonHold();
-    }
-
-    public override void OnPointerEnter()
-    {
-        base.OnPointerEnter();
-        GetComponent<SpriteRenderer>().color = Color.yellow;       // stay mock implementation, later change sprite to highlighted
     }
 
     public override void OnPointerExit()

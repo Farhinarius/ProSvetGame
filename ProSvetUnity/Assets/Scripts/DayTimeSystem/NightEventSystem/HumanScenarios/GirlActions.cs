@@ -40,6 +40,7 @@ public class GirlActions : HumanActions
     protected override void Start()
     {
         base.Start();
+        InteractableItem.OnMouseButtonClick += OnMouseButtonClick;
         _fsm.ChangeState(States.StandStill);
     }
 
@@ -50,12 +51,14 @@ public class GirlActions : HumanActions
 
     void StandStill_Update()
     {
+        Debug.Log("Clicked");
         if (ItemsIsActivated)
             _fsm.ChangeState(States.MovingToDestination);
     }
 
     void StandStill_Exit()
     {
+        Debug.Log("Exit stand still");
         SetDestination(LevelInfo.Destinations.bed);
     }
 
@@ -129,7 +132,7 @@ public class GirlActions : HumanActions
         Debug.Log("Enter 'SleepDissatisfied' state");
     }
 
-    # region StateMachine MonoBehaviour
+    #region StateMachine Driver Methods
 
     private void Update()
     {
@@ -141,7 +144,11 @@ public class GirlActions : HumanActions
         _fsm.Driver.FixedUpdate.Invoke();
     }
 
-    # endregion 
+    private void OnMouseButtonClick()
+    {
+        _fsm.Driver.OnMouseButtonClick.Invoke();
+    }
 
+    # endregion
 
 }

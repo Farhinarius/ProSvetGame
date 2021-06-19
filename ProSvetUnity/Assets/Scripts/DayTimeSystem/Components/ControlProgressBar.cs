@@ -11,6 +11,15 @@ public class ControlProgressBar : MonoBehaviour
 
     private bool _positiveIncrement;
 
+    public static class Limits
+    {
+        public static float OneStar => 0.186f;
+
+        public static float TwoStar => 0.493f;
+
+        public static float ThreeStar => 1f;
+    }
+
     public float Value => progressBar.fillAmount;
    
     private void Start()
@@ -23,7 +32,7 @@ public class ControlProgressBar : MonoBehaviour
 
     public IEnumerator DrawValue(float limit)
     {
-        while ( !Mathf.Approximately(limit, progressBar.fillAmount) )
+        while (!Mathf.Approximately(limit, progressBar.fillAmount))
         {
             yield return new WaitForFixedUpdate();
             progressBar.fillAmount = Mathf.Lerp(progressBar.fillAmount, limit, Time.fixedDeltaTime * 2);

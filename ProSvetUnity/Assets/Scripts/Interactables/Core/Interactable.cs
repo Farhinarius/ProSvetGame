@@ -8,9 +8,9 @@ public class Interactable : MonoBehaviour, IPointerHandler
     [SerializeField] protected AudioSource _audioSource;
     protected string _name;
 
-    public static event Action onMousePointerEnter;
-    public static event Action onMousePointerClick;
-    public static event Action onMousePointerExit;
+    public static event Action OnMouseEnter;
+    public static event Action OnMouseButtonClick;
+    public static event Action OnMouseExit;
 
     protected virtual void Start()
     {
@@ -20,13 +20,13 @@ public class Interactable : MonoBehaviour, IPointerHandler
     public virtual void OnPointerEnter()
     {
         // Debug.Log("Poitner Enter: " + _name);
-        onMousePointerEnter?.Invoke();
+        OnMouseEnter?.Invoke();
     }
 
     public virtual void OnPointerButtonClick()
     {
         // Debug.Log("Pointer Click: " + _name);
-        onMousePointerClick?.Invoke();
+        OnMouseButtonClick?.Invoke();
 
         if (_audioSource != null)
             _audioSource.Play();
@@ -40,6 +40,6 @@ public class Interactable : MonoBehaviour, IPointerHandler
     public virtual void OnPointerExit()
     {
         // Debug.Log("Pointer Exit: " + _name);
-        onMousePointerExit?.Invoke();
+        OnMouseExit?.Invoke();
     }
 }

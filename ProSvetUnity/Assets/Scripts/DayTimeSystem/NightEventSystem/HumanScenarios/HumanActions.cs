@@ -3,10 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Threading.Tasks;
+using MonsterLove.StateMachine;
 
 public class HumanActions : MonoBehaviour
 {
     #region Data
+
+    // State Machine behaviour
+    
 
     // timers
     public const float changeTime = 10f;
@@ -36,6 +40,7 @@ public class HumanActions : MonoBehaviour
 
     // emotion in future ???
 
+   
     # endregion
 
     # region MonoBehaviour Methods
@@ -76,7 +81,7 @@ public class HumanActions : MonoBehaviour
         _target = target;
 
     protected void ChangeSprite(Sprite spriteToChange) =>
-        _spriteRenderer.sprite = _turnedOn ? spriteToChange : _originalSprite; 
+        _spriteRenderer.sprite = _turnedOn ? spriteToChange : _originalSprite;
 
     #endregion
 }
