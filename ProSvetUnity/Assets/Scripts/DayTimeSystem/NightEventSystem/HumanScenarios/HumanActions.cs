@@ -2,8 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Threading.Tasks;
-using MonsterLove.StateMachine;
+using static Helpers;
 
 public class HumanActions : MonoBehaviour
 {
@@ -18,9 +17,8 @@ public class HumanActions : MonoBehaviour
     [SerializeField] protected float timer;
     protected int direction = 1;
 
-    // transforms
+    // current transform
     protected Transform _transform;
-    protected Transform _target;
 
     // physics
     public float _speed;
@@ -59,8 +57,17 @@ public class HumanActions : MonoBehaviour
 
     # region Methods
 
-    protected void UpdateMove() =>
-        _transform.position = Vector2.MoveTowards(_transform.position, _target.position, _speed * Time.deltaTime);
+    protected IEnumerator MoveTo(Transform target)
+    {
+        while (!Reached(_transform, target))
+        {
+            yield return new WaitForEndOfFrame();
+            _transform.position = Vector2.MoveTowards(_transform.position, target.position, _speed * Time.deltaTime);
+        }
+    }
+
+    protected void ChangeSprite(Sprite spriteToChange) =>
+        _spriteRenderer.sprite = _turnedOn ? spriteToChange : _originalSprite;
 
     protected void WalkAround()
     {
@@ -76,12 +83,6 @@ public class HumanActions : MonoBehaviour
         objPos.x += _speed * Time.fixedDeltaTime * direction;
         _rb2d.MovePosition(objPos);
     }
-
-    protected void SetDestination(Transform target) =>
-        _target = target;
-
-    protected void ChangeSprite(Sprite spriteToChange) =>
-        _spriteRenderer.sprite = _turnedOn ? spriteToChange : _originalSprite;
 
     #endregion
 }

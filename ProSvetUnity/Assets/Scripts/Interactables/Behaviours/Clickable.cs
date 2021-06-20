@@ -14,8 +14,8 @@ public class Clickable : InteractableItem
 
     public override void OnPointerButtonClick()
     {
-        base.OnPointerButtonClick();
         Switch();
+        base.OnPointerButtonClick();
     }
 
     public override void OnPointerButtonHold()

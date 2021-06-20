@@ -18,8 +18,8 @@ public class Connected : Clickable
 
     public override void OnPointerButtonClick()
     {
-        base.OnPointerButtonClick();
         SwitchMutual();
+        base.OnPointerButtonClick();
     }
 
     public override void OnPointerButtonHold()

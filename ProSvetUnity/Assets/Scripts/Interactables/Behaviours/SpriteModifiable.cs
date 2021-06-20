@@ -4,21 +4,18 @@ using UnityEngine;
 
 public class SpriteModifiable : Clickable
 {
-    private SpriteRenderer _spriteRenderer;
-
     [SerializeField] private Sprite _originalSprite;
     [SerializeField] private Sprite _newSprite;
 
     protected override void Start()
     {
         base.Start();
-        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     public override void OnPointerButtonClick()
     {
-        base.OnPointerButtonClick();
         SwitchSprite();
+        base.OnPointerButtonClick();
     }
 
     public override void OnPointerButtonHold()
@@ -37,5 +34,5 @@ public class SpriteModifiable : Clickable
     }
 
     public void SwitchSprite() =>
-        _spriteRenderer.sprite = _turnedOn ? _newSprite : _originalSprite;
+        _spriteRenderer.sprite = _turnedOn ? _originalSprite : _newSprite;
 }
