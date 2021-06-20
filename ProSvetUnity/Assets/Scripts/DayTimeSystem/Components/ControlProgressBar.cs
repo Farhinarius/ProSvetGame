@@ -32,10 +32,15 @@ public class ControlProgressBar : MonoBehaviour
 
     public IEnumerator DrawValue(float limit)
     {
-        while (!Mathf.Approximately(limit, progressBar.fillAmount))
+        while (Mathf.Abs(limit - progressBar.fillAmount) > 0.01)
         {
-            yield return new WaitForFixedUpdate();
-            progressBar.fillAmount = Mathf.Lerp(progressBar.fillAmount, limit, Time.fixedDeltaTime * 2);
+            yield return new WaitForEndOfFrame();
+            progressBar.fillAmount = Mathf.Lerp(progressBar.fillAmount, limit, Time.deltaTime * 2);
         }
+    }
+
+    public IEnumerator WaitDrawValue(float limit)
+    {
+        yield return StartCoroutine(DrawValue(limit));
     }
 }

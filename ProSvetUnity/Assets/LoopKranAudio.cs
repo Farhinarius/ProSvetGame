@@ -16,7 +16,7 @@ public class LoopKranAudio : MonoBehaviour
 
     private void switchAudioSource()
     {
-        if (action._turnedOn)
+        if (!action._turnedOn)
             LoopSoundOn();
         else
             LoopSoundOff();

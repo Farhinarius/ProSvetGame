@@ -51,111 +51,78 @@ public class WorkmanActions : HumanActions
         timer = 1.0f;
     }
 
-    // void CannotWork_Update()
-    // {
-    //     if (timer > 0) timer -= Time.deltaTime;
-    //     else
-    //         if (lampIsTurnedOn)
-    //             _fsm.ChangeState(States.MovingToDestination);
-    // }
+    void CannotWork_Update()
+    {
+        if (timer > 0) timer -= Time.deltaTime;
+        else
+        if (lampIsTurnedOn)
+        {
+            StartCoroutine(WaitMoveTo(LevelInfo.Destinations.workPlace));
+            _fsm.ChangeState(States.Work);
+        }
+    }
 
-    // void CannotWork_Exit()
-    // {
-    //     SetDestination(LevelInfo.Destinations.workPlace);
-    // }
+    void Work_Enter()
+    {
+        Debug.Log("Enter 'Work' state");
+        // change sprite 
+        timer = debugTime;
+    }
+    void Work_Update()
+    {
+        if (timer > 0) timer -= Time.deltaTime;
+        if (timer <= 0 || lampIsTurnedOff)
+        {
+            if (lampIsTurnedOff)
+            {
+                StartCoroutine(WaitMoveTo(LevelInfo.Destinations.cannotWorkPosition));
+                _fsm.ChangeState(States.CannotWork);
+            }
 
-    // void MovingToDestination_Enter()
-    // {
-    //     Debug.Log($"Enter MovingToDestination. Move To {_target}");
-    // }
+            if (showerIsWorking)
+            {
+                StartCoroutine(WaitMoveTo(LevelInfo.Destinations.shower));
+                _fsm.ChangeState(States.TakeAShower);
+            }
+            else
+                _fsm.ChangeState(States.Work);  // return to this state and repeat work time
+        }
+    }
 
-    // void MovingToDestination_FixedUpdate()
-    // {
-    //     UpdateMove();
+    void TakeAShower_Enter()
+    {
+        Debug.Log("Enter 'TakeAShower' state");
+        // change sprite
+        timer = debugTime;
+    }
 
-    //     if (Reached(_transform, _target))
-    //     {
-    //         if (_target.Equals(LevelInfo.Destinations.workPlace))
-    //             _fsm.ChangeState(States.Work);
-    //         else 
-    //         if (_target.Equals(LevelInfo.Destinations.cannotWorkPosition))
-    //             _fsm.ChangeState(States.CannotWork);
-    //         else
-    //         if (_target.Equals(LevelInfo.Destinations.shower))
-    //             _fsm.ChangeState(States.TakeAShower);
-    //         else 
-    //         if (_target.Equals(LevelInfo.Destinations.workmanSleep))
-    //             _fsm.ChangeState(States.Sleep);
-    //     }
-    // }
+    void TakeAShower_Update()
+    {
+        if (!showerIsWorking)
+        {
+            StartCoroutine(WaitMoveTo(LevelInfo.Destinations.workmanSleep));
+            _fsm.ChangeState(States.SleepDissatisfied);
+        }
+ 
+        if (timer > 0) timer -= Time.deltaTime;
+        else  
+        {
+            StartCoroutine(WaitMoveTo(LevelInfo.Destinations.workmanSleep));
+            _fsm.ChangeState(States.Sleep);
+        }
+    }
 
-    // void Work_Enter()
-    // {
-    //     Debug.Log("Enter 'Work' state");
-    //     // change sprite 
-    //     timer = debugTime;
-    // }
+    void Sleep_Enter()
+    {
+        Debug.Log("Enter 'Sleep' state");
+        // change sprite
+    }
 
-    // void Work_Update()
-    // {
-    //     if (timer > 0) timer -= Time.deltaTime;
-    //     if (timer <= 0 || lampIsTurnedOff)
-    //             _fsm.ChangeState(States.MovingToDestination);
-    // }
-
-    // void Work_Exit()
-    // {
-    //     if (lampIsTurnedOff)
-    //     {
-    //         SetDestination(LevelInfo.Destinations.cannotWorkPosition);
-    //         return;
-    //     }
-
-    //     if (showerIsWorking)
-    //         SetDestination(LevelInfo.Destinations.shower);
-    //     else 
-    //         _fsm.ChangeState(States.Work);  // return to this state and repeat work time
-    // }
-
-    // void TakeAShower_Enter()
-    // {
-    //     Debug.Log("Enter 'TakeAShower' state");
-    //     // change sprite
-    //     timer = debugTime;
-    // }
-
-    // void TakeAShower_Update()
-    // {
-    //     if (!showerIsWorking) _fsm.ChangeState(States.MovingToDestination); 
-        
-    //     if (timer > 0) timer -= Time.deltaTime;
-    //     else  
-    //         _fsm.ChangeState(States.MovingToDestination);
-    // }
-
-    // void TakeAShower_Exit()
-    // {
-    //     if (!showerIsWorking)
-    //         isDissatisfied = true;
-    //         // can add agro emotion
-        
-    //     SetDestination(LevelInfo.Destinations.workmanSleep);
-    // }
-
-    // void Sleep_Enter()
-    // {
-    //     Debug.Log("Enter 'Sleep' state");
-
-    //     if (isDissatisfied)
-    //         _fsm.ChangeState(States.SleepDissatisfied);
-    //     // change sprite
-    // }
-
-    // void SleepDissatisfied_Enter()
-    // {
-    //     Debug.Log("Enter 'SleepDissatisfied' state");
-    //     // change sprite
-    // }
+    void SleepDissatisfied_Enter()
+    {
+        Debug.Log("Enter 'SleepDissatisfied' state");
+        // change sprite
+    }
 
 
     # region StateMachine Driver Methods

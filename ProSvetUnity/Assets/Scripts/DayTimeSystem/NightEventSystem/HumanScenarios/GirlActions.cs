@@ -40,7 +40,7 @@ public class GirlActions : HumanActions
     protected override void Start()
     {
         base.Start();
-        InteractableItem.OnMouseButtonCallback += OnMouseButtonClick;
+        InteractableItem.OnMouseButtonCallback += OnItemClick;
         _fsm.ChangeState(States.StandStill);
     }
 
@@ -49,15 +49,13 @@ public class GirlActions : HumanActions
         Debug.Log("Enter StandStill");
     }
 
-    void StandStill_OnMouseButtonClick()
+    void StandStill_Update()
     {
         if (ItemsIsActivated)
+        {
+            StartCoroutine(WaitMoveTo(LevelInfo.Destinations.bed));
             _fsm.ChangeState(States.Rest);
-    }
-
-    IEnumerator StandStill_Exit()
-    {
-        yield return StartCoroutine(MoveTo(LevelInfo.Destinations.bed));
+        }
     }
 
     void Rest_Enter()
@@ -69,7 +67,10 @@ public class GirlActions : HumanActions
     void Rest_Update()
     {
         if (ItemsIsDeactivated)
+        {
+            StartCoroutine(WaitMoveTo(LevelInfo.Destinations.sofa));
             _fsm.ChangeState(States.StandStill);
+        }
 
         if (timer > 0) timer -= Time.deltaTime;
         else
@@ -81,12 +82,6 @@ public class GirlActions : HumanActions
         }
     }
 
-    IEnumerator Rest_Exit()
-    {
-        if (ItemsIsDeactivated)
-            yield return StartCoroutine(MoveTo(LevelInfo.Destinations.sofa));
-    }
-
     void Sleep_Enter()
     {
         Debug.Log("Enter 'Sleep' state");
@@ -95,16 +90,13 @@ public class GirlActions : HumanActions
     void Sleep_Update()
     {
         if (ItemsIsDeactivated)
+        {
+            StartCoroutine(WaitMoveTo(LevelInfo.Destinations.sofa));
             _fsm.ChangeState(States.StandStill);
+        }
 
         if (sinkIsOpened)
             _fsm.ChangeState(States.SleepDissatisfied);
-    }
-
-    IEnumerator Sleep_Exit()
-    {
-        if (ItemsIsDeactivated)
-            yield return StartCoroutine(MoveTo(LevelInfo.Destinations.sofa));
     }
 
     void SleepDissatisfied_Enter()
@@ -124,7 +116,7 @@ public class GirlActions : HumanActions
         _fsm.Driver.FixedUpdate.Invoke();
     }
 
-    private void OnMouseButtonClick()
+    private void OnItemClick()
     {
         _fsm.Driver.OnMouseButtonClick.Invoke();
     }

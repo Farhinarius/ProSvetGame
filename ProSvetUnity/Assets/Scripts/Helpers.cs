@@ -31,7 +31,19 @@ public static class Helpers
             $" {typeof(T)} class doesn't inherit from EventArgs class");
     }
 
+    // public static void WalkAround()
+    // {
+    //     timer -= Time.fixedDeltaTime;
 
+    //     if (timer < 0)
+    //     {
+    //         direction = -direction;
+    //         timer = changeTime;
+    //     }
 
+    //     Vector2 objPos = _rb2d.position;
+    //     objPos.x += _speed * Time.fixedDeltaTime * direction;
+    //     _rb2d.MovePosition(objPos);
+    // }
 
 }

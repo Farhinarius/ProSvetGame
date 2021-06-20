@@ -1345,6 +1345,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b95f0cbd1cb034f458644278c1a6d78d, type: 3}
+--- !u!82 &1099308177 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 3072134897100503694, guid: 97e13211d6c3d0849ae6a06a3fa25356,
+    type: 3}
+  m_PrefabInstance: {fileID: 3059542593569177943}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1157527135
 GameObject:
   m_ObjectHideFlags: 0
@@ -2322,7 +2328,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _audioSource
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1099308177}
     - target: {fileID: 5520451511195791300, guid: 97e13211d6c3d0849ae6a06a3fa25356,
         type: 3}
       propertyPath: _spriteRendererOther

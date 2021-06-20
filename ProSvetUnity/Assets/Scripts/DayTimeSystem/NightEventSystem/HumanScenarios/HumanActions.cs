@@ -66,23 +66,13 @@ public class HumanActions : MonoBehaviour
         }
     }
 
+    public IEnumerator WaitMoveTo(Transform destination)
+    {
+        yield return StartCoroutine(MoveTo(destination));
+    }
+
     protected void ChangeSprite(Sprite spriteToChange) =>
         _spriteRenderer.sprite = _turnedOn ? spriteToChange : _originalSprite;
-
-    protected void WalkAround()
-    {
-        timer -= Time.fixedDeltaTime;
-
-        if (timer < 0)
-        {
-            direction = -direction;
-            timer = changeTime;
-        }
-
-        Vector2 objPos = _rb2d.position;
-        objPos.x += _speed * Time.fixedDeltaTime * direction;
-        _rb2d.MovePosition(objPos);
-    }
 
     #endregion
 }

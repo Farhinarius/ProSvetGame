@@ -63,34 +63,37 @@ public class NightEventSystem : ScriptableEventSystem
         _workmanActions.enabled = false;
     }
 
-    public void StateCallback(GirlActions.States girlState)
-    {
-        DefineState();
-    }
-
-    public void StateCallback(WorkmanActions.States workmanState)
-    {
-        DefineState();
-    }
-
     # endregion
 
     void Init_Enter()
     {
         Debug.Log("Enter in night state machine event system (Init state)");
 
-        // when any item is being clicked, check event system
-        // InteractableItem.onMousePointerClick += DefineState;
+        StartCoroutine(progressBar.WaitDrawValue(OneStar));
 
-
-        // This code RAISES EXCEPTION!!!    // Fix
-        _girlActions.FSM.Changed += StateCallback;
-        _workmanActions.FSM.Changed += StateCallback;
+        _fsm.ChangeState(States.DoStuff);       // 1 star gain
     }
 
     void DoStuff_Enter()
     {
         Debug.Log("Enter 'DoStuff' state");
+    }
+
+    void DoStuff_Update()
+    {
+        if (_girlActions.CurrentState == GirlActions.States.SleepDissatisfied &&
+            _workmanActions.CurrentState == WorkmanActions.States.SleepDissatisfied)
+        {
+            _fsm.ChangeState(States.BadDreams);     // transit to 1 star   state lock
+        }
+
+        if (_girlActions.CurrentState == GirlActions.States.Sleep ||
+            _workmanActions.CurrentState == WorkmanActions.States.Sleep)
+        {
+            StartCoroutine(progressBar.WaitDrawValue(TwoStar));
+
+            _fsm.ChangeState(States.OneGoodDream);  // transit to 2 stars
+        }
     }
 
     void BadDreams_Enter()
@@ -102,74 +105,39 @@ public class NightEventSystem : ScriptableEventSystem
     {
         Debug.Log("Enter 'OneGoodDream' state");
     }
+
+    void OneGoodDream_Update()
+    {
+        if (_girlActions.CurrentState == GirlActions.States.Sleep &&
+            _workmanActions.CurrentState == WorkmanActions.States.Sleep)
+        {
+            StartCoroutine(progressBar.WaitDrawValue(ThreeStar));
+
+            _fsm.ChangeState(States.BestDream);       // transit to 3 stars state lock
+        }
+
+        if (_girlActions.CurrentState != GirlActions.States.Sleep &&
+            _workmanActions.CurrentState != WorkmanActions.States.Sleep)
+        {
+            _fsm.ChangeState(States.DoStuff);
+        }
+
+        if (_girlActions.CurrentState == GirlActions.States.SleepDissatisfied &&
+            _workmanActions.CurrentState == WorkmanActions.States.SleepDissatisfied)
+        {
+            StartCoroutine(progressBar.WaitDrawValue(OneStar));
+            _fsm.ChangeState(States.BadDreams);     // transit to 1 stars   state lock
+        }
+    }
         
     void BestDream_Enter()
     {
         Debug.Log("Enter 'Best Dream' state");
     }
 
-    private void DefineState()
+    private void Update()
     {
-        switch (CurrentState)
-        {
-            case States.Init:
-                
-                if (_girlActions.CurrentState != GirlActions.States.Sleep &&
-                    _girlActions.CurrentState != GirlActions.States.SleepDissatisfied &&
-                    _workmanActions.CurrentState != WorkmanActions.States.Sleep &&
-                    _workmanActions.CurrentState != WorkmanActions.States.SleepDissatisfied)
-                {
-                    _fsm.ChangeState(States.DoStuff);       // 1 star gain
-
-                    StartCoroutine(progressBar.DrawValue(OneStar));
-                }
-                break;
-                
-            case States.DoStuff:
-
-                if (_girlActions.CurrentState == GirlActions.States.SleepDissatisfied &&
-                    _workmanActions.CurrentState == WorkmanActions.States.SleepDissatisfied)
-                {
-                    _fsm.ChangeState(States.BadDreams);     // transit to 1 star   state lock
-                }
-                
-                if (_girlActions.CurrentState == GirlActions.States.Sleep ||
-                    _workmanActions.CurrentState == WorkmanActions.States.Sleep)
-                {
-                    _fsm.ChangeState(States.OneGoodDream);  // transit to 2 stars
-                    
-                    StartCoroutine(progressBar.DrawValue(TwoStar));
-                }
-
-                break;
-
-            case States.OneGoodDream:
-                
-                if (_girlActions.CurrentState == GirlActions.States.Sleep &&
-                    _workmanActions.CurrentState == WorkmanActions.States.Sleep)
-                {
-                    _fsm.ChangeState(States.BestDream);       // transit to 3 stars state lock
-
-                    StartCoroutine(progressBar.DrawValue(ThreeStar));
-                }
-                
-                if (_girlActions.CurrentState != GirlActions.States.Sleep &&
-                    _workmanActions.CurrentState != WorkmanActions.States.Sleep)
-                {
-                    _fsm.ChangeState(States.DoStuff);
-                }
-                
-                if (_girlActions.CurrentState == GirlActions.States.SleepDissatisfied &&
-                    _workmanActions.CurrentState == WorkmanActions.States.SleepDissatisfied)
-                {
-                    _fsm.ChangeState(States.BadDreams);     // transit to 1 stars   state lock
-
-                    StartCoroutine(progressBar.DrawValue(OneStar));
-                }
-
-                break;
-        }
-
+        _fsm.Driver.Update.Invoke();
     }
 
 }
