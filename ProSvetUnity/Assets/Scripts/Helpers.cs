@@ -17,7 +17,7 @@ public static class Helpers
         pointerHandler.enabled = state;
 
     public static bool Reached(Transform current, Transform target) =>
-        Vector2.Distance(current.position, target.position) < 0.1;
+        Vector2.Distance(current.position, target.position) < 1e-2;
 
     public static T EventArgsConvert<T>(EventArgs e) where T : EventArgs
     {

@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices.ComTypes;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using MonsterLove.StateMachine;
 using static Helpers;
@@ -10,7 +11,6 @@ public class GirlActions : HumanActions
         Null,
         StandStill,
         Rest,
-        MovingToDestination,
         Sleep,
         SleepDissatisfied
     }
@@ -40,7 +40,7 @@ public class GirlActions : HumanActions
     protected override void Start()
     {
         base.Start();
-        InteractableItem.OnMouseButtonClick += OnMouseButtonClick;
+        InteractableItem.OnMouseButtonCallback += OnMouseButtonClick;
         _fsm.ChangeState(States.StandStill);
     }
 
@@ -49,36 +49,15 @@ public class GirlActions : HumanActions
         Debug.Log("Enter StandStill");
     }
 
-    void StandStill_Update()
+    void StandStill_OnMouseButtonClick()
     {
-        Debug.Log("Clicked");
         if (ItemsIsActivated)
-            _fsm.ChangeState(States.MovingToDestination);
+            _fsm.ChangeState(States.Rest);
     }
 
-    void StandStill_Exit()
+    IEnumerator StandStill_Exit()
     {
-        Debug.Log("Exit stand still");
-        SetDestination(LevelInfo.Destinations.bed);
-    }
-
-    void MovingToDestination_Enter()
-    {
-        Debug.Log($"Enter MovingToDestination. Move To {_target}");
-    }
-
-    void MovingToDestination_FixedUpdate()
-    {
-        UpdateMove();
-
-        if (Reached(_transform, _target))
-        {
-            if ( _target.Equals(LevelInfo.Destinations.bed))
-                _fsm.ChangeState(States.Rest);
-            else 
-            if ( _target.Equals(LevelInfo.Destinations.sofa))
-                _fsm.ChangeState(States.StandStill);
-        }
+        yield return StartCoroutine(MoveTo(LevelInfo.Destinations.bed));
     }
 
     void Rest_Enter()
@@ -90,10 +69,10 @@ public class GirlActions : HumanActions
     void Rest_Update()
     {
         if (ItemsIsDeactivated)
-            _fsm.ChangeState(States.MovingToDestination);
+            _fsm.ChangeState(States.StandStill);
 
         if (timer > 0) timer -= Time.deltaTime;
-        else 
+        else
         {
             if (!sinkIsOpened)
                 _fsm.ChangeState(States.Sleep);
@@ -102,9 +81,10 @@ public class GirlActions : HumanActions
         }
     }
 
-    void Rest_Exit()
+    IEnumerator Rest_Exit()
     {
-        SetDestination(LevelInfo.Destinations.sofa);
+        if (ItemsIsDeactivated)
+            yield return StartCoroutine(MoveTo(LevelInfo.Destinations.sofa));
     }
 
     void Sleep_Enter()
@@ -115,16 +95,16 @@ public class GirlActions : HumanActions
     void Sleep_Update()
     {
         if (ItemsIsDeactivated)
-            _fsm.ChangeState(States.MovingToDestination);
+            _fsm.ChangeState(States.StandStill);
 
         if (sinkIsOpened)
             _fsm.ChangeState(States.SleepDissatisfied);
     }
 
-    void Sleep_Exit()
+    IEnumerator Sleep_Exit()
     {
         if (ItemsIsDeactivated)
-            SetDestination(LevelInfo.Destinations.sofa);
+            yield return StartCoroutine(MoveTo(LevelInfo.Destinations.sofa));
     }
 
     void SleepDissatisfied_Enter()
