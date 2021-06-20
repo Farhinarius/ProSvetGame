@@ -19,8 +19,8 @@ public class MutualInfluence : Connected
 
     public override void OnPointerButtonClick()
     {
-        base.OnPointerButtonClick();
         SwapSprites();
+        base.OnPointerButtonClick();
     }
 
     public override void OnPointerButtonHold()

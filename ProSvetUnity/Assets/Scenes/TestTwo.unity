@@ -1483,6 +1483,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: curtains (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5591989995718330128, guid: 007e2a31e727ba04ca37e027eaa44715,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5634550704486705788, guid: 007e2a31e727ba04ca37e027eaa44715,
         type: 3}
       propertyPath: m_RootOrder
@@ -1921,6 +1926,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b95f0cbd1cb034f458644278c1a6d78d, type: 3}
+--- !u!82 &1099308177 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 3072134897100503694, guid: 97e13211d6c3d0849ae6a06a3fa25356,
+    type: 3}
+  m_PrefabInstance: {fileID: 3059542593569177943}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1157527135
 GameObject:
   m_ObjectHideFlags: 0
@@ -3996,6 +4007,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7137522767552752482, guid: 03f86d8a7a6202c4b9365d593252621c,
         type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 7137522767552752482, guid: 03f86d8a7a6202c4b9365d593252621c,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.73
       objectReference: {fileID: 0}
@@ -4177,6 +4193,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RootOrder
       value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7501791879915715138, guid: ece5f36061e11c1428b579173288df52,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7501791879915715138, guid: ece5f36061e11c1428b579173288df52,
         type: 3}

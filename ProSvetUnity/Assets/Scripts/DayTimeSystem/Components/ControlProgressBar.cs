@@ -7,45 +7,40 @@ public class ControlProgressBar : MonoBehaviour
 {
     private Image progressBar;
 
-    private const float increment = 1 / 3;
+    private bool _triggered;
 
+    private bool _positiveIncrement;
+
+    public static class Limits
+    {
+        public static float OneStar => 0.186f;
+
+        public static float TwoStar => 0.493f;
+
+        public static float ThreeStar => 1f;
+    }
+
+    public float Value => progressBar.fillAmount;
+   
     private void Start()
     {
         progressBar = GetComponentInChildren<Image>();
         SetValue(0);
     }
 
-    public void SetValue(float value)
-    {
-        progressBar.fillAmount = value;
-    }
+    public void SetValue(float value) => progressBar.fillAmount = value;
 
-    public float Value => progressBar.fillAmount;
-
-    public void DrawValue(bool aboveZero)
+    public IEnumerator DrawValue(float limit)
     {
-        if (aboveZero)
-            StartCoroutine(AddDrawingValue(increment));
-        else if (!aboveZero)
-            StartCoroutine(RemoveDrawingValue(increment));
-    }
-
-    public IEnumerator AddDrawingValue(float valueToChange)
-    {
-        while (Mathf.Abs(progressBar.fillAmount - valueToChange) > Vector2.kEpsilon)
+        while (Mathf.Abs(limit - progressBar.fillAmount) > 0.01)
         {
-            yield return new WaitForFixedUpdate();
-            progressBar.fillAmount += valueToChange / Time.fixedDeltaTime;
+            yield return new WaitForEndOfFrame();
+            progressBar.fillAmount = Mathf.Lerp(progressBar.fillAmount, limit, Time.deltaTime * 2);
         }
     }
 
-    public IEnumerator RemoveDrawingValue(float valueToChange)
+    public IEnumerator WaitDrawValue(float limit)
     {
-        while (Mathf.Abs(progressBar.fillAmount - valueToChange) > Vector2.kEpsilon)
-        {
-            yield return new WaitForFixedUpdate();
-            progressBar.fillAmount -= valueToChange / Time.fixedDeltaTime;
-        }
+        yield return StartCoroutine(DrawValue(limit));
     }
-
 }

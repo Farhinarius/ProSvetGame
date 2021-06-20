@@ -2,11 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Threading.Tasks;
+using static Helpers;
 
 public class HumanActions : MonoBehaviour
 {
     #region Data
+
+    // State Machine behaviour
+    
 
     // timers
     public const float changeTime = 10f;
@@ -14,9 +17,8 @@ public class HumanActions : MonoBehaviour
     [SerializeField] protected float timer;
     protected int direction = 1;
 
-    // transforms
+    // current transform
     protected Transform _transform;
-    protected Transform _target;
 
     // physics
     public float _speed;
@@ -36,6 +38,7 @@ public class HumanActions : MonoBehaviour
 
     // emotion in future ???
 
+   
     # endregion
 
     # region MonoBehaviour Methods
@@ -54,29 +57,22 @@ public class HumanActions : MonoBehaviour
 
     # region Methods
 
-    protected void UpdateMove() =>
-        _transform.position = Vector2.MoveTowards(_transform.position, _target.position, _speed * Time.deltaTime);
-
-    protected void WalkAround()
+    protected IEnumerator MoveTo(Transform target)
     {
-        timer -= Time.fixedDeltaTime;
-
-        if (timer < 0)
+        while (!Reached(_transform, target))
         {
-            direction = -direction;
-            timer = changeTime;
+            yield return new WaitForEndOfFrame();
+            _transform.position = Vector2.MoveTowards(_transform.position, target.position, _speed * Time.deltaTime);
         }
-
-        Vector2 objPos = _rb2d.position;
-        objPos.x += _speed * Time.fixedDeltaTime * direction;
-        _rb2d.MovePosition(objPos);
     }
 
-    protected void SetDestination(Transform target) =>
-        _target = target;
+    public IEnumerator WaitMoveTo(Transform destination)
+    {
+        yield return StartCoroutine(MoveTo(destination));
+    }
 
     protected void ChangeSprite(Sprite spriteToChange) =>
-        _spriteRenderer.sprite = _turnedOn ? spriteToChange : _originalSprite; 
+        _spriteRenderer.sprite = _turnedOn ? spriteToChange : _originalSprite;
 
     #endregion
 }

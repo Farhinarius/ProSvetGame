@@ -17,7 +17,7 @@ public static class Helpers
         pointerHandler.enabled = state;
 
     public static bool Reached(Transform current, Transform target) =>
-        Vector2.Distance(current.position, target.position) < 0.1;
+        Vector2.Distance(current.position, target.position) < 1e-2;
 
     public static T EventArgsConvert<T>(EventArgs e) where T : EventArgs
     {
@@ -31,7 +31,19 @@ public static class Helpers
             $" {typeof(T)} class doesn't inherit from EventArgs class");
     }
 
+    // public static void WalkAround()
+    // {
+    //     timer -= Time.fixedDeltaTime;
 
+    //     if (timer < 0)
+    //     {
+    //         direction = -direction;
+    //         timer = changeTime;
+    //     }
 
+    //     Vector2 objPos = _rb2d.position;
+    //     objPos.x += _speed * Time.fixedDeltaTime * direction;
+    //     _rb2d.MovePosition(objPos);
+    // }
 
 }

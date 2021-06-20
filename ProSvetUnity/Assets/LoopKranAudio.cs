@@ -11,12 +11,12 @@ public class LoopKranAudio : MonoBehaviour
     void Start()
     {
         action = GetComponent<JointAction>() ?? throw new System.NullReferenceException("Joint behaviour isn't found");
-        JointAction.onPointerButtonClick += switchAudioSource;
+        JointAction.AudioCallbackForButtonClick += switchAudioSource;
     }
 
     private void switchAudioSource()
     {
-        if (action._turnedOn)
+        if (!action._turnedOn)
             LoopSoundOn();
         else
             LoopSoundOff();
